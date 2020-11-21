@@ -30,7 +30,7 @@ namespace EasySave.NS_ViewModel
 
         public void AddWork()
         {
-            if (model.Works.length < 5)
+            if(model.Works.length < 5)
             {
                 string addWorkName = view.AddWorkName();
                 string addWorkSrc = view.AddWorkSrc();
@@ -47,7 +47,14 @@ namespace EasySave.NS_ViewModel
 
         public void RemoveWork()
         {
-
+            if(model.Works.length > 0)
+            {
+                view.RemoveWorkMsg(model.RemoveWork(view.RemoveWorkName()));
+            }
+            else
+            {
+                view.RemoveWorkMsg(X); //TODO Put correct msg number
+            }
         }
 
         public void MakeBackupWork()
