@@ -25,7 +25,32 @@ namespace EasySave.NS_ViewModel
         // --- Methods ---
         public void Run()
         {
-            Console.WriteLine("EasySave is ready to be developed!");
+            bool isRunning = true;
+            int userChoice;
+
+            while(isRunning)
+            {
+                userChoice = view.Menu();
+
+                switch(userChoice)
+                {
+                    case 1:
+                        AddWork();
+                        break;
+
+                    case 2:
+                        MakeBackupWork();
+                        break;
+
+                    case 3:
+                        RemoveWork();
+                        break;
+
+                    default:
+                        isRunning = false;
+                        break;
+                }
+            }
         }
 
         public void AddWork()
@@ -53,7 +78,7 @@ namespace EasySave.NS_ViewModel
             }
             else
             {
-                view.RemoveWorkMsg(X); //TODO Put correct msg number
+                view.RemoveWorkMsg( X ); //TODO Put correct msg number
             }
         }
 
@@ -62,7 +87,7 @@ namespace EasySave.NS_ViewModel
 
         }
 
-        public void DoBackup(int _userChoice)
+        public void DoBackup(int _indexWork)
         {
 
         }
