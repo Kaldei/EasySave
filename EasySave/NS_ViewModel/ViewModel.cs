@@ -27,5 +27,37 @@ namespace EasySave.NS_ViewModel
         {
             Console.WriteLine("EasySave is ready to be developed!");
         }
+
+        public void AddWork()
+        {
+            if (model.Works.length < 5)
+            {
+                string addWorkName = view.AddWorkName();
+                string addWorkSrc = view.AddWorkSrc();
+                string addWorkDest = view.AddWorkDest();
+                string addWorkBackupType = view.AddWorkBackupType();
+
+                view.AddWorkMsg(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
+            }
+            else
+            {
+                view.AddWorkMsg( X ); //TODO Put correct msg number
+            }
+        }
+
+        public void RemoveWork()
+        {
+
+        }
+
+        public void MakeBackupWork()
+        {
+
+        }
+
+        public void DoBackup(int _userChoice)
+        {
+
+        }
     }
 }
