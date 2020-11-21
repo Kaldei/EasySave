@@ -1,66 +1,62 @@
-# Titre du projet
-_(juste en dessous des badges sympatiques à placer)_
+# EasySave
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+Simple overview of use/purpose.
 
-Une petite description du projet
+## Description
 
-## Pour commencer
+An in-depth paragraph about your project and overview of use.
 
-Entrez ici les instructions pour bien débuter avec votre projet...
+## Getting Started
 
-### Pré-requis
+### Dependencies
 
-Ce qu'il est requis pour commencer avec votre projet...
+* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
+* ex. Windows 10
 
-- Programme 1
-- Programme 2
-- etc...
+### Installing
 
-### Installation
+* How/where to download your program
+* Any modifications needed to be made to files/folders
 
-Les étapes pour installer votre programme....
+### Executing program
 
-Dites ce qu'il faut faire...
+* How to run the program
+* Step-by-step bullets
+```
+code blocks for commands
+```
 
-_exemple_: Executez la commande ``telnet mapscii.me`` pour commencer ensuite [...]
+## Help
 
+Any advise for common problems or issues.
+```
+command to run if program contains helper info
+```
 
-Ensuite vous pouvez montrer ce que vous obtenez au final...
+## Authors
 
-## Démarrage
+Contributors names and contact info
 
-Dites comment faire pour lancer votre projet
+ex. Dominique Pizzie  
+ex. [@DomPizzie](https://twitter.com/dompizzie)
 
-## Fabriqué avec
+## Version History
 
-Entrez les programmes/logiciels/ressources que vous avez utilisé pour développer votre projet
-
-_exemples :_
-* [Materialize.css](http://materializecss.com) - Framework CSS (front-end)
-* [Atom](https://atom.io/) - Editeur de textes
-
-## Contributing
-
-Si vous souhaitez contribuer, lisez le fichier [CONTRIBUTING.md](https://example.org) pour savoir comment le faire.
-
-## Versions
-Listez les versions ici 
-_exemple :_
-**Dernière version stable :** 5.0
-**Dernière version :** 5.1
-Liste des versions : [Cliquer pour afficher](https://github.com/your/project-name/tags)
-_(pour le lien mettez simplement l'URL de votre projets suivi de ``/tags``)_
-
-## Auteurs
-Listez le(s) auteur(s) du projet ici !
-* **Jhon doe** _alias_ [@outout14](https://github.com/outout14)
-
-Lisez la liste des [contributeurs](https://github.com/your/project/contributors) pour voir qui à aidé au projet !
-
-_(pour le lien mettez simplement l'URL de votre projet suivi de ``/contirubors``)_
+* 0.2
+    * Various bug fixes and optimizations
+    * See [commit change]() or See [release history]()
+* 0.1
+    * Initial Release
 
 ## License
 
-Ce projet est sous licence ``exemple: WTFTPL`` - voir le fichier [LICENSE.md](LICENSE.md) pour plus d'informations
+This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
 
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+* [awesome-readme](https://github.com/matiassingers/awesome-readme)
+* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* [dbader](https://github.com/dbader/readme-template)
+* [zenorocha](https://gist.github.com/zenorocha/4526327)
+* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
