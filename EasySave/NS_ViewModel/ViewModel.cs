@@ -123,7 +123,7 @@ namespace EasySave.NS_ViewModel
                     break;
 
                 case "!":
-                    code = DifferentialBackup(_work);
+                    code = FirstDifferential(_work);
                     break;
 
                 default:
@@ -131,6 +131,23 @@ namespace EasySave.NS_ViewModel
                     break;
             }
             return code;
+        }
+        private int FirstDifferential(Work _work)
+        {
+            string name = "Name";
+            string dst = "C:/Users/Clement/Desktop/TestCopy/";
+
+            DirectoryInfo dir = new DirectoryInfo(dst);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            foreach (DirectoryInfo directory in dirs)
+            {
+                if (name == directory.Name.Substring(0, directory.Name.IndexOf("_")))
+                {
+                    return DifferentialBackup(_work, directory);
+                }
+            }
+            return FullBackup(_work);
         }
 
         private int FullBackup(Work _work)
