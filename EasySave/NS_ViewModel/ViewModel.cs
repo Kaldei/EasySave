@@ -163,9 +163,41 @@ namespace EasySave.NS_ViewModel
             return 1;
         }
 
-        private int DifferentialBackup(Work _work)
+        private int DifferentialBackup(Work _work, DirectoryInfo _fullBackupDir)
         {
-            return 0;
+            string name = "Name";
+            string dst = "C:/Users/Clement/Desktop/TestCopy/";
+            string src = "C:/Users/Clement/Desktop/test/";
+            string fullBackPath = _fullBackupDir.FullName + "/";
+
+            DirectoryInfo dir = new DirectoryInfo(src);
+
+            if (!dir.Exists && !Directory.Exists(dst))
+            {
+                return 0;
+            }
+
+            // Open Files
+            FileInfo[] srcFiles = dir.GetFiles("*.*", SearchOption.AllDirectories);
+            List<FileInfo> filesToCopy = new List<FileInfo>();
+
+            // Calcul the size of every files
+            long totalSize = 0;
+            foreach (FileInfo file in srcFiles)
+            {
+                string currFullBackPath = fullBackPath + Path.GetRelativePath(src, file.FullName);
+
+                if (!File.Exists(currFullBackPath) || !IsSameFile(currFullBackPath, file.FullName))
+                {
+                    Console.WriteLine(file.Name);
+                    totalSize += file.Length;
+                    filesToCopy.Add(file);
+                }
+            }
+
+            // Check errors
+            SaveFiles(filesToCopy.ToArray(), dst, src, totalSize);
+            return 1;
         }
         private void SaveFiles(FileInfo[] _files, string _dst, string _src, long _totalSize)
         {
