@@ -7,6 +7,6 @@ namespace EasySave.NS_Model
     enum BackupType
     {
         FULL,
-        INCREMENTAL
+        DIFFRENTIAL
     }
 }
