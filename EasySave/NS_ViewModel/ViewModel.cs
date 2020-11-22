@@ -219,12 +219,30 @@ namespace EasySave.NS_ViewModel
         private void SaveFiles(FileInfo[] _files, string _dst, string _src, long _totalSize)
         {
             DateTime startTime = DateTime.Now;
+            State state = new State()
+            {
+                timestamp = Convert.ToString(startTime),
+                name = "Name",
+                currentWork = new CurrentWork
+                {
+                    totalFile = _files.Length,
+                    totalSize = _totalSize,
+                    progress = 0,
+                    nbFileLeft = _files.Length,
+                    leftSize = _totalSize,
+                    currentPathSrc = _src,
+                    currentPathDest = _dst
+
+                }
+            };
 
             // Create the dst folder
             _dst += "Name" + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "/";
             Directory.CreateDirectory(_dst);
 
             long leftSize = _totalSize;
+            int totalFile = _files.Length;
+
             for (int i = 0; i < _files.Length; i++)
             {
                 string dstDirectory = _dst;
@@ -244,16 +262,19 @@ namespace EasySave.NS_ViewModel
 
                 // Copy the current file
                 string dstFile = dstDirectory + _files[i].Name;
+
+                state.UpdateState(state, pourcent, (totalFile - i), leftSize, _files[i].FullName, dstFile);
+
                 _files[i].CopyTo(dstFile, true);
 
                 // We update the save file
-                //saveState(_files[i], dstFile, pourcent, (_files.Length - i), leftSize);
                 leftSize -= _files[i].Length;
             }
             DateTime endTime = DateTime.Now;
             TimeSpan workTime = endTime - startTime;
             double transferTime = workTime.TotalMilliseconds;
 
+            state.UpdateState(state, 100, 0, 0, "", "");
             //saveLog(startTime, "Test", _src, _dst, _totalSize, transferTime);
         }
 
