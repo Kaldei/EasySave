@@ -149,19 +149,23 @@ namespace EasySave.NS_View
             }
         }
 
+        public void DisplayWorks()
+        {
+            for (int i = 0; i < viewModel.model.test.Count; i++)
+            {
+                Console.WriteLine(i + 1 + " - " + "Name: " + viewModel.model.works[i].name
+                    + "\tSource: " + viewModel.model.works[i].src
+                    + "\tDestination: " + viewModel.model.works[i].dst
+                    + "\tType: " + viewModel.model.works[i].backupType);
+            }
+        }
 
         public int MakeBackupChoice()
         {
             Console.WriteLine("Chose the work to save :"+
                 "\n0 - all");
 
-            for(int i = 0 ; i <  viewModel.model.test.Count; i++)
-            {
-                Console.WriteLine(i+1 + " - " + "Name: " + viewModel.model.works[i].name
-                    +"\tSource: " + viewModel.model.works[i].src
-                    +"\tDestination: " + viewModel.model.works[i].dst
-                    +"\tType: " + viewModel.model.works[i].backupType);
-            }
+            DisplayWorks();
 
             string input;
             bool isValid = false;
@@ -170,10 +174,13 @@ namespace EasySave.NS_View
             while (!isValid)
             {
                 input = Console.ReadLine();
-
+                
+                //check if the input is a integer
                 if (CheckInt(input))
                 {
                     idNumberBackup = Int32.Parse(input);
+
+                    //check if the input is a valid option menu
                     if (idNumberBackup >= 0 && idNumberBackup <= viewModel.model.works.Count)
                     {
                         isValid = true;
@@ -186,6 +193,40 @@ namespace EasySave.NS_View
                 }
             }
             return idNumberBackup; 
+        }
+
+        public int RemoveWorkChoice()
+        {
+            Console.WriteLine("Chose the work to remove :");
+            DisplayWorks();
+
+            string input;
+            bool isValid = false;
+            int idNumberBackup = 0;
+
+            while (!isValid)
+            {
+                input = Console.ReadLine();
+
+                //check if the input is a integer
+                if (CheckInt(input))
+                {
+                    idNumberBackup = Int32.Parse(input);
+
+                    //check if the input is a valid option menu
+                    if (idNumberBackup >= 0 && idNumberBackup <= viewModel.model.works.Count)
+                    {
+                        isValid = true;
+                    }
+                }
+
+                if (!isValid)
+                {
+                    Console.WriteLine("\nPlease enter a valid option.");
+                }
+            }
+            return idNumberBackup;
+
         }
 
         public void MenuMsg()
