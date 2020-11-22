@@ -142,7 +142,7 @@ namespace EasySave.NS_ViewModel
         {
             return 0;
         }
-        public static void SaveFiles(FileInfo[] _files, string _dst, string _src, long _totalSize)
+        private void SaveFiles(FileInfo[] _files, string _dst, string _src, long _totalSize)
         {
             DateTime startTime = DateTime.Now;
 
@@ -181,6 +181,25 @@ namespace EasySave.NS_ViewModel
             double transferTime = workTime.TotalMilliseconds;
 
             //saveLog(startTime, "Test", _src, _dst, _totalSize, transferTime);
+        }
+
+        private bool IsSameFile(string path1, string path2)
+        {
+            byte[] file1 = File.ReadAllBytes(path1);
+            byte[] file2 = File.ReadAllBytes(path2);
+
+            if (file1.Length == file2.Length)
+            {
+                for (int i = 0; i < file1.Length; i++)
+                {
+                    if (file1[i] != file2[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
         }
     }
 }
