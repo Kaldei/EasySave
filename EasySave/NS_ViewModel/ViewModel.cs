@@ -135,7 +135,32 @@ namespace EasySave.NS_ViewModel
 
         private int FullBackup(Work _work)
         {
-            return 0;
+            // Add Work Link (replace string)
+            // User Input
+            string src = "C:/Users/Clement/Desktop/test/";
+            string dst = "C:/Users/Clement/Desktop/TestCopy/";
+
+            // Open Directory
+            DirectoryInfo dir = new DirectoryInfo(src);
+
+            if (!dir.Exists && !Directory.Exists(dst))
+            {
+                return 0;
+            }
+
+            // Open Files
+            FileInfo[] files = dir.GetFiles("*.*", SearchOption.AllDirectories);
+
+            // Calcul the size of every files
+            long totalSize = 0;
+            foreach (FileInfo file in files)
+            {
+                totalSize += file.Length;
+            }
+
+            // Check errors
+            SaveFiles(files, dst, src, totalSize);
+            return 1;
         }
 
         private int DifferentialBackup(Work _work)
