@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using EasySave.NS_Model;
 using EasySave.NS_ViewModel;
 
 namespace EasySave.NS_View
@@ -227,6 +224,25 @@ namespace EasySave.NS_View
             }
             return idNumberBackup;
 
+        }
+
+        public void MakeBackupMsg(int _id, string _name)
+        {
+            switch (_id)
+            {
+                case 0 :
+                    Console.WriteLine("The work '" + _name + "' was saved with success! ");
+                        break;
+                case 1:
+                    Console.WriteLine("The work was saved with success! ");
+                    break;
+                case 2:
+                    Console.WriteLine("Failed to saved work(s) ");
+                    break;
+                default:
+                    Console.WriteLine("\nFailed : error unknow.");
+                    break;
+            }
         }
 
         public void MenuMsg()
