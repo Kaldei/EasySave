@@ -53,7 +53,7 @@ namespace EasySave.NS_View
             Console.WriteLine("\nEnter directory source. ");
             string source = Console.ReadLine();
 
-            while (CheckPath(source) == false)
+            while (Directory.Exists(source) == false)
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
                 source = Console.ReadLine();
@@ -62,18 +62,34 @@ namespace EasySave.NS_View
             return source;
         }
 
-        public string AddWorkDst()
+        public string AddWorkDst(string _source)
         {
             Console.WriteLine("\nEnter directory destination.");
-            string source = Console.ReadLine();
+            string destination = Console.ReadLine();
 
-            while (CheckPath(source) == false)
+            while (CheckDstPath(_source, destination) == false)
             {
-                Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
-                source = Console.ReadLine();
+                destination = Console.ReadLine();
             }
 
-            return source;
+            return destination;
+        }
+
+        private bool CheckDstPath(string _source, string _destination)
+        {
+            while (Directory.Exists(_destination) == true)
+            {
+                if (_source != _destination)
+                {
+                    return true;
+                }
+                Console.WriteLine("\nChoose a different path from the source. ");
+
+                return false;
+            }
+
+            Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
+            return false;
         }
 
         private bool CheckName(string _name)
@@ -92,15 +108,6 @@ namespace EasySave.NS_View
             }
             Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
 
-            return false;
-        }
-
-        private bool CheckPath(string _source)
-        {
-            if (Directory.Exists(_source))
-            {
-                return true;
-            }
             return false;
         }
 
@@ -145,6 +152,7 @@ namespace EasySave.NS_View
 
         public int MakeBackupChoice()
         {
+            Console.Clear();
             Console.WriteLine("\nChoose the work to save : \n0 - all");
             //Display all works 
             DisplayWorks();
@@ -157,6 +165,8 @@ namespace EasySave.NS_View
 
         public int RemoveWorkChoice()
         {
+            Console.Clear();
+
             Console.WriteLine("\nChoose the work to remove :");
 
             //Display all works 
