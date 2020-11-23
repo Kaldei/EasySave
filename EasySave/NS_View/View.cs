@@ -28,7 +28,7 @@ namespace EasySave.NS_View
 
             string inputUser = Console.ReadLine() ;
 
-            return CheckInputChoiceMenu(inputUser, 1, 4);
+            return CheckChoiceMenu(inputUser, 1, 4);
         }
 
         public string AddWorkName()
@@ -37,7 +37,7 @@ namespace EasySave.NS_View
 
             string name = Console.ReadLine();
 
-            while (CheckInputName(name) == false )
+            while (CheckName(name) == false )
             {
                 Console.WriteLine("\nEnter a VALID name (1 to 20 characters)");
                 name = Console.ReadLine();
@@ -51,7 +51,7 @@ namespace EasySave.NS_View
             Console.WriteLine("\nEnter directory source. ");
             string source = Console.ReadLine() ;
 
-            while (CheckInputPath(source) == false)
+            while (CheckPath(source) == false)
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
                 source = Console.ReadLine();
@@ -60,12 +60,12 @@ namespace EasySave.NS_View
             return source ;
         }
 
-        public string AddWorkDest()
+        public string AddWorkDst()
         {
             Console.WriteLine("\nEnter directory destination.");
             string source = Console.ReadLine();
 
-            while (CheckInputPath(source) == false)
+            while (CheckPath(source) == false)
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
                 source = Console.ReadLine();
@@ -74,7 +74,7 @@ namespace EasySave.NS_View
             return source;
         }
 
-        private bool CheckInputName(string _name)
+        private bool CheckName(string _name)
         {
             int length = _name.Length;
 
@@ -86,7 +86,7 @@ namespace EasySave.NS_View
             return false;
         }
 
-        private bool CheckInputPath(string _source)
+        private bool CheckPath(string _source)
         { 
             if (Directory.Exists(_source))
             {
@@ -95,7 +95,7 @@ namespace EasySave.NS_View
             return false;
         }
 
-        private static bool CheckInputInt(string _input)
+        private static bool CheckInt(string _input)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace EasySave.NS_View
             }
         }
 
-        public void DisplayWorks()
+        private void DisplayWorks()
         {
             for (int i = 0; i < viewModel.model.works.Count; i++)
             {
@@ -159,7 +159,7 @@ namespace EasySave.NS_View
             DisplayWorks();
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckInputChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
+            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
 
             return idNumberWork;
         }
@@ -172,15 +172,15 @@ namespace EasySave.NS_View
             DisplayWorks();
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckInputChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count);
+            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count);
 
             return idNumberWork;
 
         }
 
-        private int CheckInputChoiceMenu(string _inputUser, int _minEntry, int _maxEntry)
+        private int CheckChoiceMenu(string _inputUser, int _minEntry, int _maxEntry)
         {
-            while (!(CheckInputInt(_inputUser) && (Int32.Parse(_inputUser) >= _minEntry && Int32.Parse(_inputUser) <= _maxEntry)))
+            while (!(CheckInt(_inputUser) && (Int32.Parse(_inputUser) >= _minEntry && Int32.Parse(_inputUser) <= _maxEntry)))
             {
                 Console.WriteLine("\nPlease enter a valid option.");
                 _inputUser = Console.ReadLine();
@@ -210,7 +210,7 @@ namespace EasySave.NS_View
             Console.WriteLine("\nEnter a valid option");
         }
 
-        public void initMsg(int _id)
+        public void InitMsg(int _id)
         {
             switch (_id)
             {
