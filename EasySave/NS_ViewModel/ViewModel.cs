@@ -77,7 +77,7 @@ namespace EasySave.NS_ViewModel
             }
             else
             {
-                view.AddWorkMsg(4); //2 Path not found //4 Trop de taffe
+                view.AddWorkMsg(4); 
             }
         }
 
@@ -89,7 +89,7 @@ namespace EasySave.NS_ViewModel
             }
             else
             {
-                view.RemoveWorkMsg(3); //3 Pas de backup  
+                view.RemoveWorkMsg(3); 
             }
         }
 
@@ -115,7 +115,7 @@ namespace EasySave.NS_ViewModel
             }
             else
             {
-                view.MakeBackupMsg(3, ""); // 3
+                view.MakeBackupMsg(3, ""); 
             }
         }
 
