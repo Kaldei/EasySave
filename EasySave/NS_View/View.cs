@@ -40,13 +40,8 @@ namespace EasySave.NS_View
 
             string name = Console.ReadLine();
 
-            while (CheckName(name) != 0)
+            while (CheckName(name) == false)
             {
-                if (CheckName(name) == 1)
-                {
-                    Console.WriteLine("\nWorkName already taken.");
-                }
-                Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
                 name = Console.ReadLine();
             }
 
@@ -81,7 +76,7 @@ namespace EasySave.NS_View
             return source;
         }
 
-        private int CheckName(string _name)
+        private bool CheckName(string _name)
         {
             int length = _name.Length;
 
@@ -89,11 +84,15 @@ namespace EasySave.NS_View
             {
                 if (!viewModel.model.works.Exists(work => work.name == _name))
                 {
-                    return 0;
+                    return true;
                 }
-                return 1;
+                Console.WriteLine("\nWorkName already taken. Please enter an other name.");
+
+                return false;
             }
-            return 2;
+            Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
+
+            return false;
         }
 
         private bool CheckPath(string _source)
