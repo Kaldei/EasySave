@@ -21,19 +21,22 @@ namespace EasySave.NS_View
         // --- Methods ---
         public int Menu()
         {
-            Console.WriteLine("\n1 - Add a work" +
-                "\n2 - Remove a work" +
+            Console.WriteLine(
+                "\nMenu:" +
+                "\n1 - Show all works" +
+                "\n2 - Add a work" +
                 "\n3 - Make a backup" +
-                "\n4 - Quit");
+                "\n4 - Remove a work" +
+                "\n5 - Quit");
 
-            string inputUser = Console.ReadLine() ;
+            string inputUser = Console.ReadLine();
 
-            return CheckChoiceMenu(inputUser, 1, 4);
+            return CheckChoiceMenu(inputUser, 1, 5);
         }
 
         public string AddWorkName()
         {
-            Console.WriteLine("\nEnter a name (1 to 20 characters)");
+            Console.WriteLine("Enter a name (1 to 20 characters)");
 
             string name = Console.ReadLine();
 
@@ -48,7 +51,7 @@ namespace EasySave.NS_View
 
         public string AddWorkSrc()
         {
-            Console.WriteLine("\nEnter directory source. ");
+            Console.WriteLine("Enter directory source. ");
             string source = Console.ReadLine() ;
 
             while (CheckPath(source) == false)
@@ -62,7 +65,7 @@ namespace EasySave.NS_View
 
         public string AddWorkDst()
         {
-            Console.WriteLine("\nEnter directory destination.");
+            Console.WriteLine("Enter directory destination.");
             string source = Console.ReadLine();
 
             while (CheckPath(source) == false)
@@ -140,7 +143,7 @@ namespace EasySave.NS_View
             }
         }
 
-        private void DisplayWorks()
+        public void DisplayWorks()
         {
             for (int i = 0; i < viewModel.model.works.Count; i++)
             {
@@ -153,7 +156,7 @@ namespace EasySave.NS_View
 
         public int MakeBackupChoice()
         {
-            Console.WriteLine("\nChoose the work to save : \n0 - all");
+            Console.WriteLine("Choose the work to save : \n0 - all");
 
             //Display all works 
             DisplayWorks();
@@ -166,7 +169,7 @@ namespace EasySave.NS_View
 
         public int RemoveWorkChoice()
         {
-            Console.WriteLine("\nChoose the work to remove :");
+            Console.WriteLine("Choose the work to remove :");
 
             //Display all works 
             DisplayWorks();
