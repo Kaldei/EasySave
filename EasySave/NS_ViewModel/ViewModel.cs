@@ -113,6 +113,7 @@ namespace EasySave.NS_ViewModel
             {
                 int userChoice = view.MakeBackupChoice();
 
+                //------// TO CHECK
                 if (userChoice == 0)
                 {
                     foreach (Work work in model.works)
@@ -153,10 +154,12 @@ namespace EasySave.NS_ViewModel
             }
             return code;
         }
+
+//------// TO CHECK
         private int FirstDifferential(Work _work)
         {
-            string name = "Name";
-            string dst = "C:/Users/Clement/Desktop/TestCopy/";
+            string name = _work.name;
+            string dst = _work.dst;
 
             DirectoryInfo dir = new DirectoryInfo(dst);
             DirectoryInfo[] dirs = dir.GetDirectories();
@@ -173,17 +176,16 @@ namespace EasySave.NS_ViewModel
 
         private int FullBackup(Work _work)
         {
-            // Add Work Link (replace string)
-            // User Input
-            string src = "C:/Users/Clement/Desktop/test/";
-            string dst = "C:/Users/Clement/Desktop/TestCopy/";
+            string name = _work.name;
+            string src = _work.src;
+            string dst = _work.dst;
 
             // Open Directory
             DirectoryInfo dir = new DirectoryInfo(src);
 
             if (!dir.Exists && !Directory.Exists(dst))
             {
-                return 0;
+                return 2;
             }
 
             // Open Files
@@ -197,15 +199,15 @@ namespace EasySave.NS_ViewModel
             }
 
             // Check errors
-            SaveFiles(files, dst, src, totalSize);
-            return 1;
+            SaveFiles(name, files, dst, src, totalSize);
+            return 0;
         }
 
+//------// TO CHECK
         private int DifferentialBackup(Work _work, DirectoryInfo _fullBackupDir)
         {
-            string name = "Name"; 
-            string dst = "C:/Users/Clement/Desktop/TestCopy/";
-            string src = "C:/Users/Clement/Desktop/test/";
+            string dst = _work.dst;
+            string src = _work.src;
             string fullBackPath = _fullBackupDir.FullName + "/";
 
             DirectoryInfo dir = new DirectoryInfo(src);
@@ -234,16 +236,17 @@ namespace EasySave.NS_ViewModel
             }
 
             // Check errors
-            SaveFiles(filesToCopy.ToArray(), dst, src, totalSize);
-            return 1;
+            SaveFiles(_work.name, filesToCopy.ToArray(), dst, src, totalSize);
+            return 0;
         }
-        private void SaveFiles(FileInfo[] _files, string _dst, string _src, long _totalSize)
+
+        private void SaveFiles(string _name, FileInfo[] _files, string _dst, string _src, long _totalSize)
         {
             DateTime startTime = DateTime.Now;
             State state = new State()
             {
                 timestamp = Convert.ToString(startTime),
-                name = "Name",
+                name = _name,
                 currentWork = new CurrentWork
                 {
                     totalFile = _files.Length,
@@ -258,7 +261,7 @@ namespace EasySave.NS_ViewModel
             };
 
             // Create the dst folder
-            _dst += "Name" + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "/";
+            _dst += _name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
             Directory.CreateDirectory(_dst);
 
             long leftSize = _totalSize;
@@ -272,7 +275,7 @@ namespace EasySave.NS_ViewModel
                 // If there is a directoy, we add the relative path from the directory dst
                 if (Path.GetRelativePath(_src, _files[i].DirectoryName).Length > 1)
                 {
-                    dstDirectory += Path.GetRelativePath(_src, _files[i].DirectoryName) + "/";
+                    dstDirectory += Path.GetRelativePath(_src, _files[i].DirectoryName) + "\\";
                 }
 
                 // If the directory dst doesn't exist, we create it
