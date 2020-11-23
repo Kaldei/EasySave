@@ -95,7 +95,7 @@ namespace EasySave.NS_View
             return backupType;
         }
 
-        //Check if the path exist and if it's diferent from the source
+        //Check if the path exist and if it's different from the source
         private bool CheckDstPath(string _source, string _destination)
         {
             while (Directory.Exists(_destination) == true)
