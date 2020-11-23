@@ -148,16 +148,16 @@ namespace EasySave.NS_View
         }
 
         //Display all works 
-        public void DisplayWorks()
+        public void DisplayWorks(int _shift)
         {
             if (viewModel.model.works.Count != 0)
             {
                 for (int i = 0; i < viewModel.model.works.Count; i++)
                 {
-                    Console.WriteLine(i + 1 + " - " + "Name: " + viewModel.model.works[i].name
-                        + "\tSource: " + viewModel.model.works[i].src
-                        + "\tDestination: " + viewModel.model.works[i].dst
-                        + "\tType: " + viewModel.model.works[i].backupType);
+                    Console.WriteLine("\n" +(i+_shift) + " - " + "Name: " + viewModel.model.works[i].name
+                        + "\n    Source: " + viewModel.model.works[i].src
+                        + "\n    Destination: " + viewModel.model.works[i].dst
+                        + "\n    Type: " + viewModel.model.works[i].backupType);
                 }
             }
             else
@@ -170,10 +170,10 @@ namespace EasySave.NS_View
         public int MakeBackupChoice()
         {
             Console.Clear();
-            Console.WriteLine("\nChoose the work to save : \n0 - all");
+            Console.WriteLine("\nChoose the work to save : \n1 - all");
 
             //Display all works 
-            DisplayWorks();
+            DisplayWorks(2);
 
             //Check if the user's input is a valid integer
             int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
@@ -188,7 +188,7 @@ namespace EasySave.NS_View
             Console.WriteLine("\nChoose the work to remove :");
 
             //Display all works 
-            DisplayWorks();
+            DisplayWorks(1);
 
             //Check if the user's input is a valid integer
             int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count);
