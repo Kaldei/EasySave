@@ -71,13 +71,25 @@ namespace EasySave.NS_ViewModel
                 string addWorkName = view.AddWorkName();
                 string addWorkSrc = view.AddWorkSrc();
                 string addWorkDest = view.AddWorkDst();
-                BackupType addWorkBackupType = BackupType.FULL; //view.AddWorkBackupType(); //TODO To change
 
-                view.AddWorkMsg(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
+                BackupType addWorkBackupType = BackupType.FULL;
+
+                switch(view.AddWorkBackupType())
+                {
+                    case 1 : 
+                         addWorkBackupType = BackupType.FULL;
+                        break;
+
+                    case 2:
+                        addWorkBackupType = BackupType.DIFFRENTIAL;
+                        break;
+                }
+
+                view.AddWorkMsg(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType), addWorkName);
             }
             else
             {
-                view.AddWorkMsg(4); 
+                view.AddWorkMsg(4, ""); 
             }
         }
 
@@ -85,11 +97,13 @@ namespace EasySave.NS_ViewModel
         {
             if(model.works.Count > 0)
             {
-                view.RemoveWorkMsg(model.RemoveWork(view.RemoveWorkChoice() - 1));
+                int RemoveChoice = view.RemoveWorkChoice() - 1;
+                string name = model.works[RemoveChoice].name;
+                view.RemoveWorkMsg(model.RemoveWork(RemoveChoice), name);
             }
             else
             {
-                view.RemoveWorkMsg(3); 
+                view.RemoveWorkMsg(3, ""); 
             }
         }
 
