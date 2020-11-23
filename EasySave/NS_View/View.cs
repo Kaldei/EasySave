@@ -36,13 +36,17 @@ namespace EasySave.NS_View
 
         public string AddWorkName()
         {
-            Console.WriteLine("Enter a name (1 to 20 characters)");
+            Console.WriteLine("\nEnter a name (1 to 20 characters):");
 
             string name = Console.ReadLine();
 
-            while (CheckName(name) == false )
+            while (CheckName(name) != 0)
             {
-                Console.WriteLine("\nEnter a VALID name (1 to 20 characters)");
+                if (CheckName(name) == 1)
+                {
+                    Console.WriteLine("\nWorkName already taken.");
+                }
+                Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
                 name = Console.ReadLine();
             }
 
@@ -51,7 +55,7 @@ namespace EasySave.NS_View
 
         public string AddWorkSrc()
         {
-            Console.WriteLine("Enter directory source. ");
+            Console.WriteLine("\nEnter directory source. ");
             string source = Console.ReadLine() ;
 
             while (CheckPath(source) == false)
@@ -65,7 +69,7 @@ namespace EasySave.NS_View
 
         public string AddWorkDst()
         {
-            Console.WriteLine("Enter directory destination.");
+            Console.WriteLine("\nEnter directory destination.");
             string source = Console.ReadLine();
 
             while (CheckPath(source) == false)
@@ -77,16 +81,19 @@ namespace EasySave.NS_View
             return source;
         }
 
-        private bool CheckName(string _name)
+        private int CheckName(string _name)
         {
             int length = _name.Length;
-
-            if (length > 1 && length < 20)
+            
+            if(length >= 1 && length <= 20)
             {
-                return true;
-            }
-
-            return false;
+                if(!viewModel.model.works.Exists(work => work.name == _name))
+                {
+                    return 0;
+                }
+                return 1;
+            } 
+            return 2;
         }
 
         private bool CheckPath(string _source)
@@ -111,15 +118,15 @@ namespace EasySave.NS_View
             }
         }
 
-        public void AddWorkMsg(int _id)
+        public void AddWorkMsg(int _id, string _name)
         {
             switch (_id)
             {
                 case 0 :
-                    Console.WriteLine("\nWork was added with success!");
+                    Console.WriteLine("\nWork '" + _name + "' was added with success!");
                     break;
                 case 1 :
-                    Console.WriteLine("\nFailed to add work.");
+                    Console.WriteLine("\nFailed '" + _name + "' to add work.");
                     break;
                 case 4:
                     Console.WriteLine("\nFailed : Work List is full.");
@@ -130,15 +137,15 @@ namespace EasySave.NS_View
             }
         }
 
-        public void RemoveWorkMsg(int _id)
+        public void RemoveWorkMsg(int _id, string _name)
         {
             switch (_id)
             {
                 case 0:
-                    Console.WriteLine("\nWork was removed with success!");
+                    Console.WriteLine("\nWork '" + _name + "' was removed with success!");
                     break;
                 case 1:
-                    Console.WriteLine("\nFailed to remove work.");
+                    Console.WriteLine("\nFailed '" + _name + "' to remove work.");
                     break;
                 case 3:
                     Console.WriteLine("\nFailed : Work List is empty.");
@@ -151,19 +158,33 @@ namespace EasySave.NS_View
 
         public void DisplayWorks()
         {
-            for (int i = 0; i < viewModel.model.works.Count; i++)
+            if (viewModel.model.works.Count != 0)
             {
-                Console.WriteLine(i + 1 + " - " + "Name: " + viewModel.model.works[i].name
-                    + "\tSource: " + viewModel.model.works[i].src
-                    + "\tDestination: " + viewModel.model.works[i].dst
-                    + "\tType: " + viewModel.model.works[i].backupType);
+                for (int i = 0; i < viewModel.model.works.Count; i++)
+                {
+                    Console.WriteLine(i + 1 + " - " + "Name: " + viewModel.model.works[i].name
+                        + "\tSource: " + viewModel.model.works[i].src
+                        + "\tDestination: " + viewModel.model.works[i].dst
+                        + "\tType: " + viewModel.model.works[i].backupType);
+                }
             }
+            else
+            {
+                Console.WriteLine("No works to display");
+            }
+        }
+
+        public int AddWorkBackupType()
+        {
+            Console.WriteLine("\nChoose a type of Backup: \n1.Full \n2.Differential");
+            string input = Console.ReadLine();
+            int backupType = CheckChoiceMenu(input, 1, 2);
+            return backupType;
         }
 
         public int MakeBackupChoice()
         {
-            Console.WriteLine("Choose the work to save : \n0 - all");
-
+            Console.WriteLine("\nChoose the work to save : \n0 - all");
             //Display all works 
             DisplayWorks();
 
@@ -175,7 +196,7 @@ namespace EasySave.NS_View
 
         public int RemoveWorkChoice()
         {
-            Console.WriteLine("Choose the work to remove :");
+            Console.WriteLine("\nChoose the work to remove :");
 
             //Display all works 
             DisplayWorks();
@@ -202,7 +223,7 @@ namespace EasySave.NS_View
             switch (_id)
             {
                 case 0 :
-                    Console.WriteLine("The work '" + _name + "' was saved with success! ");
+                    Console.WriteLine("\nThe work '" + _name + "' was saved with success! ");
                         break;
                 case 1:
                     Console.WriteLine("Failed to saved work");
