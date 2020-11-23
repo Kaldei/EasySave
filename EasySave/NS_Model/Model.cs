@@ -19,8 +19,6 @@ namespace EasySave.NS_Model
             // Initalize Work List
             works = new List<Work>();
 
-            // Load Works at the beginning of the program (from ./BackupWorkSave.json)
-            LoadWorks();
         }
 
 
@@ -67,15 +65,25 @@ namespace EasySave.NS_Model
             }
         }
 
-        // Load Works
-        private void LoadWorks()
+        // Load Works at the beginning of the program (from ./BackupWorkSave.json)
+        public int LoadWorks()
         {
             // Check if JSON File exists
             if (File.Exists(jsonPath))
             {
-                // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
-                works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(jsonPath));
+                try
+                {
+                    // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
+                    works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(jsonPath));
+                }
+                catch
+                {
+                    // Return Error Code
+                    return 1;
+                }
             }
+            // Return Confiramation Code
+            return 0;
 
         }
 
