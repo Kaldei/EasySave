@@ -19,22 +19,16 @@ namespace EasySave.NS_View
 
 
         // --- Methods ---
-        public string Menu()
+        public int Menu()
         {
-            Console.WriteLine("\n----- WELCOME ON EASYSAVE -----" +
-                "\n1 - Add a work" +
+            Console.WriteLine("\n1 - Add a work" +
                 "\n2 - Remove a work" +
                 "\n3 - Make a backup" +
                 "\n4 - Quit");
 
-            string id = Console.ReadLine() ; 
+            string inputUser = Console.ReadLine() ;
 
-            while (CheckInt(id) == false)
-            {
-                id = Console.ReadLine();
-            }
-
-            return id;
+            return CheckInputChoiceMenu(inputUser, 1, 4);
         }
 
         public string AddWorkName()
@@ -66,7 +60,7 @@ namespace EasySave.NS_View
             return source ;
         }
 
-        public string AddWorkDst()
+        public string AddWorkDest()
         {
             Console.WriteLine("\nEnter directory destination.");
             string source = Console.ReadLine();
@@ -80,7 +74,7 @@ namespace EasySave.NS_View
             return source;
         }
 
-        public bool CheckInputName(string _name)
+        private bool CheckInputName(string _name)
         {
             int length = _name.Length;
 
@@ -92,7 +86,7 @@ namespace EasySave.NS_View
             return false;
         }
 
-        public bool CheckInputPath(string _source)
+        private bool CheckInputPath(string _source)
         { 
             if (Directory.Exists(_source))
             {
@@ -101,7 +95,7 @@ namespace EasySave.NS_View
             return false;
         }
 
-        public static bool CheckInt(string _input)
+        private static bool CheckInputInt(string _input)
         {
             try
             {
@@ -159,11 +153,12 @@ namespace EasySave.NS_View
 
         public int MakeBackupChoice()
         {
-            Console.WriteLine("Chose the work to save : \n0 - all");
+            Console.WriteLine("\nChoose the work to save : \n0 - all");
 
             //Display all works 
             DisplayWorks();
 
+            //Check if the user's input is a valid integer
             int idNumberWork = CheckInputChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
 
             return idNumberWork;
@@ -171,20 +166,21 @@ namespace EasySave.NS_View
 
         public int RemoveWorkChoice()
         {
-            Console.WriteLine("Chose the work to remove :");
+            Console.WriteLine("\nChoose the work to remove :");
 
             //Display all works 
             DisplayWorks();
 
+            //Check if the user's input is a valid integer
             int idNumberWork = CheckInputChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count);
 
             return idNumberWork;
 
         }
 
-        public int CheckInputChoiceMenu(string _inputUser, int _minEntry, int _maxEntry)
+        private int CheckInputChoiceMenu(string _inputUser, int _minEntry, int _maxEntry)
         {
-            while (!(CheckInt(_inputUser) && (Int32.Parse(_inputUser) >= _minEntry && Int32.Parse(_inputUser) <= _maxEntry)))
+            while (!(CheckInputInt(_inputUser) && (Int32.Parse(_inputUser) >= _minEntry && Int32.Parse(_inputUser) <= _maxEntry)))
             {
                 Console.WriteLine("\nPlease enter a valid option.");
                 _inputUser = Console.ReadLine();
@@ -199,9 +195,6 @@ namespace EasySave.NS_View
                 case 0 :
                     Console.WriteLine("The work '" + _name + "' was saved with success! ");
                         break;
-                case 1:
-                    Console.WriteLine("The work was saved with success! ");
-                    break;
                 case 2:
                     Console.WriteLine("Failed to saved work(s) ");
                     break;
@@ -211,9 +204,26 @@ namespace EasySave.NS_View
             }
         }
 
+
         public void MenuMsg()
         {
             Console.WriteLine("\nEnter a valid option");
+        }
+
+        public void initMsg(int _id)
+        {
+            switch (_id)
+            {
+                case 0:
+                    Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
+                    break;
+                case 1:
+                    Console.WriteLine("\nPlease restore your JSON backup file.");
+                    break;
+                default:
+                    Console.WriteLine("\nFailed : error unknow.");
+                    break;
+            }
         }
 
     }
