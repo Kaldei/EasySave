@@ -21,6 +21,9 @@ namespace EasySave.NS_View
         // --- Methods ---
         public int Menu()
         {
+            Console.WriteLine("\nTap to display menu");
+            Console.ReadLine();
+            Console.Clear();
             Console.WriteLine(
                 "\nMenu:" +
                 "\n1 - Show all works" +
