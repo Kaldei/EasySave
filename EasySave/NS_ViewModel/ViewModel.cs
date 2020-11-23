@@ -21,7 +21,7 @@ namespace EasySave.NS_ViewModel
             this.view = new View(this);
 
             // Load Works at the beginning of the program (from ./BackupWorkSave.json)
-            view.InitMsg(this.model.LoadWorks());
+            // view.InitMsg(this.model.LoadWorks());
         }
 
 
@@ -58,7 +58,7 @@ namespace EasySave.NS_ViewModel
                         break;
 
                     default:
-                        view.MenuMsg();
+                        //   view.MenuMsg();
                         break;
                 }
             }
@@ -70,7 +70,7 @@ namespace EasySave.NS_ViewModel
             {
                 string addWorkName = view.AddWorkName();
                 string addWorkSrc = view.AddWorkSrc();
-                string addWorkDest = view.AddWorkDst();
+                string addWorkDest = view.AddWorkDst(addWorkSrc);
 
                 BackupType addWorkBackupType = BackupType.FULL;
 
@@ -85,11 +85,11 @@ namespace EasySave.NS_ViewModel
                         break;
                 }
 
-                view.AddWorkMsg(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType), addWorkName);
+                model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType);
             }
             else
             {
-                view.AddWorkMsg(4, "");
+                //  view.AddWorkMsg(4, "");
             }
         }
 
@@ -99,11 +99,11 @@ namespace EasySave.NS_ViewModel
             {
                 int RemoveChoice = view.RemoveWorkChoice() - 1;
                 string name = model.works[RemoveChoice].name;
-                view.RemoveWorkMsg(model.RemoveWork(RemoveChoice), name);
+                model.RemoveWork(RemoveChoice);
             }
             else
             {
-                view.RemoveWorkMsg(3, "");
+                //view.RemoveWorkMsg(3, "");
             }
         }
 
@@ -118,19 +118,19 @@ namespace EasySave.NS_ViewModel
                     // Run every work one by one
                     foreach (Work work in model.works)
                     {
-                        view.MakeBackupMsg(LaunchBackupType(work), work.name);
+                        LaunchBackupType(work);
                     }
                 }
                 else
                 {
                     // Run one work from his ID in the list
                     int index = userChoice - 1;
-                    view.MakeBackupMsg(LaunchBackupType(model.works[index]), model.works[index].name);
+                    LaunchBackupType(model.works[index]);
                 }
             }
             else
             {
-                view.MakeBackupMsg(3, "");
+                // view.MakeBackupMsg(3, "");
             }
         }
 
