@@ -56,7 +56,7 @@ namespace EasySave.NS_View
         public string AddWorkSrc()
         {
             Console.WriteLine("\nEnter directory source. ");
-            string source = Console.ReadLine() ;
+            string source = Console.ReadLine();
 
             while (CheckPath(source) == false)
             {
@@ -64,7 +64,7 @@ namespace EasySave.NS_View
                 source = Console.ReadLine();
             }
 
-            return source ;
+            return source;
         }
 
         public string AddWorkDst()
@@ -84,20 +84,20 @@ namespace EasySave.NS_View
         private int CheckName(string _name)
         {
             int length = _name.Length;
-            
-            if(length >= 1 && length <= 20)
+
+            if (length >= 1 && length <= 20)
             {
-                if(!viewModel.model.works.Exists(work => work.name == _name))
+                if (!viewModel.model.works.Exists(work => work.name == _name))
                 {
                     return 0;
                 }
                 return 1;
-            } 
+            }
             return 2;
         }
 
         private bool CheckPath(string _source)
-        { 
+        {
             if (Directory.Exists(_source))
             {
                 return true;
@@ -115,44 +115,6 @@ namespace EasySave.NS_View
             catch
             {
                 return false;
-            }
-        }
-
-        public void AddWorkMsg(int _id, string _name)
-        {
-            switch (_id)
-            {
-                case 0 :
-                    Console.WriteLine("\nWork '" + _name + "' was added with success!");
-                    break;
-                case 1 :
-                    Console.WriteLine("\nFailed '" + _name + "' to add work.");
-                    break;
-                case 4:
-                    Console.WriteLine("\nFailed : Work List is full.");
-                    break;
-                default:
-                    Console.WriteLine("\nFailed : Error Unknow.");
-                    break;
-            }
-        }
-
-        public void RemoveWorkMsg(int _id, string _name)
-        {
-            switch (_id)
-            {
-                case 0:
-                    Console.WriteLine("\nWork '" + _name + "' was removed with success!");
-                    break;
-                case 1:
-                    Console.WriteLine("\nFailed '" + _name + "' to remove work.");
-                    break;
-                case 3:
-                    Console.WriteLine("\nFailed : Work List is empty.");
-                    break;
-                default:
-                    Console.WriteLine("\nFailed : error unknow.");
-                    break;
             }
         }
 
@@ -218,32 +180,7 @@ namespace EasySave.NS_View
             return Int32.Parse(_inputUser);
         }
 
-        public void MakeBackupMsg(int _id, string _name)
-        {
-            switch (_id)
-            {
-                case 0 :
-                    Console.WriteLine("\nThe work '" + _name + "' was saved with success! ");
-                        break;
-                case 1:
-                    Console.WriteLine("Failed to saved work");
-                    break;
-                case 3:
-                    Console.WriteLine("Failed : Work List is empty.");
-                    break;
-                default:
-                    Console.WriteLine("\nFailed : Error Unknow.");
-                    break;
-            }
-        }
-
-
-        public void MenuMsg()
-        {
-            Console.WriteLine("\nEnter a valid option");
-        }
-
-        public void InitMsg(int _id)
+        public void ConsoleUpdate(int _id)
         {
             switch (_id)
             {
@@ -251,16 +188,42 @@ namespace EasySave.NS_View
                     Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
                     break;
                 case 1:
-                    Console.WriteLine("\nPlease restore your JSON backup file.");
+                    Console.WriteLine("\nThe work was added with success!");
                     break;
                 case 2:
+                    Console.WriteLine("\nThe work was saved with success!");
+                    break;
+                case 3:
+                    Console.WriteLine("\nThe work was removed with success!");
+                    break;
+                case 4:
+                    Console.WriteLine("\nPlease restore your JSON backup file.");
+                    break;
+                case 5:
                     Console.WriteLine("\nBackupWorkSave JSON file do not exists.");
+                    break;
+                case 6:
+                    Console.WriteLine("\nFailed to add work.");
+                    break;
+                case 7:
+                    Console.WriteLine("\nFailed to saved work.");
+                    break;
+                case 8:
+                    Console.WriteLine("\nFailed to removed work.");
+                    break;
+                case 9:
+                    Console.WriteLine("\nFailed: Work List is empty.");
+                    break;
+                case 10:
+                    Console.WriteLine("\nFailed: Work List is full.");
+                    break;
+                case 11:
+                    Console.WriteLine("\nEnter a valid option");
                     break;
                 default:
                     Console.WriteLine("\nFailed : Error Unknow.");
                     break;
             }
         }
-
     }
 }
