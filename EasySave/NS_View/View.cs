@@ -121,8 +121,11 @@ namespace EasySave.NS_View
                 case 1 :
                     Console.WriteLine("\nFailed to add work.");
                     break;
+                case 4:
+                    Console.WriteLine("\nFailed : Work List is full.");
+                    break;
                 default:
-                    Console.WriteLine("\nFailed : error unknow.");
+                    Console.WriteLine("\nFailed : Error Unknow.");
                     break;
             }
         }
@@ -136,6 +139,9 @@ namespace EasySave.NS_View
                     break;
                 case 1:
                     Console.WriteLine("\nFailed to remove work.");
+                    break;
+                case 3:
+                    Console.WriteLine("\nFailed : Work List is empty.");
                     break;
                 default:
                     Console.WriteLine("\nFailed : error unknow.");
@@ -198,11 +204,14 @@ namespace EasySave.NS_View
                 case 0 :
                     Console.WriteLine("The work '" + _name + "' was saved with success! ");
                         break;
-                case 2:
-                    Console.WriteLine("Failed to saved work(s) ");
+                case 1:
+                    Console.WriteLine("Failed to saved work");
+                    break;
+                case 3:
+                    Console.WriteLine("Failed : Work List is empty.");
                     break;
                 default:
-                    Console.WriteLine("\nFailed : error unknow.");
+                    Console.WriteLine("\nFailed : Error Unknow.");
                     break;
             }
         }
@@ -223,8 +232,11 @@ namespace EasySave.NS_View
                 case 1:
                     Console.WriteLine("\nPlease restore your JSON backup file.");
                     break;
+                case 2:
+                    Console.WriteLine("\nBackupWorkSave JSON file do not exists.");
+                    break;
                 default:
-                    Console.WriteLine("\nFailed : error unknow.");
+                    Console.WriteLine("\nFailed : Error Unknow.");
                     break;
             }
         }
