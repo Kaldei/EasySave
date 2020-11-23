@@ -19,6 +19,8 @@ namespace EasySave.NS_View
 
 
         // --- Methods ---
+
+        //Display menu
         public int Menu()
         {
             Console.WriteLine("\nTap to display menu");
@@ -37,12 +39,14 @@ namespace EasySave.NS_View
             return CheckChoiceMenu(inputUser, 1, 5);
         }
 
+        //Add work name
         public string AddWorkName()
         {
             Console.WriteLine("\nEnter a name (1 to 20 characters):");
 
             string name = Console.ReadLine();
 
+            //Check if the name is valid
             while (CheckName(name) == false)
             {
                 name = Console.ReadLine();
@@ -51,11 +55,13 @@ namespace EasySave.NS_View
             return name;
         }
 
+        //Add work source
         public string AddWorkSrc()
         {
             Console.WriteLine("\nEnter directory source. ");
             string source = Console.ReadLine();
 
+            //Check if the path is valid
             while (Directory.Exists(source) == false)
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
@@ -64,12 +70,14 @@ namespace EasySave.NS_View
 
             return source;
         }
-
+        
+        //Add work destination
         public string AddWorkDst(string _source)
         {
             Console.WriteLine("\nEnter directory destination.");
             string destination = Console.ReadLine();
 
+            //Check if the path is valid
             while (CheckDstPath(_source, destination) == false)
             {
                 destination = Console.ReadLine();
@@ -78,6 +86,16 @@ namespace EasySave.NS_View
             return destination;
         }
 
+        //Add work backup type
+        public int AddWorkBackupType()
+        {
+            Console.WriteLine("\nChoose a type of Backup: \n1.Full \n2.Differential");
+            string input = Console.ReadLine();
+            int backupType = CheckChoiceMenu(input, 1, 2);
+            return backupType;
+        }
+
+        //Check if the path exist and if it's diferent from the source
         private bool CheckDstPath(string _source, string _destination)
         {
             while (Directory.Exists(_destination) == true)
@@ -86,8 +104,8 @@ namespace EasySave.NS_View
                 {
                     return true;
                 }
-                Console.WriteLine("\nChoose a different path from the source. ");
 
+                Console.WriteLine("\nChoose a different path from the source. ");
                 return false;
             }
 
@@ -95,6 +113,7 @@ namespace EasySave.NS_View
             return false;
         }
 
+        //Check if the name is valid and doesn't already exist
         private bool CheckName(string _name)
         {
             int length = _name.Length;
@@ -105,15 +124,16 @@ namespace EasySave.NS_View
                 {
                     return true;
                 }
-                Console.WriteLine("\nWorkName already taken. Please enter an other name.");
 
+                Console.WriteLine("\nWorkName already taken. Please enter an other name.");
                 return false;
             }
-            Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
 
+            Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
             return false;
         }
-
+        
+        //Check if the input is an integer
         private static bool CheckInt(string _input)
         {
             try
@@ -127,6 +147,7 @@ namespace EasySave.NS_View
             }
         }
 
+        //Display all works 
         public void DisplayWorks()
         {
             if (viewModel.model.works.Count != 0)
@@ -145,18 +166,12 @@ namespace EasySave.NS_View
             }
         }
 
-        public int AddWorkBackupType()
-        {
-            Console.WriteLine("\nChoose a type of Backup: \n1.Full \n2.Differential");
-            string input = Console.ReadLine();
-            int backupType = CheckChoiceMenu(input, 1, 2);
-            return backupType;
-        }
-
+        //Choose the work to save
         public int MakeBackupChoice()
         {
             Console.Clear();
             Console.WriteLine("\nChoose the work to save : \n0 - all");
+
             //Display all works 
             DisplayWorks();
 
@@ -166,10 +181,10 @@ namespace EasySave.NS_View
             return idNumberWork;
         }
 
+        //Choose the work to remove
         public int RemoveWorkChoice()
         {
             Console.Clear();
-
             Console.WriteLine("\nChoose the work to remove :");
 
             //Display all works 
@@ -182,6 +197,7 @@ namespace EasySave.NS_View
 
         }
 
+        //Check if the input is a integer and in the good range
         private int CheckChoiceMenu(string _inputUser, int _minEntry, int _maxEntry)
         {
             while (!(CheckInt(_inputUser) && (Int32.Parse(_inputUser) >= _minEntry && Int32.Parse(_inputUser) <= _maxEntry)))
@@ -192,6 +208,7 @@ namespace EasySave.NS_View
             return Int32.Parse(_inputUser);
         }
 
+        //Display message on the console
         public void ConsoleUpdate(int _id)
         {
             switch (_id)
