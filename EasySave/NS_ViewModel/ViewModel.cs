@@ -9,7 +9,7 @@ namespace EasySave.NS_ViewModel
     class ViewModel
     {
         // --- Attributes ---
-        private Model model;
+        public Model model;
         private View view;
 
 
@@ -28,25 +28,32 @@ namespace EasySave.NS_ViewModel
             bool isRunning = true;
             int userChoice;
 
-            while(isRunning)
+            // Load Works at the beginning of the program (from ./BackupWorkSave.json)
+            view.InitMsg(this.model.LoadWorks());
+
+            while (isRunning)
             {
                 userChoice = view.Menu();
 
                 switch(userChoice)
                 {
                     case 1:
-                        AddWork();
+                        view.DisplayWorks();
                         break;
 
                     case 2:
-                        MakeBackupWork();
+                        AddWork();
                         break;
 
                     case 3:
-                        RemoveWork();
+                        MakeBackupWork();
                         break;
 
                     case 4:
+                        RemoveWork();
+                        break;
+
+                    case 5:
                         isRunning = false;
                         break;
 
@@ -59,56 +66,56 @@ namespace EasySave.NS_ViewModel
 
         private void AddWork()
         {
-            if(model.works.length < 5)
+            if(model.works.Count < 5)
             {
                 string addWorkName = view.AddWorkName();
                 string addWorkSrc = view.AddWorkSrc();
-                string addWorkDest = view.AddWorkDest();
-                BackupType addWorkBackupType = view.AddWorkBackupType();
+                string addWorkDest = view.AddWorkDst();
+                BackupType addWorkBackupType = BackupType.FULL; //view.AddWorkBackupType(); //TODO To change
 
                 view.AddWorkMsg(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
             }
             else
             {
-                view.AddWorkMsg( X ); //TODO Put correct msg number
+                view.AddWorkMsg(4); //2 Path not found //4 Trop de taffe
             }
         }
 
         private void RemoveWork()
         {
-            if(model.works.length > 0)
+            if(model.works.Count > 0)
             {
-                view.RemoveWorkMsg(model.RemoveWork(view.RemoveWorkName()));
+                view.RemoveWorkMsg(model.RemoveWork(view.RemoveWorkChoice() - 1));
             }
             else
             {
-                view.RemoveWorkMsg( X ); //TODO Put correct msg number
+                view.RemoveWorkMsg(3); //3 Pas de backup  
             }
         }
 
         private void MakeBackupWork()
         {
-            if(model.works.length > 0)
+            if(model.works.Count > 0)
             {
-                int userChoice = view.MakeBackupChoice(model.works);
+                int userChoice = view.MakeBackupChoice();
 
                 if (userChoice == 0)
                 {
                     foreach (Work work in model.works)
                     {
-                        DoBackup(work, true);
+                        view.MakeBackupMsg(DoBackup(work), work.name);
                     }
                     // All Works
                 }
                 else
                 {
-                    DoBackup(model.works[userChoice - 1], false);
+                    view.MakeBackupMsg(DoBackup(model.works[userChoice - 1]), model.works[userChoice - 1].name);
                     // One works
                 }
             }
             else
             {
-                view.MakeBackupMsg( X, name? ) //TODO Put correct msg number
+                view.MakeBackupMsg(3, ""); // 3
             }
         }
 
@@ -116,13 +123,13 @@ namespace EasySave.NS_ViewModel
         {
             int code;
 
-            switch(_work.BackupType)
+            switch(_work.backupType)
             {
-                case "?":
+                case BackupType.FULL :
                     code = FullBackup(_work);
                     break;
 
-                case "!":
+                case BackupType.DIFFRENTIAL :
                     code = FirstDifferential(_work);
                     break;
 
@@ -182,7 +189,7 @@ namespace EasySave.NS_ViewModel
 
         private int DifferentialBackup(Work _work, DirectoryInfo _fullBackupDir)
         {
-            string name = "Name";
+            string name = "Name"; 
             string dst = "C:/Users/Clement/Desktop/TestCopy/";
             string src = "C:/Users/Clement/Desktop/test/";
             string fullBackPath = _fullBackupDir.FullName + "/";
