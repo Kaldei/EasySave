@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,6 +12,8 @@ namespace EasySave.NS_Model
         public string src { get; set; }
         public string dst { get; set; }
         public BackupType backupType { get; set; }
+        public State state { get; set; }
+        public string lastBackupDate { get; set; }
 
 
         // --- Constructors ---
@@ -27,10 +30,8 @@ namespace EasySave.NS_Model
             this.src = _src;
             this.dst = _dst;
             this.backupType = _backupType;
+
+            this.state = null;
         }
-
-
-        // --- Methods ---
-        // DoBackup() ?
     }
 }
