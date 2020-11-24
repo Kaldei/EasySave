@@ -293,7 +293,7 @@ namespace EasySave.NS_Model
             SaveWorks();
 
             // Write the log
-            //TODO
+            this.viewModel.view.DisplayBackupRecap(_work.id, transferTime);
             return 104;
         }
     }
