@@ -82,13 +82,28 @@ namespace EasySave.NS_ViewModel
                 {
                     return;
                 }
+
                 string addWorkSrc = view.AddWorkSrc();
+                //Return menu
+                if (addWorkSrc == "0")
+                {
+                    return;
+                }
+
                 string addWorkDest = view.AddWorkDst(addWorkSrc);
+                //Return menu
+                if (addWorkDest == "0")
+                {
+                    return;
+                }
 
                 BackupType addWorkBackupType = BackupType.FULL;
 
                 switch (view.AddWorkBackupType())
                 {
+                    case 0:
+                        return;
+
                     case 1:
                         addWorkBackupType = BackupType.FULL;
                         break;
@@ -105,6 +120,12 @@ namespace EasySave.NS_ViewModel
             {
                 view.ConsoleUpdate(205);
             }
+        }
+
+        private string RetifyPath(string _path)
+        {
+            _path = (_path.EndsWith("/") || _path.EndsWith("\\")) ? _path : (_path + "\\");
+            return _path.Replace("/", "\\");
         }
 
         private void RemoveWork()
@@ -132,6 +153,7 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count > 0)
             {
                 int userChoice = view.MakeBackupChoice();
+
                 //Return menu
                 if (userChoice == 0)
                 {

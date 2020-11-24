@@ -63,7 +63,7 @@ namespace EasySave.NS_View
             string source = Console.ReadLine();
 
             //Check if the path is valid
-            while (Directory.Exists(source) == false)
+            while (Directory.Exists(source) == false && source != "0")
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
                 source = Console.ReadLine();
@@ -79,7 +79,7 @@ namespace EasySave.NS_View
             string destination = Console.ReadLine();
 
             //Check if the path is valid
-            while (CheckDstPath(_source, destination) == false)
+            while (CheckDstPath(_source, destination) == false && destination != "0")
             {
                 destination = Console.ReadLine();
             }
@@ -92,7 +92,7 @@ namespace EasySave.NS_View
         {
             Console.WriteLine("\nChoose a type of Backup: \n1.Full \n2.Differential");
             string input = Console.ReadLine();
-            int backupType = CheckChoiceMenu(input, 1, 2);
+            int backupType = CheckChoiceMenu(input, 0, 2);
             return backupType;
         }
 
