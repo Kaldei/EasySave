@@ -10,18 +10,18 @@ namespace EasySave.NS_ViewModel
     {
         // --- Attributes ---
         public Model model;
-        private View view;
+        public View view;
 
 
         // --- Constructor ---
         public ViewModel()
         {
             // Instantiate Model & View
-            this.model = new Model();
+            this.model = new Model(this);
             this.view = new View(this);
 
             // Load Works at the beginning of the program (from ./BackupWorkSave.json)
-            // view.InitMsg(this.model.LoadWorks());
+            view.ConsoleUpdate(this.model.LoadWorks());
         }
 
 
@@ -38,29 +38,37 @@ namespace EasySave.NS_ViewModel
                 switch (userChoice)
                 {
                     case 1:
-                        view.DisplayWorks();
+                        DisplayWorks();
                         break;
-
                     case 2:
                         AddWork();
                         break;
-
                     case 3:
                         MakeBackupWork();
                         break;
-
                     case 4:
                         RemoveWork();
                         break;
-
                     case 5:
                         isRunning = false;
                         break;
-
                     default:
-                        //   view.MenuMsg();
+                        view.ConsoleUpdate(207);
                         break;
                 }
+
+            }
+        }
+
+        private void DisplayWorks()
+        {
+            if (model.works.Count > 0)
+            {
+                view.DisplayWorks(1);
+            }
+            else
+            {
+                view.ConsoleUpdate(204);
             }
         }
 
@@ -69,13 +77,33 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count < 5)
             {
                 string addWorkName = view.AddWorkName();
+                //Return menu
+                if (addWorkName == "0")
+                {
+                    return;
+                }
+
                 string addWorkSrc = view.AddWorkSrc();
+                //Return menu
+                if (addWorkSrc == "0")
+                {
+                    return;
+                }
+
                 string addWorkDest = view.AddWorkDst(addWorkSrc);
+                //Return menu
+                if (addWorkDest == "0")
+                {
+                    return;
+                }
 
                 BackupType addWorkBackupType = BackupType.FULL;
 
                 switch (view.AddWorkBackupType())
                 {
+                    case 0:
+                        return;
+
                     case 1:
                         addWorkBackupType = BackupType.FULL;
                         break;
@@ -85,11 +113,12 @@ namespace EasySave.NS_ViewModel
                         break;
                 }
 
-                model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType);
+                view.ConsoleUpdate(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
+                view.ConsoleUpdate(1);
             }
             else
             {
-                //  view.AddWorkMsg(4, "");
+                view.ConsoleUpdate(205);
             }
         }
 
@@ -98,12 +127,18 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count > 0)
             {
                 int RemoveChoice = view.RemoveWorkChoice() - 1;
+                //Return menu
+                if(RemoveChoice == -1)
+                {
+                    return;
+                }
                 string name = model.works[RemoveChoice].name;
-                model.RemoveWork(RemoveChoice);
+                view.ConsoleUpdate(model.RemoveWork(RemoveChoice));
+                view.ConsoleUpdate(1);
             }
             else
             {
-                //view.RemoveWorkMsg(3, "");
+                view.ConsoleUpdate(204);
             }
         }
 
@@ -113,24 +148,33 @@ namespace EasySave.NS_ViewModel
             {
                 int userChoice = view.MakeBackupChoice();
 
+                //Return menu
                 if (userChoice == 0)
+                {
+                    return;
+                }
+
+                if (userChoice == 1)
                 {
                     // Run every work one by one
                     foreach (Work work in model.works)
                     {
-                        view.MakeBackupMsg(model.LaunchBackupType(work), work.name);
-                    }
+                        view.ConsoleUpdate(model.LaunchBackupType(work));
+                    }                        
+                    view.ConsoleUpdate(1);
+
                 }
                 else
                 {
                     // Run one work from his ID in the list
-                    int index = userChoice - 1;
-                    view.MakeBackupMsg(model.LaunchBackupType(model.works[index]), model.works[index].name);
+                    int index = userChoice - 2;
+                    view.ConsoleUpdate(model.LaunchBackupType(model.works[index]));
+                    view.ConsoleUpdate(1);
                 }
             }
             else
             {
-                // view.MakeBackupMsg(3, "");
+                view.ConsoleUpdate(204);
             }
         }
     }
