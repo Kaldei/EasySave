@@ -236,7 +236,14 @@ namespace EasySave.NS_View
             Console.WriteLine("Number of files left : " + work.state.nbFileLeft);
             Console.WriteLine("Size of the files left : " + DiplaySize(work.state.leftSize) + "\n");
             DisplayProgressBar(work.state.progress);
-
+        }
+        public void DisplayBackupRecap(int _id, double _transferTime)
+        {
+            var work = viewModel.model.works[_id];
+            Console.Clear();
+            Console.WriteLine("Backup : " + work.name + " finished\n");
+            Console.WriteLine("Time taken : " + _transferTime + " ms");
+            DisplayProgressBar(100);
         }
 
         private void DisplayProgressBar(int _pourcent)
