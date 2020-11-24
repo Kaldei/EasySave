@@ -30,8 +30,7 @@ namespace EasySave.NS_View
                 "\n4 - Remove a work" +
                 "\n5 - Quit");
 
-            string inputUser = Console.ReadLine();
-            return CheckChoiceMenu(inputUser, 1, 5);
+            return CheckChoiceMenu(Console.ReadLine(), 1, 5);
         }
 
         //Add work name
@@ -45,75 +44,76 @@ namespace EasySave.NS_View
             string name = Console.ReadLine();
 
             //Check if the name is valid
-            while (CheckName(name) == false)
+            while (!CheckName(name))
             {
                 name = Console.ReadLine();
             }
             return name;
         }
 
-        private string RetifyPath(string _path)
+        private string RectifyPath(string _path)
         {
             if (_path != "0")
             {
                 _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
                 _path = _path.Replace("/", "\\");
             }
-            return _path;
+            return _path.ToLower();
         }
 
         //Add work source
         public string AddWorkSrc()
         {
             Console.WriteLine("\nEnter directory source. ");
-            string source = RetifyPath(Console.ReadLine());
+            string src = RectifyPath(Console.ReadLine());
 
             //Check if the path is valid
-            while (Directory.Exists(source) == false && source != "0")
+            while (!Directory.Exists(src) && src != "0")
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
-                source = RetifyPath(Console.ReadLine());
+                src = RectifyPath(Console.ReadLine());
             }
-            return source;
+            return src;
         }
-        
+
         //Add work destination
-        public string AddWorkDst(string _source)
+        public string AddWorkDst(string _src)
         {
             Console.WriteLine("\nEnter directory destination.");
-            string destination = RetifyPath(Console.ReadLine());
+            string dst = RectifyPath(Console.ReadLine());
 
             //Check if the path is valid
-            while (CheckDstPath(_source, destination) == false && destination != "0")
+            while (CheckDstPath(_src, dst) == false && dst != "0") // ============================================= TODO
             {
-                destination = RetifyPath(Console.ReadLine());
+                dst = RectifyPath(Console.ReadLine()); // ============================================= TODO
             }
-            return destination;
+            return dst;
+        }
+
+        //Check if the path exist and if it's different from the source
+        private bool CheckDstPath(string _src, string _dst)
+        {
+            while (Directory.Exists(_dst))
+            {
+                if (_src != _dst)
+                {
+                    return true;
+                }
+                Console.WriteLine("\nChoose a different path from the source. "); // ============================================= TODO
+                return false;
+            }
+            Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. "); // ============================================= TODO
+            return false;
         }
 
         //Add work backup type
         public int AddWorkBackupType()
         {
-            Console.WriteLine("\nChoose a type of Backup: \n1.Full \n2.Differential");
-            string input = Console.ReadLine();
-            int backupType = CheckChoiceMenu(input, 0, 2);
-            return backupType;
-        }
-
-        //Check if the path exist and if it's different from the source
-        private bool CheckDstPath(string _source, string _destination)
-        {
-            while (Directory.Exists(_destination) == true)
-            {
-                if (_source.ToUpper() != _destination.ToUpper())
-                {
-                    return true;
-                }
-                Console.WriteLine("\nChoose a different path from the source. ");
-                return false;
-            }
-            Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
-            return false;
+            Console.WriteLine(
+                "\nChoose a type of Backup: " +
+                "\n1.Full " +
+                "\n2.Differential");
+            return CheckChoiceMenu(Console.ReadLine(), 0, 2);
         }
 
         //Check if the name is valid and doesn't already exist
@@ -123,7 +123,7 @@ namespace EasySave.NS_View
 
             if (length >= 1 && length <= 20)
             {
-                if (!viewModel.model.works.Exists(work => work.name == _name))
+                if (!this.viewModel.model.works.Exists(work => work.name == _name))
                 {
                     return true;
                 }
@@ -133,13 +133,13 @@ namespace EasySave.NS_View
             Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
             return false;
         }
-        
+
         //Check if the input is an integer
         private static bool CheckInt(string _input)
         {
             try
             {
-                int nbr = int.Parse(_input);
+                int.Parse(_input);
                 return true;
             }
             catch
@@ -151,21 +151,22 @@ namespace EasySave.NS_View
         //Display all works 
         private void LoadWorks(int _shift)
         {
-            var works = viewModel.model.works;
+            var works = this.viewModel.model.works;
 
-            for (int i = 0; i < viewModel.model.works.Count; i++)
+            for (int i = 0; i < works.Count; i++)
             {
-                Console.WriteLine("\n" +(i+_shift) + " - " + "Name: " + works[i].name
+                Console.WriteLine(
+                    "\n" + (i + _shift) + " - " + "Name: " + works[i].name
                     + "\n    Source: " + works[i].src
                     + "\n    Destination: " + works[i].dst
                     + "\n    Type: " + works[i].backupType);
             }
         }
 
-        public void DisplayWorks(int _shift)
+        public void DisplayWorks()
         {
             Console.Clear();
-            Console.WriteLine("Work list:");
+            Console.WriteLine("Work list :");
 
             //Display all works 
             LoadWorks(1);
@@ -176,15 +177,16 @@ namespace EasySave.NS_View
         public int MakeBackupChoice()
         {
             Console.Clear();
-            Console.WriteLine("Choose the work to save : \n\n1 - all");
+            Console.WriteLine(
+                "Choose the work to save : " +
+                "\n\n1 - all");
 
             //Display all works 
             LoadWorks(2);
             ConsoleUpdate(2);
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count + 1);
-            return idNumberWork;
+            return CheckChoiceMenu(Console.ReadLine(), 0, this.viewModel.model.works.Count + 1);
         }
 
         //Choose the work to remove
@@ -198,8 +200,7 @@ namespace EasySave.NS_View
             ConsoleUpdate(2);
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
-            return idNumberWork;
+            return CheckChoiceMenu(Console.ReadLine(), 0, this.viewModel.model.works.Count);
         }
 
         //Check if the input is a integer and in the good range
@@ -215,11 +216,12 @@ namespace EasySave.NS_View
 
         public void DisplayCurrentState(int _id)
         {
-            var work = viewModel.model.works[_id];
-            Console.Clear();
-            Console.WriteLine("Current backup : " + work.name + "\n");
-            Console.WriteLine("Number of files left : " + work.state.nbFileLeft);
-            Console.WriteLine("Size of the files left : " + DiplaySize(work.state.leftSize) + "\n");
+            var work = this.viewModel.model.works[_id];
+            Console.WriteLine("==================================");
+            Console.WriteLine(
+                "Current backup : " + work.name
+                + "\nNumber of files left : " + work.state.nbFileLeft
+                + "\nSize of the files left : " + DiplaySize(work.state.leftSize) + "\n");
             DisplayProgressBar(work.state.progress);
         }
 
@@ -227,8 +229,9 @@ namespace EasySave.NS_View
         {
             var work = viewModel.model.works[_id];
             Console.Clear();
-            Console.WriteLine("Backup : " + work.name + " finished\n");
-            Console.WriteLine("Time taken : " + _transferTime + " ms");
+            Console.WriteLine(
+                "Backup : " + work.name + " finished\n"
+                + "\nTime taken : " + _transferTime + " ms\n");
             DisplayProgressBar(100);
         }
 
@@ -279,120 +282,103 @@ namespace EasySave.NS_View
         }
 
         //Display message on the console
-        public void ConsoleUpdate(int _id)
+        public void ConsoleUpdate(int _id) // ============================================= TODO
         {
-            switch (_id)
+            if (_id < 100)
             {
-                //Information message
-                case 1:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to display menu . . .");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                    break;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                switch (_id)
+                {
+                    //Information message
+                    case 1:
+                        Console.WriteLine("\nPress any key to display menu . . .");
+                        Console.ReadLine();
+                        break;
 
-                case 2:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\n(Enter 0 to return to the menu)");
-                    Console.ResetColor();
-                    break;
-
-
-                // Success message from 100 to 199
-                case 100:
-                    Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nPress any key to display menu . . .");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                    break;
-
-                case 101:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\nThe work was added with success!");
-                    Console.ResetColor();
-                    break;
-
-                case 102:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\nThe work was saved with success!");
-                    Console.ResetColor();
-                    break;
-
-                case 103:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\nThe work was removed with success!");
-                    Console.ResetColor();
-                    break;
-
-                case 104:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\nBackup success !");
-                    Console.ResetColor();
-                    break;
-               
-
-                // Error message from 200 to 299
-                case 200:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nPlease restore your JSON backup file.");
-                    Console.ResetColor();
-                    break;
-
-                case 201:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nFailed to add work.");
-                    Console.ResetColor();
-                    break;
-
-                case 202:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nFailed to saved work.");
-                    Console.ResetColor();
-                    break;
-
-                case 203:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nFailed to removed work.");
-                    Console.ResetColor();
-                    break;
-
-                case 204:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nWork List is empty.");
-                    Console.ResetColor();
-                    break;
-
-                case 205:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nWork List is full.");
-                    Console.ResetColor();
-                    break;
-
-                case 206:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nPlease enter a valid option");
-                    Console.ResetColor();
-                    break;
-
-                case 207:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nFailed to move a file, destination or source file do not exists.");
-                    Console.ResetColor();
-                    break;
-
-                case 208:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nSelected backup type doesn't exists.");
-                    Console.ResetColor();
-                    break;
-
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nFailed : Error Unknow.");
-                    Console.ResetColor();
-                    break;
+                    case 2:
+                        Console.WriteLine("\n(Enter 0 to return to the menu)");
+                        break;
+                }
             }
+            else if (_id < 200)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                switch (_id)
+                {
+                    // Success message from 100 to 199
+                    case 100:
+                        Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
+                        break;
+
+                    case 101:
+                        Console.WriteLine("\nThe work was added with success!");
+                        break;
+
+                    case 102:
+                        Console.WriteLine("\nThe work was saved with success!");
+                        break;
+
+                    case 103:
+                        Console.WriteLine("\nThe work was removed with success!");
+                        break;
+
+                    case 104:
+                        Console.WriteLine("\nBackup success !");
+                        break;
+                }
+                ConsoleUpdate(1);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                switch (_id)
+                {
+                    // Error message from 200 to 299
+                    case 200:
+                        Console.WriteLine("\nPlease restore your JSON backup file.");
+                        break;
+
+                    case 201:
+                        Console.WriteLine("\nFailed to add work.");
+                        ConsoleUpdate(1);
+                        break;
+
+                    case 202:
+                        Console.WriteLine("\nFailed to saved work.");
+                        ConsoleUpdate(1);
+                        break;
+
+                    case 203:
+                        Console.WriteLine("\nFailed to removed work.");
+                        ConsoleUpdate(1);
+                        break;
+
+                    case 204:
+                        Console.WriteLine("\nWork List is empty.");
+                        break;
+
+                    case 205:
+                        Console.WriteLine("\nWork List is full.");
+                        break;
+
+                    case 206:
+                        Console.WriteLine("\nPlease enter a valid option");
+                        break;
+
+                    case 207:
+                        Console.WriteLine("\nFailed to move a file, destination or source file do not exists.");
+                        break;
+
+                    case 208:
+                        Console.WriteLine("\nSelected backup type doesn't exists.");
+                        break;
+
+                    default:
+                        Console.WriteLine("\nFailed : Error Unknown.");
+                        break;
+                }
+            }
+            Console.ResetColor();
         }
     }
 }

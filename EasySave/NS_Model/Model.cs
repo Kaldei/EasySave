@@ -26,7 +26,6 @@ namespace EasySave.NS_Model
             // Initalize Work List
             this.works = new List<Work>();
             this.viewModel = _viewModel;
-
         }
 
 
@@ -37,13 +36,10 @@ namespace EasySave.NS_Model
             try
             {
                 // Add Work in the program (at the end of the List)
-                Work work = new Work(this.works.Count, _name, _src, _dst, _backupType);
-                works.Add(work);
-
-                // Save Works out of the program (at ./BackupWorkSave.json)
+                this.works.Add(new Work(this.works.Count, _name, _src, _dst, _backupType));
                 SaveWorks();
 
-                // Return Confiramation Code
+                // Return Success Code
                 return 101;
             }
             catch
@@ -59,12 +55,10 @@ namespace EasySave.NS_Model
             try
             {
                 // Remove Work from the program (at index)
-                works.RemoveAt(_index);
-
-                // Save Works out of the program (at ./BackupWorkSave.json)
+                this.works.RemoveAt(_index);
                 SaveWorks();
 
-                // Return Confirmation Code
+                // Return Success Code
                 return 103;
             }
             catch
@@ -83,7 +77,7 @@ namespace EasySave.NS_Model
                 try
                 {
                     // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
-                    works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(backupWorkSavePath));
+                    this.works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(this.backupWorkSavePath));
                 }
                 catch
                 {
@@ -91,7 +85,7 @@ namespace EasySave.NS_Model
                     return 200;
                 }
             }
-            // Return Confirm Message
+            // Return Success Code
             return 100;
         }
 
@@ -99,19 +93,17 @@ namespace EasySave.NS_Model
         private void SaveWorks()
         {
             // Write Work list into JSON file (at ./BackupWorkSave.json)
-            File.WriteAllText(backupWorkSavePath, JsonSerializer.Serialize(works, jsonOptions));
+            File.WriteAllText(this.backupWorkSavePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
         }
 
         public int LaunchBackupType(Work _work)
         {
-            int code;
-            string dst = _work.dst;
-            string src = _work.src;
-            DirectoryInfo dir = new DirectoryInfo(src);
+            DirectoryInfo dir = new DirectoryInfo(_work.src);
 
             // Check if the source & destionation folder exists
-            if (!dir.Exists && !Directory.Exists(dst))
+            if (!dir.Exists && !Directory.Exists(_work.dst))
             {
+                // Return Error Code
                 return 207;
             }
 
@@ -119,40 +111,33 @@ namespace EasySave.NS_Model
             switch (_work.backupType)
             {
                 case BackupType.DIFFRENTIAL:
-                    string fullBackupDir = getFullBackupDir(_work);
+                    string fullBackupDir = GetFullBackupDir(_work);
 
                     // If there is no first full backup, we create the first one (reference of the next diff backup)
                     if (fullBackupDir != null)
                     {
-                        code = DifferentialBackupSetup(_work, dir, fullBackupDir);
-                        break;
+                        return DifferentialBackupSetup(_work, dir, fullBackupDir);
                     }
-                    code = FullBackupSetup(_work, dir);
-                    break;
+                    return FullBackupSetup(_work, dir);
 
                 case BackupType.FULL:
-                    code = FullBackupSetup(_work, dir);
-                    break;
+                    return FullBackupSetup(_work, dir);
 
                 default:
-                    code = 208;
-                    break;
+                    // Return Error Code
+                    return 208;
             }
-            return code;
         }
 
         // Get the directory of the first full backup of a differential backup
-        private string getFullBackupDir(Work _work)
+        private string GetFullBackupDir(Work _work)
         {
-            string name = _work.name;
-            string dst = _work.dst;
-
-            DirectoryInfo dir = new DirectoryInfo(dst);
-            DirectoryInfo[] dirs = dir.GetDirectories();
+            // Get all directories name of the dest folder
+            DirectoryInfo[] dirs = new DirectoryInfo(_work.dst).GetDirectories();
 
             foreach (DirectoryInfo directory in dirs)
             {
-                if (name == directory.Name.Substring(0, directory.Name.IndexOf("_")))
+                if (_work.name == directory.Name.Substring(0, directory.Name.IndexOf("_")))
                 {
                     return directory.FullName;
                 }
@@ -179,7 +164,6 @@ namespace EasySave.NS_Model
         // Differential Backup
         private int DifferentialBackupSetup(Work _work, DirectoryInfo _dir, string _fullBackupDir)
         {
-            string fullBackPath = _fullBackupDir + "\\";
             long totalSize = 0;
 
             // Get evvery files of the source directory
@@ -189,7 +173,7 @@ namespace EasySave.NS_Model
             // Check if there is a modification between the current file and the last full backup
             foreach (FileInfo file in srcFiles)
             {
-                string currFullBackPath = fullBackPath + Path.GetRelativePath(_work.src, file.FullName);
+                string currFullBackPath = _fullBackupDir + "\\" + Path.GetRelativePath(_work.src, file.FullName);
 
                 if (!File.Exists(currFullBackPath) || !IsSameFile(currFullBackPath, file.FullName))
                 {
@@ -224,15 +208,15 @@ namespace EasySave.NS_Model
         }
 
         // Do Backup
-        public int DoBackup(Work _work, FileInfo[] _files, long _totalSize)
+        public int DoBackup(Work _work, FileInfo[] _files, long _totalSize) // =============================================== TODO
         {
             // Create the state file
             DateTime startTime = DateTime.Now;
-            string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
+            string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\"; // =============================================== TODO
 
             // Uptade the current work status
-            _work.state = new State(_files.Length, _totalSize, _work.src, dst);
-            _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss");
+            _work.state = new State(_files.Length, _totalSize, _work.src, dst); // =============================================== TODO
+            _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss"); // =============================================== TODO
 
             // Create the dst folder
             Directory.CreateDirectory(dst);
@@ -249,7 +233,7 @@ namespace EasySave.NS_Model
                 // If there is a directoy, we add the relative path from the directory dst
                 if (Path.GetRelativePath(_work.src, _files[i].DirectoryName).Length > 1)
                 {
-                    dstDirectory += Path.GetRelativePath(_work.src, _files[i].DirectoryName) + "\\";
+                    dstDirectory += Path.GetRelativePath(_work.src, _files[i].DirectoryName) + "\\"; // =============================================== TODO
 
                     // If the directory dst doesn't exist, we create it
                     if (!Directory.Exists(dstDirectory))
@@ -272,6 +256,7 @@ namespace EasySave.NS_Model
                 // Update the size remaining to copy (octet)
                 leftSize -= _files[i].Length;
             }
+
             // Calculate the time of the all process of copy
             DateTime endTime = DateTime.Now;
             TimeSpan workTime = endTime - startTime;
@@ -283,6 +268,7 @@ namespace EasySave.NS_Model
 
             // Write the log
             this.viewModel.view.DisplayBackupRecap(_work.id, transferTime);
+            // Return Success Code
             return 104;
         }
     }

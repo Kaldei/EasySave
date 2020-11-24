@@ -16,7 +16,6 @@
         // Constructor used by LoadWorks()
         public Work() {}
 
-
         // Constructor used by AddWork()
         public Work (int _id, string _name, string _src, string _dst, BackupType _backupType)
         {
