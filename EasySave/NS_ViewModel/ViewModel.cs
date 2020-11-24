@@ -40,27 +40,23 @@ namespace EasySave.NS_ViewModel
                     case 1:
                         DisplayWorks();
                         break;
-
                     case 2:
                         AddWork();
                         break;
-
                     case 3:
                         MakeBackupWork();
                         break;
-
                     case 4:
                         RemoveWork();
                         break;
-
                     case 5:
                         isRunning = false;
                         break;
-
                     default:
                         view.ConsoleUpdate(207);
                         break;
                 }
+
             }
         }
 
@@ -81,6 +77,11 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count < 5)
             {
                 string addWorkName = view.AddWorkName();
+                //Return menu
+                if (addWorkName == "0")
+                {
+                    return;
+                }
                 string addWorkSrc = view.AddWorkSrc();
                 string addWorkDest = view.AddWorkDst(addWorkSrc);
 
@@ -98,6 +99,7 @@ namespace EasySave.NS_ViewModel
                 }
 
                 view.ConsoleUpdate(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
+                view.ConsoleUpdate(1);
             }
             else
             {
@@ -110,8 +112,14 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count > 0)
             {
                 int RemoveChoice = view.RemoveWorkChoice() - 1;
+                //Return menu
+                if(RemoveChoice == -1)
+                {
+                    return;
+                }
                 string name = model.works[RemoveChoice].name;
                 view.ConsoleUpdate(model.RemoveWork(RemoveChoice));
+                view.ConsoleUpdate(1);
             }
             else
             {
@@ -124,6 +132,11 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count > 0)
             {
                 int userChoice = view.MakeBackupChoice();
+                //Return menu
+                if (userChoice == 0)
+                {
+                    return;
+                }
 
                 if (userChoice == 1)
                 {
@@ -131,13 +144,16 @@ namespace EasySave.NS_ViewModel
                     foreach (Work work in model.works)
                     {
                         view.ConsoleUpdate(model.LaunchBackupType(work));
-                    }
+                    }                        
+                    view.ConsoleUpdate(1);
+
                 }
                 else
                 {
                     // Run one work from his ID in the list
                     int index = userChoice - 2;
                     view.ConsoleUpdate(model.LaunchBackupType(model.works[index]));
+                    view.ConsoleUpdate(1);
                 }
             }
             else
