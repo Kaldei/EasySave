@@ -214,19 +214,24 @@ namespace EasySave.NS_Model
             DateTime startTime = DateTime.Now;
             string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\"; // =============================================== TODO
 
-            // Uptade the current work status
+            // Update the current work status
             _work.state = new State(_files.Length, _totalSize, _work.src, dst); // =============================================== TODO
             _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss"); // =============================================== TODO
 
             // Create the dst folder
             Directory.CreateDirectory(dst);
 
+            // Files Size
             long leftSize = _totalSize;
+            // Number of Files
             int totalFile = _files.Length;
 
             // Copy every file
             for (int i = 0; i < _files.Length; i++)
             {
+                // Time at when file copy start (use by SaveLog())
+                DateTime startTimeFile = DateTime.Now;
+
                 string dstDirectory = dst;
                 int pourcent = (i * 100 / _files.Length);
 
@@ -255,6 +260,9 @@ namespace EasySave.NS_Model
 
                 // Update the size remaining to copy (octet)
                 leftSize -= _files[i].Length;
+
+                // Save Log
+                SaveLog(startTimeFile, _work.name, _files[i].ToString(), dstFile, _files[i].Length);
             }
 
             // Calculate the time of the all process of copy
@@ -271,5 +279,29 @@ namespace EasySave.NS_Model
             // Return Success Code
             return 104;
         }
+
+        // Save Log 
+        public void SaveLog(DateTime _startDate, string _name, string _src, string _dst, long _size)
+        {
+            // Prepare times log
+            string today = DateTime.Now.ToString("yyyy-MM-dd");
+            string startTime = _startDate.ToString("yyyy-MM-dd_HH-mm-ss");
+            string elapsedTime = (DateTime.Now - _startDate).ToString();
+
+            // Create File if it doesn't exists
+            if (!Directory.Exists("./Logs"))
+            {
+                Directory.CreateDirectory("./Logs");
+            }
+
+            // Write log
+            File.AppendAllText($"./Logs/{today}.txt", $"{startTime}: {_name}" +
+                $"\nSource: {_src}" +
+                $"\nDestination: {_dst}" +
+                $"\nSize (Bytes): {_size}" +
+                $"\nElapsed Time: {elapsedTime}" +
+                "\n\r\n");
+        }
+
     }
 }
