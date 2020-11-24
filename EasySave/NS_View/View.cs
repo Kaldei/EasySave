@@ -23,8 +23,6 @@ namespace EasySave.NS_View
         //Display menu
         public int Menu()
         {
-            Console.WriteLine("\nTap to display menu");
-            Console.ReadLine();
             Console.Clear();
             Console.WriteLine(
                 "Menu:" +
@@ -42,8 +40,11 @@ namespace EasySave.NS_View
         //Add work name
         public string AddWorkName()
         {
-            Console.WriteLine("\nEnter a name (1 to 20 characters):");
+            Console.Clear();
+            Console.WriteLine("Parameter to add a work:");
+            ConsoleUpdate(2);
 
+            Console.WriteLine("\nEnter a name (1 to 20 characters):");
             string name = Console.ReadLine();
 
             //Check if the name is valid
@@ -148,11 +149,10 @@ namespace EasySave.NS_View
         }
 
         //Display all works 
-        public void DisplayWorks(int _shift)
+        private void LoadWorks(int _shift)
         {
             var works = viewModel.model.works;
-            if (works.Count != 0)
-            {
+            
                 for (int i = 0; i < viewModel.model.works.Count; i++)
                 {
                     Console.WriteLine("\n" +(i+_shift) + " - " + "Name: " + works[i].name
@@ -160,24 +160,31 @@ namespace EasySave.NS_View
                         + "\n    Destination: " + works[i].dst
                         + "\n    Type: " + works[i].backupType);
                 }
-            }
-            else
-            {
-                Console.WriteLine("No works to display");
-            }
+
+        }
+
+        public void DisplayWorks(int _shift)
+        {
+            Console.Clear();
+            Console.WriteLine("Work list:");
+
+            //Display all works 
+            LoadWorks(1);
+            ConsoleUpdate(1);
         }
 
         //Choose the work to save
         public int MakeBackupChoice()
         {
             Console.Clear();
-            Console.WriteLine("\nChoose the work to save : \n1 - all");
+            Console.WriteLine("Choose the work to save : \n\n1 - all");
 
             //Display all works 
-            DisplayWorks(2);
+            LoadWorks(2);
+            ConsoleUpdate(2);
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count + 1);
+            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count + 1);
 
             return idNumberWork;
         }
@@ -186,13 +193,15 @@ namespace EasySave.NS_View
         public int RemoveWorkChoice()
         {
             Console.Clear();
-            Console.WriteLine("\nChoose the work to remove :");
+            Console.WriteLine("Choose the work to remove :");
 
             //Display all works 
-            DisplayWorks(1);
+            LoadWorks(1);
+            ConsoleUpdate(2);
+
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count);
+            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
 
             return idNumberWork;
 
@@ -203,7 +212,7 @@ namespace EasySave.NS_View
         {
             while (!(CheckInt(_inputUser) && (Int32.Parse(_inputUser) >= _minEntry && Int32.Parse(_inputUser) <= _maxEntry)))
             {
-                Console.WriteLine("\nPlease enter a valid option.");
+                ConsoleUpdate(206);
                 _inputUser = Console.ReadLine();
             }
             return Int32.Parse(_inputUser);
@@ -212,31 +221,34 @@ namespace EasySave.NS_View
         public void DisplayCurrentState(int _id)
         {
             var work = viewModel.model.works[_id];
-            Console.Clear();
+            Console.WriteLine("==================================");
             Console.WriteLine("Current backup : " + work.name + "\n");
             Console.WriteLine("Number of files left : " + work.state.nbFileLeft);
             Console.WriteLine("Size of the files left : " + DiplaySize(work.state.leftSize) + "\n");
             DisplayProgressBar(work.state.progress);
+
         }
 
         private void DisplayProgressBar(int _pourcent)
         {
-            Console.Write("[");
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("Progress: [ " + _pourcent + "%]");
+            Console.ResetColor();
+
+            Console.Write(" [");
             for (int i = 0; i < 100; i += 5)
             {
                 if (_pourcent > i)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("#");
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("-");
+                    Console.Write(".");
                 }
             }
-            Console.ResetColor();
-            Console.Write("] " + _pourcent + "%");
+            Console.Write("]\n\n");
         }
 
         private string DiplaySize(long _octet)
@@ -275,54 +287,99 @@ namespace EasySave.NS_View
         {
             switch (_id)
             {
+                //Information message
+                case 1:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to display menu . . .");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                    break;
+                case 2:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\n(Enter 0 to return to the menu)");
+                    Console.ResetColor();
+                    break;
+
                 // Success message from 100 to 199
                 case 100:
                     Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nPress any key to display menu . . .");
+                    Console.ResetColor();
+                    Console.ReadLine();
                     break;
                 case 101:
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("\nThe work was added with success!");
+                    Console.ResetColor();
                     break;
                 case 102:
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("\nThe work was saved with success!");
+                    Console.ResetColor();
                     break;
                 case 103:
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("\nThe work was removed with success!");
+                    Console.ResetColor();
                     break;
                 case 104:
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("\nBackup success !");
+                    Console.ResetColor();
                     break;
+               
 
                 // Error message from 200 to 299
                 case 200:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nPlease restore your JSON backup file.");
+                    Console.ResetColor();
                     break;
                 case 201:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nFailed to add work.");
+                    Console.ResetColor();
                     break;
                 case 202:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nFailed to saved work.");
+                    Console.ResetColor();
                     break;
                 case 203:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nFailed to removed work.");
+                    Console.ResetColor();
                     break;
                 case 204:
-                    Console.WriteLine("\nFailed: Work List is empty.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nWork List is empty.");
+                    Console.ResetColor();
                     break;
                 case 205:
-                    Console.WriteLine("\nFailed: Work List is full.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nWork List is full.");
+                    Console.ResetColor();
                     break;
                 case 206:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nPlease enter a valid option");
+                    Console.ResetColor();
                     break;
                 case 207:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nFailed to move a file, destination or source file do not exists.");
+                    Console.ResetColor();
                     break;
                 case 208:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nSelected backup type doesn't exists.");
+                    Console.ResetColor();
                     break;
-
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nFailed : Error Unknow.");
+                    Console.ResetColor();
                     break;
             }
         }
