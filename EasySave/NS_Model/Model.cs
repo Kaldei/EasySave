@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.IO;
 using EasySave.NS_ViewModel;
-
 
 namespace EasySave.NS_Model
 {
@@ -33,7 +31,6 @@ namespace EasySave.NS_Model
 
 
         // --- Methods ---
-
         // Add Work
         public int AddWork(string _name, string _src, string _dst, BackupType _backupType)
         {
@@ -54,7 +51,6 @@ namespace EasySave.NS_Model
                 // Return Error Code
                 return 201;
             }
-
         }
 
         // Remove Work
@@ -104,7 +100,6 @@ namespace EasySave.NS_Model
         {
             // Write Work list into JSON file (at ./BackupWorkSave.json)
             File.WriteAllText(backupWorkSavePath, JsonSerializer.Serialize(works, jsonOptions));
-
         }
 
         public int LaunchBackupType(Work _work)
@@ -112,7 +107,6 @@ namespace EasySave.NS_Model
             int code;
             string dst = _work.dst;
             string src = _work.src;
-
             DirectoryInfo dir = new DirectoryInfo(src);
 
             // Check if the source & destionation folder exists
@@ -179,8 +173,6 @@ namespace EasySave.NS_Model
             {
                 totalSize += file.Length;
             }
-
-            // Launch the backup
             return DoBackup(_work, files, totalSize);
         }
 
@@ -192,7 +184,6 @@ namespace EasySave.NS_Model
 
             // Get evvery files of the source directory
             FileInfo[] srcFiles = _dir.GetFiles("*.*", SearchOption.AllDirectories);
-
             List<FileInfo> filesToCopy = new List<FileInfo>();
 
             // Check if there is a modification between the current file and the last full backup
@@ -209,8 +200,6 @@ namespace EasySave.NS_Model
                     filesToCopy.Add(file);
                 }
             }
-
-            // Launch the backup
             return DoBackup(_work, filesToCopy.ToArray(), totalSize);
         }
 

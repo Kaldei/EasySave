@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EasySave.NS_Model
+﻿namespace EasySave.NS_Model
 {
     class State
     {
@@ -18,10 +14,7 @@ namespace EasySave.NS_Model
 
         // --- Contructors ---
         // Constructor used by LoadWorks()
-        public State()
-        {
-            
-        }
+        public State() {}
 
         // Constructor used by DoBackup()
         public State(int _totalFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
@@ -44,6 +37,5 @@ namespace EasySave.NS_Model
             this.currentPathSrc = _currSrcPath;
             this.currentPathDest = _currDestPath;
         }
-
     }
 }
