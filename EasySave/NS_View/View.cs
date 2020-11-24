@@ -62,7 +62,6 @@ namespace EasySave.NS_View
             {
                 _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
                 _path = _path.Replace("/", "\\");
-                Console.WriteLine(_path.Replace("/", "\\"));
             }
             return _path;
         }
@@ -112,7 +111,7 @@ namespace EasySave.NS_View
         {
             while (Directory.Exists(_destination) == true)
             {
-                if (_source != _destination)
+                if (_source.ToUpper() != _destination.ToUpper())
                 {
                     return true;
                 }
