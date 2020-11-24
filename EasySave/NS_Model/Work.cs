@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EasySave.NS_Model
+﻿namespace EasySave.NS_Model
 {
     class Work
     {
@@ -19,10 +14,7 @@ namespace EasySave.NS_Model
 
         // --- Constructors ---
         // Constructor used by LoadWorks()
-        public Work()
-        {
-
-        }
+        public Work() {}
 
         // Constructor used by AddWork()
         public Work (int _id, string _name, string _src, string _dst, BackupType _backupType)
@@ -32,7 +24,6 @@ namespace EasySave.NS_Model
             this.src = _src;
             this.dst = _dst;
             this.backupType = _backupType;
-
             this.state = null;
         }
     }
