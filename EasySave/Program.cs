@@ -1,5 +1,4 @@
-﻿using System;
-using EasySave.NS_ViewModel;
+﻿using EasySave.NS_ViewModel;
 
 namespace EasySave
 {
