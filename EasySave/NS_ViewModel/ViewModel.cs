@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using EasySave.NS_Model;
+﻿using EasySave.NS_Model;
 using EasySave.NS_View;
 
 namespace EasySave.NS_ViewModel
@@ -40,23 +37,27 @@ namespace EasySave.NS_ViewModel
                     case 1:
                         DisplayWorks();
                         break;
+
                     case 2:
                         AddWork();
                         break;
+
                     case 3:
                         MakeBackupWork();
                         break;
+
                     case 4:
                         RemoveWork();
                         break;
+
                     case 5:
                         isRunning = false;
                         break;
+
                     default:
                         view.ConsoleUpdate(207);
                         break;
                 }
-
             }
         }
 
@@ -77,21 +78,21 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count < 5)
             {
                 string addWorkName = view.AddWorkName();
-                //Return menu
+                //Return to menu
                 if (addWorkName == "0")
                 {
                     return;
                 }
 
                 string addWorkSrc = view.AddWorkSrc();
-                //Return menu
+                //Return to menu
                 if (addWorkSrc == "0")
                 {
                     return;
                 }
 
                 string addWorkDest = view.AddWorkDst(addWorkSrc);
-                //Return menu
+                //Return to menu
                 if (addWorkDest == "0")
                 {
                     return;
@@ -112,7 +113,6 @@ namespace EasySave.NS_ViewModel
                         addWorkBackupType = BackupType.DIFFRENTIAL;
                         break;
                 }
-
                 view.ConsoleUpdate(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
                 view.ConsoleUpdate(1);
             }
@@ -127,11 +127,12 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count > 0)
             {
                 int RemoveChoice = view.RemoveWorkChoice() - 1;
-                //Return menu
+                //Return to menu
                 if(RemoveChoice == -1)
                 {
                     return;
                 }
+
                 string name = model.works[RemoveChoice].name;
                 view.ConsoleUpdate(model.RemoveWork(RemoveChoice));
                 view.ConsoleUpdate(1);
@@ -147,8 +148,7 @@ namespace EasySave.NS_ViewModel
             if (model.works.Count > 0)
             {
                 int userChoice = view.MakeBackupChoice();
-
-                //Return menu
+                //Return to menu
                 if (userChoice == 0)
                 {
                     return;
@@ -162,7 +162,6 @@ namespace EasySave.NS_ViewModel
                         view.ConsoleUpdate(model.LaunchBackupType(work));
                     }                        
                     view.ConsoleUpdate(1);
-
                 }
                 else
                 {
