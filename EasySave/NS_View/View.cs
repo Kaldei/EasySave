@@ -27,7 +27,7 @@ namespace EasySave.NS_View
             Console.ReadLine();
             Console.Clear();
             Console.WriteLine(
-                "\nMenu:" +
+                "Menu:" +
                 "\n1 - Show all works" +
                 "\n2 - Add a work" +
                 "\n3 - Make a backup" +
@@ -150,14 +150,15 @@ namespace EasySave.NS_View
         //Display all works 
         public void DisplayWorks(int _shift)
         {
-            if (viewModel.model.works.Count != 0)
+            var works = viewModel.model.works;
+            if (works.Count != 0)
             {
                 for (int i = 0; i < viewModel.model.works.Count; i++)
                 {
-                    Console.WriteLine("\n" +(i+_shift) + " - " + "Name: " + viewModel.model.works[i].name
-                        + "\n    Source: " + viewModel.model.works[i].src
-                        + "\n    Destination: " + viewModel.model.works[i].dst
-                        + "\n    Type: " + viewModel.model.works[i].backupType);
+                    Console.WriteLine("\n" +(i+_shift) + " - " + "Name: " + works[i].name
+                        + "\n    Source: " + works[i].src
+                        + "\n    Destination: " + works[i].dst
+                        + "\n    Type: " + works[i].backupType);
                 }
             }
             else
@@ -176,7 +177,7 @@ namespace EasySave.NS_View
             DisplayWorks(2);
 
             //Check if the user's input is a valid integer
-            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 0, viewModel.model.works.Count);
+            int idNumberWork = CheckChoiceMenu(Console.ReadLine(), 1, viewModel.model.works.Count + 1);
 
             return idNumberWork;
         }
@@ -208,47 +209,118 @@ namespace EasySave.NS_View
             return Int32.Parse(_inputUser);
         }
 
+        public void DisplayCurrentState(int _id)
+        {
+            var work = viewModel.model.works[_id];
+            Console.Clear();
+            Console.WriteLine("Current backup : " + work.name + "\n");
+            Console.WriteLine("Number of files left : " + work.state.nbFileLeft);
+            Console.WriteLine("Size of the files left : " + DiplaySize(work.state.leftSize) + "\n");
+            DisplayProgressBar(work.state.progress);
+        }
+
+        private void DisplayProgressBar(int _pourcent)
+        {
+            Console.Write("[");
+            for (int i = 0; i < 100; i += 5)
+            {
+                if (_pourcent > i)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("#");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("-");
+                }
+            }
+            Console.ResetColor();
+            Console.Write("] " + _pourcent + "%");
+        }
+
+        private string DiplaySize(long _octet)
+        {
+            if (_octet > 1000000000000)
+            {
+                return Math.Round((decimal)_octet / 1000000000000, 2) + " To";
+            }
+            else if (_octet > 1000000000)
+            {
+                return Math.Round((decimal)_octet / 1000000000, 2) + " Go";
+            }
+            else if (_octet > 1000000)
+            {
+                return Math.Round((decimal)_octet / 1000000, 2) + " Mo";
+            }
+            else if (_octet > 1000)
+            {
+                return Math.Round((decimal)_octet / 1000, 2) + " ko";
+            }
+            else
+            {
+                return _octet + " o";
+            }
+        }
+        public int totalFile { get; set; }
+        public long totalSize { get; set; }
+        public int progress { get; set; }
+        public int nbFileLeft { get; set; }
+        public long leftSize { get; set; }
+        public string currentPathSrc { get; set; }
+        public string currentPathDest { get; set; }
+
         //Display message on the console
         public void ConsoleUpdate(int _id)
         {
             switch (_id)
             {
-                case 0:
+                // Success message from 100 to 199
+                case 100:
                     Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
                     break;
-                case 1:
+                case 101:
                     Console.WriteLine("\nThe work was added with success!");
                     break;
-                case 2:
+                case 102:
                     Console.WriteLine("\nThe work was saved with success!");
                     break;
-                case 3:
+                case 103:
                     Console.WriteLine("\nThe work was removed with success!");
                     break;
-                case 4:
+                case 104:
+                    Console.WriteLine("\nBackup success !");
+                    break;
+
+                // Error message from 200 to 299
+                case 200:
                     Console.WriteLine("\nPlease restore your JSON backup file.");
                     break;
-                case 5:
-                    Console.WriteLine("\nBackupWorkSave JSON file do not exists.");
-                    break;
-                case 6:
+                case 201:
                     Console.WriteLine("\nFailed to add work.");
                     break;
-                case 7:
+                case 202:
                     Console.WriteLine("\nFailed to saved work.");
                     break;
-                case 8:
+                case 203:
                     Console.WriteLine("\nFailed to removed work.");
                     break;
-                case 9:
+                case 204:
                     Console.WriteLine("\nFailed: Work List is empty.");
                     break;
-                case 10:
+                case 205:
                     Console.WriteLine("\nFailed: Work List is full.");
                     break;
-                case 11:
-                    Console.WriteLine("\nEnter a valid option");
+                case 206:
+                    Console.WriteLine("\nPlease enter a valid option");
                     break;
+                case 207:
+                    Console.WriteLine("\nFailed to move a file, destination or source file do not exists.");
+                    break;
+                case 208:
+                    Console.WriteLine("\nSelected backup type doesn't exists.");
+                    break;
+
                 default:
                     Console.WriteLine("\nFailed : Error Unknow.");
                     break;

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.IO;
+using EasySave.NS_ViewModel;
+
 
 namespace EasySave.NS_Model
 {
@@ -11,6 +13,8 @@ namespace EasySave.NS_Model
         // --- Attributes ---
         private string backupWorkSavePath = "./BackupWorkSave.json";
         public List<Work> works { get; set; }
+        public ViewModel viewModel { get; set; }
+
         // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
         {
@@ -19,10 +23,11 @@ namespace EasySave.NS_Model
 
 
         // --- Constructor ---
-        public Model()
+        public Model(ViewModel _viewModel)
         {
             // Initalize Work List
-            works = new List<Work>();
+            this.works = new List<Work>();
+            this.viewModel = _viewModel;
 
         }
 
@@ -35,19 +40,19 @@ namespace EasySave.NS_Model
             try
             {
                 // Add Work in the program (at the end of the List)
-                Work work = new Work(_name, _src, _dst, _backupType);
+                Work work = new Work(this.works.Count, _name, _src, _dst, _backupType);
                 works.Add(work);
 
                 // Save Works out of the program (at ./BackupWorkSave.json)
                 SaveWorks();
 
                 // Return Confiramation Code
-                return 0;
+                return 101;
             }
             catch
             {
                 // Return Error Code
-                return 1;
+                return 201;
             }
 
         }
@@ -63,13 +68,13 @@ namespace EasySave.NS_Model
                 // Save Works out of the program (at ./BackupWorkSave.json)
                 SaveWorks();
 
-                // Return Confiramation Code
-                return 0;
+                // Return Confirmation Code
+                return 103;
             }
             catch
             {
                 // Return Error Code
-                return 1;
+                return 203;
             }
         }
 
@@ -87,11 +92,11 @@ namespace EasySave.NS_Model
                 catch
                 {
                     // Return Error Code
-                    return 1;
+                    return 200;
                 }
             }
             // Return Confirm Message
-            return 0;
+            return 100;
         }
 
         // Save Works
@@ -113,7 +118,7 @@ namespace EasySave.NS_Model
             // Check if the source & destionation folder exists
             if (!dir.Exists && !Directory.Exists(dst))
             {
-                return 2;
+                return 207;
             }
 
             // Run the correct backup (Full or Diff)
@@ -136,7 +141,7 @@ namespace EasySave.NS_Model
                     break;
 
                 default:
-                    code = 1;
+                    code = 208;
                     break;
             }
             return code;
@@ -269,6 +274,7 @@ namespace EasySave.NS_Model
 
                 // Uptade the current work status
                 _work.state.UpdateState(pourcent, (totalFile - i), leftSize, _files[i].FullName, dstFile);
+                this.viewModel.view.DisplayCurrentState(_work.id);
                 SaveWorks();
 
                 // Copy the current file
@@ -288,7 +294,7 @@ namespace EasySave.NS_Model
 
             // Write the log
             //TODO
-            return 0;
+            return 104;
         }
     }
 }
