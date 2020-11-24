@@ -20,7 +20,7 @@
   </p>
 </p>
 
-<!-- TABLE OF CONTENTS -->
+<!-- TABLE OF CONTENTS 
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
@@ -51,7 +51,7 @@
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
-
+-->
 
 
 <!-- ABOUT THE PROJECT -->
@@ -60,8 +60,8 @@
 Our team has just joined the software publisher ProSoft.
 Under the responsibility of the CIO, we will be responsible for managing the “EasySave” project which consists of developing backup software.
 Like any software in the ProSoft Suite, the software will fit into the pricing policy.
-    - Unit price: 200 € HT
-    - Annual maintenance contract 5/7 8-17h (updates included): 12% purchase price (tacit renewal annual contract with revaluation based on the SYNTEC index)
+* Unit price: 200 € HT
+* Annual maintenance contract 5/7 8-17h (updates included): 12% purchase price (tacit renewal annual contract with revaluation based on the SYNTEC index)
 
 During this project we are responsible of the archiutecture of the application, the development and the managment of differents versions, but also the user documentation.
 In order for our code to be reusable by another team, we have respected certain constraints and tools (cf <a href="#built-with">Built With</a>).
@@ -97,27 +97,27 @@ The specification for this version are the following :
 ### Log file
 
 The software must write in real time in a daily log file the history of the actions of the backup jobs. The minimum information expected is:
-    * Horodatage   
-    * Appellation du travail de sauvegarde 
-    * Adresse complète du fichier Source (format UNC) 
-    * Adresse complète du fichier de destination (format UNC) 
-    * Taille du fichier  
-    * Temps de transfert du fichier en ms (négatif si erreur)   
+* Horodatage   
+* Appellation du travail de sauvegarde 
+* Adresse complète du fichier Source (format UNC) 
+* Adresse complète du fichier de destination (format UNC) 
+* Taille du fichier  
+* Temps de transfert du fichier en ms (négatif si erreur)   
 
 ### State file
 
 The software must record in real time, in a single file, the progress of the backup jobs. The minimum information expected is:
-    * Timestamp
-    * Name of the backup job
-    * Status of the Backup job (ex: Active, Not Active ...)
-    * If the job is active
-        * The total number of eligible files
-        * The size of the files to be transferred
-        * Progression
-        * Number of remaining files
-        * Size of the remaining files
-        * Full address of the Source file being backed up
-        * Full address of the destination file
+* Timestamp
+* Name of the backup job
+* Status of the Backup job (ex: Active, Not Active ...)
+* If the job is active
+    * The total number of eligible files
+    * The size of the files to be transferred
+    * Progression
+    * Number of remaining files
+    * Size of the remaining files
+    * Full address of the Source file being backed up
+    * Full address of the destination file
 
 <!-- GETTING STARTED -->
 ## Getting Started
