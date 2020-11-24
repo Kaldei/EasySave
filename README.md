@@ -175,10 +175,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Arthur Caldeirero - arthur.caldeirero@viacesi.fr
-Anthony Lorendeaux - anthony.lorendeaux@viacesi.fr
-Clément Gaston - clement.gaston@viacesi.fr
-Laetitia Kessas - laetitia.kessas@viacesi.fr
+* Arthur Caldeirero - arthur.caldeirero@viacesi.fr
+* Anthony Lorendeaux - anthony.lorendeaux@viacesi.fr
+* Clément Gaston - clement.gaston@viacesi.fr
+* Laetitia Kessas - laetitia.kessas@viacesi.fr
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
