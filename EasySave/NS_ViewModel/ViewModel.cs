@@ -122,12 +122,6 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-        private string RetifyPath(string _path)
-        {
-            _path = (_path.EndsWith("/") || _path.EndsWith("\\")) ? _path : (_path + "\\");
-            return _path.Replace("/", "\\");
-        }
-
         private void RemoveWork()
         {
             if (model.works.Count > 0)

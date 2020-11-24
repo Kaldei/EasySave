@@ -56,17 +56,28 @@ namespace EasySave.NS_View
             return name;
         }
 
+        private string RetifyPath(string _path)
+        {
+            if (_path != "0")
+            {
+                _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
+                _path = _path.Replace("/", "\\");
+                Console.WriteLine(_path.Replace("/", "\\"));
+            }
+            return _path;
+        }
+
         //Add work source
         public string AddWorkSrc()
         {
             Console.WriteLine("\nEnter directory source. ");
-            string source = Console.ReadLine();
+            string source = RetifyPath(Console.ReadLine());
 
             //Check if the path is valid
             while (Directory.Exists(source) == false && source != "0")
             {
                 Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
-                source = Console.ReadLine();
+                source = RetifyPath(Console.ReadLine());
             }
 
             return source;
@@ -76,12 +87,12 @@ namespace EasySave.NS_View
         public string AddWorkDst(string _source)
         {
             Console.WriteLine("\nEnter directory destination.");
-            string destination = Console.ReadLine();
+            string destination = RetifyPath(Console.ReadLine());
 
             //Check if the path is valid
             while (CheckDstPath(_source, destination) == false && destination != "0")
             {
-                destination = Console.ReadLine();
+                destination = RetifyPath(Console.ReadLine());
             }
 
             return destination;
