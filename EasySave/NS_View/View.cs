@@ -83,9 +83,9 @@ namespace EasySave.NS_View
             string dst = RectifyPath(Console.ReadLine());
 
             //Check if the path is valid
-            while (CheckDstPath(_src, dst) == false && dst != "0") // ============================================= TODO
+            while (CheckDstPath(_src, dst) == false && dst != "0") 
             {
-                dst = RectifyPath(Console.ReadLine()); // ============================================= TODO
+                dst = RectifyPath(Console.ReadLine()); 
             }
             return dst;
         }
@@ -99,10 +99,10 @@ namespace EasySave.NS_View
                 {
                     return true;
                 }
-                Console.WriteLine("\nChoose a different path from the source. "); // ============================================= TODO
+                Console.WriteLine("\nChoose a different path from the source. "); 
                 return false;
             }
-            Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. "); // ============================================= TODO
+            Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. "); 
             return false;
         }
 
@@ -336,6 +336,7 @@ namespace EasySave.NS_View
                     // Error message from 200 to 299
                     case 200:
                         Console.WriteLine("\nPlease restore your JSON backup file.");
+                        ConsoleUpdate(1);
                         break;
 
                     case 201:
@@ -355,10 +356,12 @@ namespace EasySave.NS_View
 
                     case 204:
                         Console.WriteLine("\nWork List is empty.");
+                        ConsoleUpdate(1);
                         break;
 
                     case 205:
                         Console.WriteLine("\nWork List is full.");
+                        ConsoleUpdate(1);
                         break;
 
                     case 206:
@@ -373,8 +376,19 @@ namespace EasySave.NS_View
                         Console.WriteLine("\nSelected backup type doesn't exists.");
                         break;
 
+                    case 209:
+                        Console.WriteLine("\nFailed to copy file.");
+                        ConsoleUpdate(1);
+                        break;
+
+                    case 210:
+                        Console.WriteLine("\nFailed to create the backup folder.");
+                        ConsoleUpdate(1);
+                        break;
+
                     default:
                         Console.WriteLine("\nFailed : Error Unknown.");
+                        ConsoleUpdate(1);
                         break;
                 }
             }
