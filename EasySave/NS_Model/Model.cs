@@ -34,7 +34,7 @@ namespace EasySave.NS_Model
             try
             {
                 // Add Work in the program (at the end of the List)
-                this.works.Add(new Work(this.works.Count, _name, _src, _dst, _backupType));
+                this.works.Add(new Work(_name, _src, _dst, _backupType));
                 SaveWorks();
 
                 // Return Success Code
@@ -54,10 +54,6 @@ namespace EasySave.NS_Model
             {
                 // Remove Work from the program (at index)
                 this.works.RemoveAt(_index);
-                for(int i = 0; i < this.works.Count; i++)
-                {
-                    this.works[i].id = i;
-                }
                 SaveWorks();
 
                 // Return Success Code
