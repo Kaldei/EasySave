@@ -101,6 +101,18 @@ namespace EasySave.NS_View
             {
                 if (_src != _dst)
                 {
+                    if (_dst.Length > _src.Length)
+                    {
+                        if (_src != _dst.Substring(0, _src.Length))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            ConsoleUpdate(217);
+                            return false;
+                        }
+                    }
                     return true;
                 }
                 ConsoleUpdate(212);
@@ -237,6 +249,7 @@ namespace EasySave.NS_View
                 + "\nTime taken : " + _transferTime + " ms\n");
             DisplayProgressBar(100);
         }
+
         public void DisplayFiledError(string _name)
         {
             Console.WriteLine("File named " + _name + " failed.");
@@ -298,7 +311,7 @@ namespace EasySave.NS_View
                 {
                     //Information message
                     case 1:
-                        Console.WriteLine("\nPress any key to display menu . . .");
+                        Console.WriteLine("\nPress Enter key to display menu . . .");
                         Console.ReadLine();
                         break;
 
@@ -310,6 +323,11 @@ namespace EasySave.NS_View
                         Console.Clear();
                         Console.WriteLine("\nBackup information :");
                         break;
+
+                    case 4:
+                        Console.WriteLine("\nPress Enter key to show more . . .");
+                        Console.ReadLine();
+                        break;
                 }
             }
             else if (_id < 200)
@@ -320,10 +338,12 @@ namespace EasySave.NS_View
                     // Success message from 100 to 199
                     case 100:
                         Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
+                        ConsoleUpdate(1);
                         break;
 
                     case 101:
                         Console.WriteLine("\nThe work was added with success!");
+                        ConsoleUpdate(1);
                         break;
 
                     case 102:
@@ -332,16 +352,17 @@ namespace EasySave.NS_View
 
                     case 103:
                         Console.WriteLine("\nThe work was removed with success!");
+                        ConsoleUpdate(1);
                         break;
 
                     case 104:
                         Console.WriteLine("\nBackup success !");
                         break;
+
                     case 105:
                         Console.WriteLine("\nNo modification since the last full backup!\n");
                         break;
                 }
-                ConsoleUpdate(1);
             }
             else
             {
@@ -419,8 +440,13 @@ namespace EasySave.NS_View
                     case 215:
                         Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
                         break;
+
                     case 216:
                         Console.WriteLine("\nBackup finished with error.");
+                        break;
+
+                    case 217:
+                        Console.WriteLine("\nDestination directory cannot be inside the source directory.");
                         break;
 
                     default:

@@ -129,6 +129,7 @@ namespace EasySave.NS_ViewModel
                         foreach (Work work in this.model.works)
                         {
                             this.view.ConsoleUpdate(LaunchBackupType(work));
+                            this.view.ConsoleUpdate(4);
                         }
                         break;
 
@@ -138,6 +139,7 @@ namespace EasySave.NS_ViewModel
                         this.view.ConsoleUpdate(LaunchBackupType(this.model.works[indexWork]));
                         break;
                 }
+                this.view.ConsoleUpdate(1);
             }
             else
             {
@@ -296,13 +298,11 @@ namespace EasySave.NS_ViewModel
             this.model.SaveWorks();
             this.view.ConsoleUpdate(3);
 
-            // Write the log
-            this.view.DisplayBackupRecap(_work.name, transferTime);
-
             foreach (string failedFile in failedFiles)
             {
                 this.view.DisplayFiledError(failedFile);
             }
+            this.view.DisplayBackupRecap(_work.name, transferTime);
 
             if (failedFiles.Count == 0)
             {
