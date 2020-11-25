@@ -9,14 +9,9 @@
   <p align="center">
     A little backup software by ProSoft
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>User documentation »</strong></a>
+    <a href="https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FDOCUMENTATION.md"><strong>User documentation »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
   </p>
 </p>
 
