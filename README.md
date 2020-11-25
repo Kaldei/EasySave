@@ -130,7 +130,7 @@ In order to run this project you need to have :
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://ACALCGLK@dev.azure.com/ACALCGLK/EasySave/_git/EasySave
    ```
 2. You can now open the project on Visual Studio
 
@@ -140,14 +140,14 @@ In order to run this project you need to have :
 Now that you have clone the project, you can open it. To launch the software you need to execute the EasySave.exe file or use Visual Studio.
 You can now display, add, remove and execute any backup work via the main menu interface.
 
-_For more examples, please refer to the [User Documentation](https://example.com)_
+_For more examples, please refer to the [User Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FDOCUMENTATION.md)_
 
-<!-- ROADMAP -->
+<!-- ROADMAP 
 ## Roadmap
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
 
-<!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -160,12 +160,12 @@ Contributions are what make the open source community such an amazing place to b
 
 
 
-<!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
+-->
 
 <!-- CONTACT -->
 ## Contact
