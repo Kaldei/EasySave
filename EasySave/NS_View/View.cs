@@ -53,7 +53,7 @@ namespace EasySave.NS_View
 
         private string RectifyPath(string _path)
         {
-            if (_path != "0")
+            if (_path != "0" && _path.Length >= 1)
             {
                 _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
                 _path = _path.Replace("/", "\\");
@@ -70,7 +70,7 @@ namespace EasySave.NS_View
             //Check if the path is valid
             while (!Directory.Exists(src) && src != "0")
             {
-                Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
+                ConsoleUpdate(211);
                 src = RectifyPath(Console.ReadLine());
             }
             return src;
@@ -83,19 +83,31 @@ namespace EasySave.NS_View
             string dst = RectifyPath(Console.ReadLine());
 
             //Check if the path is valid
-            while (!(Directory.Exists(dst) && _src != dst) && dst != "0") 
+            while (!CheckWorkDst(_src, dst))
             {
-                if(_src == dst)
-                {
-                    Console.WriteLine("\nChoose a different path from the source. ");
-                }
-                else
-                {
-                    Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
-                }
-                dst = RectifyPath(Console.ReadLine()); 
+                dst = RectifyPath(Console.ReadLine());
             }
             return dst;
+        }
+
+        private bool CheckWorkDst(string _src, string _dst)
+        {
+            if (_dst == "0")
+            {
+                return true;
+
+            }
+            else if (Directory.Exists(_dst))
+            {
+                if (_src != _dst)
+                {
+                    return true;
+                }
+                ConsoleUpdate(212);
+                return false;
+            }
+            ConsoleUpdate(213);
+            return false;
         }
 
         //Add work backup type
@@ -119,10 +131,10 @@ namespace EasySave.NS_View
                 {
                     return true;
                 }
-                Console.WriteLine("\nWorkName already taken. Please enter an other name.");
+                ConsoleUpdate(214);
                 return false;
             }
-            Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
+            ConsoleUpdate(215);
             return false;
         }
 
@@ -166,7 +178,7 @@ namespace EasySave.NS_View
         }
 
         //Choose the work to save
-        public int MakeBackupChoice()
+        public int LaunchBackupChoice()
         {
             Console.Clear();
             Console.WriteLine(
@@ -276,7 +288,7 @@ namespace EasySave.NS_View
         }
 
         //Display message on the console
-        public void ConsoleUpdate(int _id) // ============================================= TODO
+        public void ConsoleUpdate(int _id) 
         {
             if (_id < 100)
             {
@@ -323,6 +335,9 @@ namespace EasySave.NS_View
 
                     case 104:
                         Console.WriteLine("\nBackup success !");
+                        break;
+                    case 105:
+                        Console.WriteLine("\nNo modification since the last full backup!\n");
                         break;
                 }
                 ConsoleUpdate(1);
@@ -383,6 +398,28 @@ namespace EasySave.NS_View
                     case 210:
                         Console.WriteLine("\nFailed to create the backup folder.");
                         ConsoleUpdate(1);
+                        break;
+                    case 211:
+                        Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
+                        break;
+
+                    case 212:
+                        Console.WriteLine("\nChoose a different path from the source. ");
+                        break;
+
+                    case 213:
+                        Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
+                        break;
+
+                    case 214:
+                        Console.WriteLine("\nWorkName already taken. Please enter an other name.");
+                        break;
+
+                    case 215:
+                        Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
+                        break;
+                    case 216:
+                        Console.WriteLine("\nBackup finished with error.");
                         break;
 
                     default:

@@ -116,7 +116,7 @@ namespace EasySave.NS_ViewModel
         {
             if (this.model.works.Count > 0)
             {
-                int userChoice = view.MakeBackupChoice();
+                int userChoice = view.LaunchBackupChoice();
 
                 switch (userChoice)
                 {
@@ -302,8 +302,16 @@ namespace EasySave.NS_ViewModel
             }
 
             this.view.DisplayBackupRecap(_work.name, transferTime);
-            // Return Success Code
-            return 104;
+            if (failedFiles.Count == 0)
+            {
+                // Return Success Code
+                return 104;
+            }
+            else
+            {
+                // Return Error Code
+                return 216;
+            }
         }
 
         private void RemoveWork()
