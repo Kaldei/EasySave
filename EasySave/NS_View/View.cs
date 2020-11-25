@@ -206,23 +206,22 @@ namespace EasySave.NS_View
             return Int32.Parse(_inputUser);
         }
 
-        public void DisplayCurrentState(int _id)
+        public void DisplayCurrentState(string _name, int _fileLeft, long _leftSize, long _curSize, int _pourcent)
         {
-            var work = this.viewModel.model.works[_id];
-            Console.WriteLine("==================================");
-            Console.WriteLine(
-                "Current backup : " + work.name
-                + "\nNumber of files left : " + work.state.nbFileLeft
-                + "\nSize of the files left : " + DiplaySize(work.state.leftSize) + "\n");
-            DisplayProgressBar(work.state.progress);
-        }
-
-        public void DisplayBackupRecap(int _id, double _transferTime)
-        {
-            var work = viewModel.model.works[_id];
             Console.Clear();
             Console.WriteLine(
-                "Backup : " + work.name + " finished\n"
+                "Current backup : " + _name
+                + "\nSize of the current file : " + DiplaySize(_curSize)
+                + "\nNumber of files left : " + _fileLeft
+                + "\nSize of the files left : " + DiplaySize(_leftSize) + "\n");
+            DisplayProgressBar(_pourcent);
+        }
+
+        public void DisplayBackupRecap(string _name, double _transferTime)
+        {
+            Console.Clear();
+            Console.WriteLine(
+                "Backup : " + _name + " finished\n"
                 + "\nTime taken : " + _transferTime + " ms\n");
             DisplayProgressBar(100);
         }

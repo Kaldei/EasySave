@@ -283,8 +283,7 @@ namespace EasySave.NS_ViewModel
             {
                 return 210;
             }
-
-            int result = CopyFiles(_work, _files, _totalSize, dst);
+            List<string> failedFiles = CopyFiles(_work, _files, _totalSize, dst);
 
             // Calculate the time of the all process of copy
             DateTime endTime = DateTime.Now;
@@ -296,9 +295,14 @@ namespace EasySave.NS_ViewModel
             this.model.SaveWorks();
 
             // Write the log
-            this.view.DisplayBackupRecap(_work.id, transferTime);
+            foreach(string failedFile in failedFiles)
+            {
+                //this.view.DisplayFiledError();
+            }
+
+            this.view.DisplayBackupRecap(_work.name, transferTime);
             // Return Success Code
-            return result;
+            return 104;
         }
 
         private void RemoveWork()
@@ -316,13 +320,13 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-        private int CopyFiles(Work _work, FileInfo[] _files, long _totalSize, string _dst)
+        private List<string> CopyFiles(Work _work, FileInfo[] _files, long _totalSize, string _dst)
         {
             // Files Size
             long leftSize = _totalSize;
             // Number of Files
             int totalFile = _files.Length;
-            bool hasError = false;
+            List<string> failedFiles = new List<string>();
 
             // Copy every file
             for (int i = 0; i < _files.Length; i++)
@@ -334,25 +338,14 @@ namespace EasySave.NS_ViewModel
 
                 if(this.model.CopyFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent))
                 {
-                    //this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent);
+                    this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent);
                 }
                 else
                 {
-                    // Set error somewhere
-                    this.view.ConsoleUpdate(209);
-                    hasError = true;
+                    failedFiles.Add(_files[i].Name);
                 }
             }
-
-            if(!hasError)
-            {
-                // Return Success Message
-                return 104;
-            } else
-            {
-                // Return Error Message
-                return 216;
-            }
+            return failedFiles;
         }
     }
 }
