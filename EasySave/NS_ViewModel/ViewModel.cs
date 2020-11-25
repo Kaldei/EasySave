@@ -185,7 +185,7 @@ namespace EasySave.NS_ViewModel
 
             foreach (DirectoryInfo directory in dirs)
             {
-                if (directory.Name.IndexOf("_") > 0 && _work.name == directory.Name.Substring(0, directory.Name.IndexOf("")))
+                if (directory.Name.IndexOf("_") > 0 && _work.name == directory.Name.Substring(0, directory.Name.IndexOf("_")))
                 {
                     return directory.FullName;
                 }
@@ -338,6 +338,8 @@ namespace EasySave.NS_ViewModel
                 }
                 else
                 {
+                    // Set error somewhere
+                    this.view.ConsoleUpdate(209);
                     hasError = true;
                 }
             }
@@ -345,11 +347,11 @@ namespace EasySave.NS_ViewModel
             if(!hasError)
             {
                 // Return Success Message
-                return 0;
+                return 104;
             } else
             {
                 // Return Error Message
-                return 0;
+                return 216;
             }
         }
     }
