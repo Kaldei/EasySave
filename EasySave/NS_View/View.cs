@@ -219,11 +219,14 @@ namespace EasySave.NS_View
 
         public void DisplayBackupRecap(string _name, double _transferTime)
         {
-            Console.Clear();
-            Console.WriteLine(
+            Console.WriteLine("\n\n" +
                 "Backup : " + _name + " finished\n"
                 + "\nTime taken : " + _transferTime + " ms\n");
             DisplayProgressBar(100);
+        }
+        public void DisplayFiledError(string _name)
+        {
+            Console.WriteLine("File named " + _name + " failed.");
         }
 
         private void DisplayProgressBar(int _pourcent)

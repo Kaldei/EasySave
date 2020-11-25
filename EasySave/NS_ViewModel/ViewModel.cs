@@ -297,7 +297,7 @@ namespace EasySave.NS_ViewModel
             // Write the log
             foreach(string failedFile in failedFiles)
             {
-                //this.view.DisplayFiledError();
+                this.view.DisplayFiledError(failedFile);
             }
 
             this.view.DisplayBackupRecap(_work.name, transferTime);
