@@ -238,6 +238,7 @@ namespace EasySave.NS_ViewModel
             {
                 _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
+                this.view.DisplayBackupRecap(_work.name, 0);
                 return 105;
             }
             return DoBackup(_work, filesToCopy.ToArray(), totalSize);
@@ -264,7 +265,7 @@ namespace EasySave.NS_ViewModel
         }
 
         // Do Backup
-        public int DoBackup(Work _work, FileInfo[] _files, long _totalSize)
+        private int DoBackup(Work _work, FileInfo[] _files, long _totalSize)
         {
             // Create the state file
             DateTime startTime = DateTime.Now;
@@ -293,15 +294,16 @@ namespace EasySave.NS_ViewModel
             // Update the current work status
             _work.state = null;
             this.model.SaveWorks();
-
             this.view.ConsoleUpdate(3);
+
             // Write the log
-            foreach(string failedFile in failedFiles)
+            this.view.DisplayBackupRecap(_work.name, transferTime);
+
+            foreach (string failedFile in failedFiles)
             {
                 this.view.DisplayFiledError(failedFile);
             }
 
-            this.view.DisplayBackupRecap(_work.name, transferTime);
             if (failedFiles.Count == 0)
             {
                 // Return Success Code
