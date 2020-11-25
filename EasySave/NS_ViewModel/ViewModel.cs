@@ -294,6 +294,7 @@ namespace EasySave.NS_ViewModel
             _work.state = null;
             this.model.SaveWorks();
 
+            this.view.ConsoleUpdate(3);
             // Write the log
             foreach(string failedFile in failedFiles)
             {
