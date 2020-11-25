@@ -188,6 +188,15 @@ namespace EasySave.NS_Model
                     filesToCopy.Add(file);
                 }
             }
+
+            // Test if there is file to copy
+            if (filesToCopy.Count == 0)
+            {
+                _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
+                SaveWorks();
+                return 105;
+            }
+
             return DoBackup(_work, filesToCopy.ToArray(), totalSize);
         }
 
@@ -226,7 +235,8 @@ namespace EasySave.NS_Model
             try
             {
                  Directory.CreateDirectory(dst);
-            } catch 
+            }
+            catch
             {
                 return 210;
             }
@@ -237,14 +247,7 @@ namespace EasySave.NS_Model
             int totalFile = _files.Length;
 
             // Copy every file
-            try
-            {
-             CopyFiles(_work, _files, _totalSize, dst, leftSize, totalFile);
-            }
-            catch
-            {
-                return 209;
-            }
+            CopyFiles(_work, _files, _totalSize, dst, leftSize, totalFile);
 
             // Calculate the time of the all process of copy
             DateTime endTime = DateTime.Now;
