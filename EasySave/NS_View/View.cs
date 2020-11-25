@@ -292,6 +292,11 @@ namespace EasySave.NS_View
                     case 2:
                         Console.WriteLine("\n(Enter 0 to return to the menu)");
                         break;
+
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("\nBackup information :");
+                        break;
                 }
             }
             else if (_id < 200)
