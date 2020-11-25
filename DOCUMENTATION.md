@@ -16,6 +16,7 @@ Once you have installed the software via the Get Started guide, you will have to
 
 ##3. Make a backup
 -----------------
+> In order to do a differential backup you don't have to make a full, the first time the differential will make it automatically.
 > To start one or all backup works.
 * First you need to choose one backup or all.
 * Once you have choose one option, the backup will begin and a screen will display the informations about the progression of the backup.
