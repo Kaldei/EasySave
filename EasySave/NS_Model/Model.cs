@@ -208,18 +208,24 @@ namespace EasySave.NS_Model
         }
 
         // Do Backup
-        public int DoBackup(Work _work, FileInfo[] _files, long _totalSize) // =============================================== TODO
+        public int DoBackup(Work _work, FileInfo[] _files, long _totalSize) 
         {
             // Create the state file
             DateTime startTime = DateTime.Now;
-            string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\"; // =============================================== TODO
+            string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\"; 
 
             // Update the current work status
-            _work.state = new State(_files.Length, _totalSize, _work.src, dst); // =============================================== TODO
-            _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss"); // =============================================== TODO
+            _work.state = new State(_files.Length, _totalSize, _work.src, dst); 
+            _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss"); 
 
             // Create the dst folder
-            Directory.CreateDirectory(dst);
+            try
+            {
+                 Directory.CreateDirectory(dst);
+            } catch 
+            {
+                return 210;
+            }
 
             // Files Size
             long leftSize = _totalSize;
@@ -227,18 +233,44 @@ namespace EasySave.NS_Model
             int totalFile = _files.Length;
 
             // Copy every file
+            try
+            {
+             CopyFiles(_work, _files, _totalSize, dst, leftSize, totalFile);
+            }
+            catch
+            {
+                return 209;
+            }
+
+            // Calculate the time of the all process of copy
+            DateTime endTime = DateTime.Now;
+            TimeSpan workTime = endTime - startTime;
+            double transferTime = workTime.TotalMilliseconds;
+
+            // Update the current work status
+            _work.state = null;
+            SaveWorks();
+
+            // Write the log
+            this.viewModel.view.DisplayBackupRecap(_work.id, transferTime);
+            // Return Success Code
+            return 104;
+        }
+
+        private void CopyFiles(Work _work, FileInfo[] _files, long _totalSize, string _dst, long _leftSize, int _totalFile)
+        {
             for (int i = 0; i < _files.Length; i++)
             {
                 // Time at when file copy start (use by SaveLog())
                 DateTime startTimeFile = DateTime.Now;
 
-                string dstDirectory = dst;
+                string dstDirectory = _dst;
                 int pourcent = (i * 100 / _files.Length);
 
                 // If there is a directoy, we add the relative path from the directory dst
                 if (Path.GetRelativePath(_work.src, _files[i].DirectoryName).Length > 1)
                 {
-                    dstDirectory += Path.GetRelativePath(_work.src, _files[i].DirectoryName) + "\\"; // =============================================== TODO
+                    dstDirectory += Path.GetRelativePath(_work.src, _files[i].DirectoryName) + "\\"; 
 
                     // If the directory dst doesn't exist, we create it
                     if (!Directory.Exists(dstDirectory))
@@ -250,8 +282,8 @@ namespace EasySave.NS_Model
                 // Get the current dstFile
                 string dstFile = dstDirectory + _files[i].Name;
 
-                // Uptade the current work status
-                _work.state.UpdateState(pourcent, (totalFile - i), leftSize, _files[i].FullName, dstFile);
+                // Update the current work status
+                _work.state.UpdateState(pourcent, (_totalFile - i), _leftSize, _files[i].FullName, dstFile);
                 this.viewModel.view.DisplayCurrentState(_work.id);
                 SaveWorks();
 
@@ -259,26 +291,13 @@ namespace EasySave.NS_Model
                 _files[i].CopyTo(dstFile, true);
 
                 // Update the size remaining to copy (octet)
-                leftSize -= _files[i].Length;
+                _leftSize -= _files[i].Length;
 
                 // Save Log
                 SaveLog(startTimeFile, _work.name, _files[i].ToString(), dstFile, _files[i].Length);
             }
-
-            // Calculate the time of the all process of copy
-            DateTime endTime = DateTime.Now;
-            TimeSpan workTime = endTime - startTime;
-            double transferTime = workTime.TotalMilliseconds;
-
-            // Uptade the current work status
-            _work.state = null;
-            SaveWorks();
-
-            // Write the log
-            this.viewModel.view.DisplayBackupRecap(_work.id, transferTime);
-            // Return Success Code
-            return 104;
         }
+
 
         // Save Log 
         public void SaveLog(DateTime _startDate, string _name, string _src, string _dst, long _size)
