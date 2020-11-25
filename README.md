@@ -175,7 +175,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 * Clément Gaston - clement.gaston@viacesi.fr
 * Laetitia Kessas - laetitia.kessas@viacesi.fr
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://dev.azure.com/ACALCGLK/EasySave/_git/EasySave](https://dev.azure.com/ACALCGLK/EasySave/_git/EasySave)
 
 
 
