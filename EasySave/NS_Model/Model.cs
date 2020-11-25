@@ -56,6 +56,10 @@ namespace EasySave.NS_Model
             {
                 // Remove Work from the program (at index)
                 this.works.RemoveAt(_index);
+                for(int i = 0; i < this.works.Count; i++)
+                {
+                    this.works[i].id = i;
+                }
                 SaveWorks();
 
                 // Return Success Code
