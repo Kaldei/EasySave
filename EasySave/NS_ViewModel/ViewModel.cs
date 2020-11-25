@@ -240,6 +240,7 @@ namespace EasySave.NS_ViewModel
             {
                 _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
+                this.view.ConsoleUpdate(3);
                 this.view.DisplayBackupRecap(_work.name, 0);
                 return 105;
             }

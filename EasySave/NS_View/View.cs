@@ -243,7 +243,6 @@ namespace EasySave.NS_View
 
         public void DisplayBackupRecap(string _name, double _transferTime)
         {
-            Console.Clear();
             Console.WriteLine("\n\n" +
                 "Backup : " + _name + " finished\n"
                 + "\nTime taken : " + _transferTime + " ms\n");
