@@ -53,7 +53,7 @@ namespace EasySave.NS_View
 
         private string RectifyPath(string _path)
         {
-            if (_path != "0")
+            if (_path != "0" && _path.Length >= 1)
             {
                 _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
                 _path = _path.Replace("/", "\\");
@@ -70,7 +70,7 @@ namespace EasySave.NS_View
             //Check if the path is valid
             while (!Directory.Exists(src) && src != "0")
             {
-                Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
+                ConsoleUpdate(211);
                 src = RectifyPath(Console.ReadLine());
             }
             return src;
@@ -83,19 +83,43 @@ namespace EasySave.NS_View
             string dst = RectifyPath(Console.ReadLine());
 
             //Check if the path is valid
-            while (!(Directory.Exists(dst) && _src != dst) && dst != "0") 
+            while (!CheckWorkDst(_src, dst))
             {
-                if(_src == dst)
-                {
-                    Console.WriteLine("\nChoose a different path from the source. ");
-                }
-                else
-                {
-                    Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
-                }
-                dst = RectifyPath(Console.ReadLine()); 
+                dst = RectifyPath(Console.ReadLine());
             }
             return dst;
+        }
+
+        private bool CheckWorkDst(string _src, string _dst)
+        {
+            if (_dst == "0")
+            {
+                return true;
+
+            }
+            else if (Directory.Exists(_dst))
+            {
+                if (_src != _dst)
+                {
+                    if (_dst.Length > _src.Length)
+                    {
+                        if (_src != _dst.Substring(0, _src.Length))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            ConsoleUpdate(217);
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                ConsoleUpdate(212);
+                return false;
+            }
+            ConsoleUpdate(213);
+            return false;
         }
 
         //Add work backup type
@@ -119,10 +143,10 @@ namespace EasySave.NS_View
                 {
                     return true;
                 }
-                Console.WriteLine("\nWorkName already taken. Please enter an other name.");
+                ConsoleUpdate(214);
                 return false;
             }
-            Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
+            ConsoleUpdate(215);
             return false;
         }
 
@@ -166,7 +190,7 @@ namespace EasySave.NS_View
         }
 
         //Choose the work to save
-        public int MakeBackupChoice()
+        public int LaunchBackupChoice()
         {
             Console.Clear();
             Console.WriteLine(
@@ -206,25 +230,28 @@ namespace EasySave.NS_View
             return Int32.Parse(_inputUser);
         }
 
-        public void DisplayCurrentState(int _id)
+        public void DisplayCurrentState(string _name, int _fileLeft, long _leftSize, long _curSize, int _pourcent)
         {
-            var work = this.viewModel.model.works[_id];
-            Console.WriteLine("==================================");
-            Console.WriteLine(
-                "Current backup : " + work.name
-                + "\nNumber of files left : " + work.state.nbFileLeft
-                + "\nSize of the files left : " + DiplaySize(work.state.leftSize) + "\n");
-            DisplayProgressBar(work.state.progress);
-        }
-
-        public void DisplayBackupRecap(int _id, double _transferTime)
-        {
-            var work = viewModel.model.works[_id];
             Console.Clear();
             Console.WriteLine(
-                "Backup : " + work.name + " finished\n"
+                "Current backup : " + _name
+                + "\nSize of the current file : " + DiplaySize(_curSize)
+                + "\nNumber of files left : " + _fileLeft
+                + "\nSize of the files left : " + DiplaySize(_leftSize) + "\n");
+            DisplayProgressBar(_pourcent);
+        }
+
+        public void DisplayBackupRecap(string _name, double _transferTime)
+        {
+            Console.WriteLine("\n\n" +
+                "Backup : " + _name + " finished\n"
                 + "\nTime taken : " + _transferTime + " ms\n");
             DisplayProgressBar(100);
+        }
+
+        public void DisplayFiledError(string _name)
+        {
+            Console.WriteLine("File named " + _name + " failed.");
         }
 
         private void DisplayProgressBar(int _pourcent)
@@ -274,7 +301,7 @@ namespace EasySave.NS_View
         }
 
         //Display message on the console
-        public void ConsoleUpdate(int _id) // ============================================= TODO
+        public void ConsoleUpdate(int _id) 
         {
             if (_id < 100)
             {
@@ -283,12 +310,22 @@ namespace EasySave.NS_View
                 {
                     //Information message
                     case 1:
-                        Console.WriteLine("\nPress any key to display menu . . .");
+                        Console.WriteLine("\nPress Enter key to display menu . . .");
                         Console.ReadLine();
                         break;
 
                     case 2:
                         Console.WriteLine("\n(Enter 0 to return to the menu)");
+                        break;
+
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("\nBackup information :");
+                        break;
+
+                    case 4:
+                        Console.WriteLine("\nPress Enter key to show more . . .");
+                        Console.ReadLine();
                         break;
                 }
             }
@@ -300,10 +337,12 @@ namespace EasySave.NS_View
                     // Success message from 100 to 199
                     case 100:
                         Console.WriteLine("\n----- WELCOME ON EASYSAVE -----");
+                        ConsoleUpdate(1);
                         break;
 
                     case 101:
                         Console.WriteLine("\nThe work was added with success!");
+                        ConsoleUpdate(1);
                         break;
 
                     case 102:
@@ -312,13 +351,17 @@ namespace EasySave.NS_View
 
                     case 103:
                         Console.WriteLine("\nThe work was removed with success!");
+                        ConsoleUpdate(1);
                         break;
 
                     case 104:
                         Console.WriteLine("\nBackup success !");
                         break;
+
+                    case 105:
+                        Console.WriteLine("\nNo modification since the last full backup!\n");
+                        break;
                 }
-                ConsoleUpdate(1);
             }
             else
             {
@@ -376,6 +419,33 @@ namespace EasySave.NS_View
                     case 210:
                         Console.WriteLine("\nFailed to create the backup folder.");
                         ConsoleUpdate(1);
+                        break;
+                    case 211:
+                        Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory source. ");
+                        break;
+
+                    case 212:
+                        Console.WriteLine("\nChoose a different path from the source. ");
+                        break;
+
+                    case 213:
+                        Console.WriteLine("\nDirectory doesn't exist. Please enter a valid directory direction. ");
+                        break;
+
+                    case 214:
+                        Console.WriteLine("\nWorkName already taken. Please enter an other name.");
+                        break;
+
+                    case 215:
+                        Console.WriteLine("\nEnter a VALID name (1 to 20 characters):");
+                        break;
+
+                    case 216:
+                        Console.WriteLine("\nBackup finished with error.");
+                        break;
+
+                    case 217:
+                        Console.WriteLine("\nDestination directory cannot be inside the source directory.");
                         break;
 
                     default:
