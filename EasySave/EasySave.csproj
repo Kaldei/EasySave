@@ -6,4 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="NS_ViewModel\" />
+    <Folder Include="NS_View\" />
+    <Folder Include="NS_Model\" />
+  </ItemGroup>
+
 </Project>
