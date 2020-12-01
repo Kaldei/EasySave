@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasySave.NS_ViewModel;
 
 namespace EasySave
 {
@@ -23,6 +24,11 @@ namespace EasySave
         public MainWindow()
         {
             InitializeComponent();
+            // Init Program
+            ViewModel viewModel = new ViewModel();
+
+            // Run Program
+            viewModel.Run();
         }
     }
 }
