@@ -9,8 +9,10 @@ namespace EasySave.NS_Model
     class Model
     {
         // --- Attributes ---
-        private string backupWorkSavePath = "./BackupWorkSave.json";
+        private string stateFilePath = "./State.json";
+        private string settingsFilePath = "./Settings.json";
         public List<Work> works { get; set; }
+        public Settings settings { get; set; }
 
         // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -24,6 +26,7 @@ namespace EasySave.NS_Model
         {
             // Initalize Work List
             this.works = new List<Work>();
+            this.settings = Settings.GetInstance();
         }
 
 
@@ -66,22 +69,53 @@ namespace EasySave.NS_Model
             }
         }
 
-        // Load Works and States at the beginning of the program
+        // Load Works and States (at the beginning of the program)
         public int LoadWorks()
         {
-            // Check if backupWorkSave.json File exists
-            if (File.Exists(backupWorkSavePath))
+            // Check if State.json exists
+            if (File.Exists(stateFilePath))
             {
                 try
                 {
-                    // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
-                    this.works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(this.backupWorkSavePath));
+                    // Read Works from State File 
+                    this.works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(this.stateFilePath));
                 }
                 catch
                 {
                     // Return Error Code
                     return 200;
                 }
+            }
+            else
+            {
+                // Create State File if it doesn't exists
+                File.WriteAllText(this.stateFilePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
+            }
+            // Return Success Code
+            return 100;
+        }
+
+        // Load Settings (at the beginning of the program)
+        public int LoadSettings()
+        {
+            // Check if Settings.json exists
+            if (File.Exists(settingsFilePath))
+            {
+                try
+                {
+                    // Read Settings from Settings File
+                    this.settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(this.settingsFilePath));
+                }
+                catch
+                {
+                    // Return Error Code
+                    return 200;
+                }
+            }
+            else
+            {
+                // Create Settings File if it doesn't exists
+                File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
             }
             // Return Success Code
             return 100;
@@ -91,7 +125,7 @@ namespace EasySave.NS_Model
         public void SaveWorks()
         {
             // Write Work list into JSON file (at ./BackupWorkSave.json)
-            File.WriteAllText(this.backupWorkSavePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
+            File.WriteAllText(this.stateFilePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
         }
 
         public bool CopyFile(Work _work, FileInfo _currentFile, long _curSize, string _dst, long _leftSize, int _totalFile, int fileIndex, int _pourcent)
