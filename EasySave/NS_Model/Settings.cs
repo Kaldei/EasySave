@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EasySave.NS_Model
 {
@@ -10,12 +9,12 @@ namespace EasySave.NS_Model
         public static Settings instance { get; set; }
         public string cryptoSoftPath { get; set; }
         public List<String> cryptoExtensions { get; set; }
-        public string businessSoftwarePath { get; set; }
+        public List<String> businessSoftwares { get; set; }
 
 
         // --- Constructors ---
-        // Constructor
-        private Settings(){ }
+        // Constructor used by LoadSettings
+        private Settings() { }
 
 
         // --- Methods ----
@@ -30,11 +29,11 @@ namespace EasySave.NS_Model
         }
 
         // Update Settings
-        public void Update(string _cryptoSoftPath, List<String> _cryptoExtensions, string _businessSoftwarePath)
+        public void Update(string _cryptoSoftPath, List<String> _cryptoExtensions, List<String> _businessSoftwares)
         {
             this.cryptoSoftPath = _cryptoSoftPath;
             this.cryptoExtensions = _cryptoExtensions;
-            this.businessSoftwarePath = _businessSoftwarePath;
+            this.businessSoftwares = _businessSoftwares;
         }
     }
 }

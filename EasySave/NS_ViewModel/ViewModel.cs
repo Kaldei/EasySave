@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using EasySave.NS_Model;
 using EasySave.NS_View;
+using System.Diagnostics;
 
 namespace EasySave.NS_ViewModel
 {
@@ -20,8 +21,11 @@ namespace EasySave.NS_ViewModel
             this.model = new Model();
             this.view = new View(this);
 
-            // Load Works at the beginning of the program (from ./BackupWorkSave.json)
+            // Load Works at the beginning of the program (from ./State.json)
             this.view.ConsoleUpdate(this.model.LoadWorks());
+
+            // Load Settings at the beginning of the program (from ./Settings.json)
+            this.model.LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
         }
 
 
@@ -29,6 +33,7 @@ namespace EasySave.NS_ViewModel
         public void Run()
         {
             bool isRunning = true;
+
 
             while (isRunning)
             {
@@ -118,6 +123,9 @@ namespace EasySave.NS_ViewModel
             {
                 int userChoice = view.LaunchBackupChoice();
 
+                // Used to Check if one Business Software is Running
+                int businessSoftwaresId;
+
                 switch (userChoice)
                 {
                     // Return to the menu
@@ -128,15 +136,39 @@ namespace EasySave.NS_ViewModel
                     case 1:
                         foreach (Work work in this.model.works)
                         {
-                            this.view.ConsoleUpdate(LaunchBackupType(work));
-                            this.view.ConsoleUpdate(4);
+                            // Get id of one Running Business Software from the List (-1 if none) 
+                            businessSoftwaresId = this.model.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
+
+                            // Prevents from Launching Backups if one Business Software is Running
+                            if (businessSoftwaresId != -1)
+                            {
+                                Console.WriteLine($"{this.model.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                            }
+                            else
+                            {
+                                this.view.ConsoleUpdate(LaunchBackupType(work));
+                                this.view.ConsoleUpdate(4);
+                            }
+                            Console.ReadLine();
                         }
                         break;
 
                     // Run one work from his ID in the list
                     default:
-                        int indexWork = userChoice - 2;
-                        this.view.ConsoleUpdate(LaunchBackupType(this.model.works[indexWork]));
+                        // Get id of one Running Business Software from the List (-1 if none) 
+                        businessSoftwaresId = this.model.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
+
+                        // Prevents from Launching Backups if one Business Software is Running
+                        if (businessSoftwaresId != -1)
+                        {
+                            Console.WriteLine($"{this.model.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                        }
+                        else
+                        {
+                            int indexWork = userChoice - 2;
+                            this.view.ConsoleUpdate(LaunchBackupType(this.model.works[indexWork]));
+                        }
+
                         break;
                 }
                 this.view.ConsoleUpdate(1);
@@ -200,7 +232,7 @@ namespace EasySave.NS_ViewModel
         {
             long totalSize = 0;
 
-            // Get evvery files of the source directory
+            // Get every files of the source directory
             FileInfo[] files = _dir.GetFiles("*.*", SearchOption.AllDirectories);
 
             // Calcul the size of every files
