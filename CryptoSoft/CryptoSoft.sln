@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProSoft", "ProSoft.csproj", "{F356D743-142E-4078-BFFD-19D2D62C3926}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoSoft", "CryptoSoft.csproj", "{0668A8B2-5312-4E0E-A139-321226760745}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F356D743-142E-4078-BFFD-19D2D62C3926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F356D743-142E-4078-BFFD-19D2D62C3926}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F356D743-142E-4078-BFFD-19D2D62C3926}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F356D743-142E-4078-BFFD-19D2D62C3926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0668A8B2-5312-4E0E-A139-321226760745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0668A8B2-5312-4E0E-A139-321226760745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0668A8B2-5312-4E0E-A139-321226760745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0668A8B2-5312-4E0E-A139-321226760745}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FA32C858-65D0-4AE0-8CEA-96CE0B2C0DF7}
+		SolutionGuid = {137715AA-068B-41B1-97AF-2C110F219999}
 	EndGlobalSection
 EndGlobal
