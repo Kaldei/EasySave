@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace EasySave.NS_Model
 {
@@ -13,13 +15,19 @@ namespace EasySave.NS_Model
         public State state { get; set; }
         public string lastBackupDate { get; set; }
 
+        // Prepare options to indent JSON Files
+        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+
 
         // --- Constructors ---
         // Constructor used by LoadWorks()
-        public Work() {}
+        public Work() { }
 
         // Constructor used by AddWork()
-        public Work (string _name, string _src, string _dst, BackupType _backupType)
+        public Work(string _name, string _src, string _dst, BackupType _backupType)
         {
             this.name = _name;
             this.src = _src;
@@ -33,7 +41,7 @@ namespace EasySave.NS_Model
         // Save Log 
         public void SaveLog(DateTime _startDate, string _src, string _dst, long _size, bool isError)
         {
-            // Prepare times log
+            // Prepare dates
             string today = DateTime.Now.ToString("yyyy-MM-dd");
             string startTime = _startDate.ToString("yyyy-MM-dd_HH-mm-ss");
             string elapsedTime = (DateTime.Now - _startDate).ToString();
@@ -49,13 +57,28 @@ namespace EasySave.NS_Model
                 Directory.CreateDirectory("./Logs");
             }
 
-            // Write log
+            var logs = new List<Log>();
+            // Get Logs File Content if it exists
+            if (File.Exists($"./Logs/{today}.json"))
+            {
+                logs = JsonSerializer.Deserialize<List<Log>>(File.ReadAllText($"./Logs/{today}.json"));
+            }
+
+            // Add Current File Log
+            logs.Add(new Log($"{this.name}", $"{_src}", $"{_dst}", $"{_size}", $"{startTime}", $"{elapsedTime}"));
+
+            // Write Logs File
+            File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
+
+            /*
+            // Old Logs implementation (in txt)
             File.AppendAllText($"./Logs/{today}.txt", $"{startTime}: {this.name}" +
                 $"\nSource: {_src}" +
                 $"\nDestination: {_dst}" +
                 $"\nSize (Bytes): {_size}" +
                 $"\nElapsed Time: {elapsedTime}" +
                 "\n\r\n");
+            */
         }
     }
 }
