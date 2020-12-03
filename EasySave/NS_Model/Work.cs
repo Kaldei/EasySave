@@ -57,21 +57,23 @@ namespace EasySave.NS_Model
                 Directory.CreateDirectory("./Logs");
             }
 
+            // Var that will contains Logs File Content
             var logs = new List<Log>();
-            // Get Logs File Content if it exists
+
+            // Get Logs File Content if it Exists
             if (File.Exists($"./Logs/{today}.json"))
             {
                 logs = JsonSerializer.Deserialize<List<Log>>(File.ReadAllText($"./Logs/{today}.json"));
             }
 
-            // Add Current File Log
+            // Add Current Backuped File Log
             logs.Add(new Log($"{this.name}", $"{_src}", $"{_dst}", $"{_size}", $"{startTime}", $"{elapsedTime}"));
 
             // Write Logs File
             File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
 
             /*
-            // Old Logs implementation (in txt)
+            // Log in .txt version
             File.AppendAllText($"./Logs/{today}.txt", $"{startTime}: {this.name}" +
                 $"\nSource: {_src}" +
                 $"\nDestination: {_dst}" +

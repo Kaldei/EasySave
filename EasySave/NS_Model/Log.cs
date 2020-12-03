@@ -14,10 +14,10 @@ namespace EasySave.NS_Model
 
 
         // --- Constructors ---
-        // Constructor used by Work.SaveLog()
+        // Constructor used to Read json File
         public Log() { }
 
-        // Constructor used by Work.SaveLog()
+        // Constructor used to Add a Log
         public Log(string _name, string _source, string _destination, string _size, string _startTime, string _elapsedTime)
         {
             this.name = _name;
@@ -27,8 +27,5 @@ namespace EasySave.NS_Model
             this.startTime = _startTime;
             this.elapsedTime = _elapsedTime;
         }
-
-
-
     }
 }
