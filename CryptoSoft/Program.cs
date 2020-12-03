@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections;
 
-namespace ProSoft
+namespace CryptoSoft
 {
     class Program
     {
