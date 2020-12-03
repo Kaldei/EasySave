@@ -24,11 +24,11 @@ namespace EasySave
         public MainWindow()
         {
             InitializeComponent();
-            // Init Program
+/*            // Init Program
             ViewModel viewModel = new ViewModel();
 
             // Run Program
-            viewModel.Run();
+            viewModel.Run();*/
         }
     }
 }
