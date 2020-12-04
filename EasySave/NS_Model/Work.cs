@@ -97,6 +97,26 @@ namespace EasySave.NS_Model
             }
         }
 
+        private bool isCryptedP;
+        public bool isCrypted
+        {
+            get
+            {
+                return isCryptedP;
+            }
+            set
+            {
+                if (value != isCryptedP)
+                {
+                    isCryptedP = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("backupType"));
+                    }
+                }
+            }
+        }
+
         private State stateP;
         public State state {
             get
@@ -142,12 +162,13 @@ namespace EasySave.NS_Model
         public Work() { }
 
         // Constructor used by AddWork()
-        public Work(string _name, string _src, string _dst, BackupType _backupType)
+        public Work(string _name, string _src, string _dst, BackupType _backupType, bool _isCrypted)
         {
             this.name = _name;
             this.src = _src;
             this.dst = _dst;
             this.backupType = _backupType;
+            this.isCrypted = _isCrypted;
             this.state = null;
         }
 

@@ -18,10 +18,11 @@
             <ListView Name="_listWorks" ItemsSource="{Binding works}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding name}" Header="Name" Width="100"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding name}" Header="Name" Width="75"></GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding src}" Header="Source" Width="250"></GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding dst}" Header="Destination" Width="250"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding backupType}" Header="Backup Type" Width="150"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding backupType}" Header="Backup Type" Width="100"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding isCrypted}" Header="Encrypt" Width="100"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
