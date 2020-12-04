@@ -16,11 +16,21 @@ namespace EasySave.NS_ViewModel
     class ViewModel : INotifyPropertyChanged
     {
         // --- Attributes ---
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // TO DELETE
         public View view;
+
+        // Prepare options to indent JSON Files
+        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+
         private string stateFilePath = "./State.json";
         private string settingsFilePath = "./Settings.json";
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Settings settings { get; set; }
 
         public void NotifyPropertyChanged([CallerMemberName] string str = "")
         {
@@ -30,9 +40,7 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-
         private List<Work> worksP;
-
         public List<Work> works {
             get
             {
@@ -49,36 +57,7 @@ namespace EasySave.NS_ViewModel
             }
         }
         
-        public Settings settings { get; set; }
-
-        // Prepare options to indent JSON Files
-        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        };
-
-        // TEST
-        /* private Work WorkCurrent;
-
-         public Work workCurrent
-         {
-             get
-             {
-                 return WorkCurrent;
-             }
-
-             set
-             {
-                 if (value != WorkCurrent)
-                 {
-                     WorkCurrent = value;
-                     NotifyPropertyChanged();
-                 }
-             }
-         }*/
-        // NE PAS REAGRDE  SURTOUT PAS
         private string CurrentName;
-
         public string currentName
         {
             get { return CurrentName; }
@@ -91,8 +70,8 @@ namespace EasySave.NS_ViewModel
                 }
             }
         }
-        private string CurrentDst;
 
+        private string CurrentDst;
         public string currentDst
         {
             get { return CurrentDst; }
@@ -105,8 +84,8 @@ namespace EasySave.NS_ViewModel
                 }
             }
         }
-        private string CurrentSrc;
 
+        private string CurrentSrc;
         public string currentSrc
         {
             get { return CurrentSrc; }
@@ -121,7 +100,6 @@ namespace EasySave.NS_ViewModel
         }
 
         private BackupType CurrentBackupType;
-
         public BackupType currentBackupType
         {
             get { return CurrentBackupType; }
@@ -138,13 +116,8 @@ namespace EasySave.NS_ViewModel
         // --- Constructor ---
         public ViewModel()
         {
-            // Instantiate View
-            this.view = new View(this);
-
             // Initialize Work List
             works = new List<Work>();
-            
-            //works.Add(new Work("soleil", "c:/users/user/desktop/test", "c:/users/user/desktop/soleil", BackupType.DIFFRENTIAL));
 
             // Initialize Settings
             this.settings = Settings.GetInstance();
@@ -176,17 +149,6 @@ namespace EasySave.NS_ViewModel
                 return AddWorkCommand;
             }
         }*/
-        public void TESTANTHO()
-        {
-            works.Add(new Work
-            {
-                name = currentName,
-                src = currentSrc,
-                dst = currentDst,
-                backupType = currentBackupType
-            });
-            SaveWorks();
-        }
 
         public void testRemove( int[] _works)
         {
@@ -300,7 +262,7 @@ namespace EasySave.NS_ViewModel
 
 
 
-
+        /*
         public void Run()
         {
             bool isRunning = true;
@@ -348,7 +310,7 @@ namespace EasySave.NS_ViewModel
                 this.view.ConsoleUpdate(204);
             }
         }
-
+        
         private void AddWork()
         {
             if (this.works.Count < 5)
@@ -387,7 +349,7 @@ namespace EasySave.NS_ViewModel
                 this.view.ConsoleUpdate(205);
             }
         }
-
+        */
         private void LaunchBackupWork()
         {
             if (this.works.Count > 0)

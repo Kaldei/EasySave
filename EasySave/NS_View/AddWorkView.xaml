@@ -33,21 +33,21 @@
         <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
         <StackPanel Grid.Column="1" Grid.Row="2">
             <Label>Name :</Label>
-            <TextBox Text="{Binding currentName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="_name"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="3">
             <Label>Source :</Label>
-            <TextBox Text="{Binding currentSrc, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="_src"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="4">
             <Label>Destination :</Label>
-            <TextBox Text="{Binding currentDst , UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox x:Name="_dst"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="5">
             <Label>Type :</Label>
-            <ComboBox ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}} }" SelectedValue="{Binding currentBackupType, UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox x:Name="_backupType" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}}}"/>
         </StackPanel>
-        <!-- TODO CHECKBOX -->
+        <CheckBox Grid.Column="1" Grid.Row="6" FlowDirection="RightToLeft" HorizontalAlignment="Left" VerticalAlignment="Center">Check to encrypt files</CheckBox>
         <Button Grid.Column="1" Grid.Row="7" Width="150" Height="30" Click="AddWork_Clicked">Ajouter</Button>
     </Grid>
 </Page>

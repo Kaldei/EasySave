@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasySave.NS_ViewModel;
+using EasySave.NS_Model;
 
 namespace EasySave.NS_View
 {
@@ -19,17 +20,18 @@ namespace EasySave.NS_View
     /// </summary>
     public partial class AddWorkView : Page
     {
-        ViewModel _main = new ViewModel();
+        ViewModel viewModel = new ViewModel();
 
         public AddWorkView()
         {
             InitializeComponent();
-            DataContext = _main;
+            DataContext = viewModel;
         }
 
         private void AddWork_Clicked(object sender, RoutedEventArgs e)
         {
-            _main.TESTANTHO();
+            viewModel.AddWork(_name.Text, _src.Text, _dst.Text, (BackupType)_backupType.SelectedItem);
+            // TODO : CALL RETRUN MENU
         }
     }
 }
