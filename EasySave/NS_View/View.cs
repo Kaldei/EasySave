@@ -244,13 +244,14 @@ namespace EasySave.NS_View
                 + "\nTaille du fichier en cours : " + DiplaySize(_curSize)
                 + "\nNombre de fichiers restants : " + _fileLeft
                 + "\nTaille restante : " + DiplaySize(_leftSize) + "\n");
-            } 
+            } else
+            {
             Console.WriteLine(
                 "Current backup : " + _name
                 + "\nSize of the current file : " + DiplaySize(_curSize)
                 + "\nNumber of files left : " + _fileLeft
                 + "\nSize of the files left : " + DiplaySize(_leftSize) + "\n");
-            
+            }
 
             DisplayProgressBar(_pourcent);
         }
@@ -262,10 +263,13 @@ namespace EasySave.NS_View
                Console.WriteLine("\n\n" +
                "Sauvegarde : " + _name + " finie\n"
                + "\nTemps : " + _transferTime + " ms\n");
-            }
+            } else
+            {
                 Console.WriteLine("\n\n" +
                 "Backup : " + _name + " finished\n"
                 + "\nTime taken : " + _transferTime + " ms\n");
+            }
+
             DisplayProgressBar(100);
         }
 
@@ -274,8 +278,11 @@ namespace EasySave.NS_View
             if(language == "FR")
             {
                 Console.WriteLine("Nom du fichier " + _name + " échoué.");
+            } else
+            {
+                Console.WriteLine("File named " + _name + " failed.");
+
             }
-            Console.WriteLine("File named " + _name + " failed.");
         }
 
         private void DisplayProgressBar(int _pourcent)
