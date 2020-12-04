@@ -28,19 +28,25 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-        public List<Work> works
-        {
-            get { return works; }
+
+        private ObservableCollection<Work> worksP;
+
+        public ObservableCollection<Work> works {
+            get
+            {
+                return worksP;
+            }
+
             set
             {
-                if (works != value)
+                if (value != worksP)
                 {
-                    works = value;
-                    NotifyPropertyChanged("userString");
+                    worksP = value;
+                    NotifyPropertyChanged();
                 }
             }
         }
-
+        
         public Settings settings { get; set; }
 
         // Prepare options to indent JSON Files
@@ -59,7 +65,7 @@ namespace EasySave.NS_ViewModel
             this.view = new View(this);
 
             // Initialize Work List
-            works = new List<Work>();
+            works = new ObservableCollection<Work>();
 
             //works.Add(new Work("soleil", "c:/users/user/desktop/test", "c:/users/user/desktop/soleil", BackupType.DIFFRENTIAL));
 
@@ -125,7 +131,7 @@ namespace EasySave.NS_ViewModel
                 try
                 {
                     // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
-                    this.works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(this.stateFilePath));
+                    this.works = JsonSerializer.Deserialize<ObservableCollection<Work>>(File.ReadAllText(this.stateFilePath));
                 }
                 catch
                 {
