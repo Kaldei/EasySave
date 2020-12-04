@@ -27,22 +27,27 @@ namespace EasySave.NS_View
             DataContext = viewModel;
         }
 
-        List<int> idWorkSelected = new List<int>();
-
         private void Remove_Clicked(object sender, RoutedEventArgs e)
         {
+            int nbrTotalWorks = _listWorks.SelectedItems.Count;
+            int[] SelectedWorks = new int[nbrTotalWorks];
 
-            int Length = ListWorks.SelectedItems.Count;
-            int[] SelectedWorks = new int[Length];
-
-            for (int i = 0; i < Length; i++)
+            // Get Works's Index from Selected Items
+            for (int i = 0; i < nbrTotalWorks; i++)
             {
-                SelectedWorks[i] = ListWorks.Items.IndexOf(ListWorks.SelectedItems[i]);
+                SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
             }
+
+            // Sort Array of Index to be sure to Remove the Right Work
             Array.Reverse(SelectedWorks);
-            viewModel.testRemove(SelectedWorks);
-           // ListWorks.SelectedItems;
+
+            // Remove Selected Works
+            foreach (int index in SelectedWorks)
+            {
+                viewModel.RemoveWork(index);
+            }
         }
+
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
 
@@ -50,14 +55,14 @@ namespace EasySave.NS_View
 
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)
         {
-
-            if (ListWorks.SelectedItems.Count != viewModel.works.Count)
+            // Select All or Unselect All If there are All Alerady Selected
+            if (_listWorks.SelectedItems.Count != viewModel.works.Count)
             {
-                 ListWorks.SelectAll();            
+                _listWorks.SelectAll();            
             }
             else
             {
-                 ListWorks.UnselectAll();
+                _listWorks.UnselectAll();
             }
         }
 

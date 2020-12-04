@@ -15,7 +15,7 @@
 
 
         <Grid Background="Pink" Grid.Row=" 0" >
-            <ListView Name="ListWorks" ItemsSource="{Binding works}">
+            <ListView Name="_listWorks" ItemsSource="{Binding works}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding name}" Header="Name" Width="100"></GridViewColumn>
@@ -26,24 +26,18 @@
                 </ListView.View>
             </ListView>
         </Grid>
+        
+        
         <Grid Grid.Row=" 1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0" Click="Remove_Clicked">
-                Remove
-            </Button>
-
-            <Button Grid.Column="1" Click="Save_Clicked" >
-                Save
-            </Button>
             
-            <Button Grid.Column="2" Click="SelectAll_Clicked" >
-                Select All
-            </Button>
+            <Button Grid.Column="0" Click="Remove_Clicked">Remove</Button>
+            <Button Grid.Column="1" Click="Save_Clicked" >Save</Button>
+            <Button Grid.Column="2" Click="SelectAll_Clicked" >Select All</Button>
 
         </Grid>
     </Grid>
