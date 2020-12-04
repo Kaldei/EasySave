@@ -237,17 +237,33 @@ namespace EasySave.NS_View
         public void DisplayCurrentState(string _name, int _fileLeft, long _leftSize, long _curSize, int _pourcent)
         {
             Console.Clear();
+            if(language == "FR")
+            {
+            Console.WriteLine(
+                "Sauvegarde en cours : " + _name
+                + "\nTaille du fichier en cours : " + DiplaySize(_curSize)
+                + "\nNombre de fichiers restants : " + _fileLeft
+                + "\nTaille restante : " + DiplaySize(_leftSize) + "\n");
+            } 
             Console.WriteLine(
                 "Current backup : " + _name
                 + "\nSize of the current file : " + DiplaySize(_curSize)
                 + "\nNumber of files left : " + _fileLeft
                 + "\nSize of the files left : " + DiplaySize(_leftSize) + "\n");
+            
+
             DisplayProgressBar(_pourcent);
         }
 
         public void DisplayBackupRecap(string _name, double _transferTime)
         {
-            Console.WriteLine("\n\n" +
+            if(language == "FR")
+            {
+               Console.WriteLine("\n\n" +
+               "Sauvegarde : " + _name + " finie\n"
+               + "\nTemps : " + _transferTime + " ms\n");
+            }
+                Console.WriteLine("\n\n" +
                 "Backup : " + _name + " finished\n"
                 + "\nTime taken : " + _transferTime + " ms\n");
             DisplayProgressBar(100);
@@ -255,6 +271,10 @@ namespace EasySave.NS_View
 
         public void DisplayFiledError(string _name)
         {
+            if(language == "FR")
+            {
+                Console.WriteLine("Nom du fichier " + _name + " échoué.");
+            }
             Console.WriteLine("File named " + _name + " failed.");
         }
 
