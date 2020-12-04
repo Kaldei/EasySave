@@ -5,16 +5,42 @@ using EasySave.NS_View;
 using EasySave.NS_Model;
 using System.Diagnostics;
 using System.Text.Json;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace EasySave.NS_ViewModel
 {
-    class ViewModel
+    class ViewModel : INotifyPropertyChanged
     {
         // --- Attributes ---
         public View view;
         private string stateFilePath = "./State.json";
         private string settingsFilePath = "./Settings.json";
-        public List<Work> works { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged([CallerMemberName] string str = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(str));
+            }
+        }
+
+        public List<Work> works
+        {
+            get { return works; }
+            set
+            {
+                if (works != value)
+                {
+                    works = value;
+                    NotifyPropertyChanged("userString");
+                }
+            }
+        }
+
         public Settings settings { get; set; }
 
         // Prepare options to indent JSON Files
@@ -22,6 +48,8 @@ namespace EasySave.NS_ViewModel
         {
             WriteIndented = true
         };
+
+       
 
 
         // --- Constructor ---
@@ -31,14 +59,16 @@ namespace EasySave.NS_ViewModel
             this.view = new View(this);
 
             // Initialize Work List
-            this.works = new List<Work>();
+            works = new List<Work>();
+
+            //works.Add(new Work("soleil", "c:/users/user/desktop/test", "c:/users/user/desktop/soleil", BackupType.DIFFRENTIAL));
 
             // Initialize Settings
             this.settings = Settings.GetInstance();
             this.settings.Update("", new List<String>(), new List<String>());
 
             // Load Works at the beginning of the program (from ./State.json)
-            this.view.ConsoleUpdate(LoadWorks());
+            LoadWorks();
 
             // Load Settings at the beginning of the program (from ./Settings.json)
             LoadSettings(); // ---- TODO : Handle Error Message in View ---- //

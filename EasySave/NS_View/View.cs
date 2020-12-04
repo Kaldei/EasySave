@@ -139,12 +139,12 @@ namespace EasySave.NS_View
 
             if (length >= 1 && length <= 20)
             {
-                if (!this.viewModel.works.Exists(work => work.name == _name))
+                /*if (!this.viewModel.works.Exists(work => work.name == _name))
                 {
                     return true;
-                }
+                }*/
                 ConsoleUpdate(214);
-                return false;
+                return true;
             }
             ConsoleUpdate(215);
             return false;

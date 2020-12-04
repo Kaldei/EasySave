@@ -2,24 +2,137 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.ComponentModel;
 
 namespace EasySave.NS_Model
 {
-    class Work
+    class Work : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
         // --- Attributes ---
-        public string name { get; set; }
-        public string src { get; set; }
-        public string dst { get; set; }
-        public BackupType backupType { get; set; }
-        public State state { get; set; }
-        public string lastBackupDate { get; set; }
+        public string name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                if (value != name)
+                {
+                    name = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("name"));
+                    }
+                }
+            }
+        }
+
+        public string src
+        {
+            get
+            {
+                return src;
+            }
+            set
+            {
+                if (value != src)
+                {
+                    src = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("src"));
+                    }
+                }
+            }
+        }
+
+        public string dst
+        {
+            get
+            {
+                return dst;
+            }
+            set
+            {
+                if (value != dst)
+                {
+                    dst = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("dst"));
+                    }
+                }
+            }
+        }
+
+        public BackupType backupType
+        {
+            get
+            {
+                return backupType;
+            }
+            set
+            {
+                if (value != backupType)
+                {
+                    backupType = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("backupType"));
+                    }
+                }
+            }
+        }
+
+        // public string src { get; set; }
+        // public string dst { get; set; }
+        //public BackupType backupType { get; set; }
+        public State state {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                if (value != state)
+                {
+                    state = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("state"));
+                    }
+                }
+            }
+        }
+        public string lastBackupDate
+        {
+            get
+            {
+                return lastBackupDate;
+            }
+            set
+            {
+                if (value != lastBackupDate)
+                {
+                    lastBackupDate = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("lastBackupDate"));
+                    }
+                }
+            }
+        }
 
         // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
+
 
 
         // --- Constructors ---
