@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace EasySave.NS_ViewModel
 {
@@ -55,8 +56,83 @@ namespace EasySave.NS_ViewModel
             WriteIndented = true
         };
 
-       
+        // TEST
+        /* private Work WorkCurrent;
 
+         public Work workCurrent
+         {
+             get
+             {
+                 return WorkCurrent;
+             }
+
+             set
+             {
+                 if (value != WorkCurrent)
+                 {
+                     WorkCurrent = value;
+                     NotifyPropertyChanged();
+                 }
+             }
+         }*/
+        // NE PAS REAGRDE  SURTOUT PAS
+        private string CurrentName;
+
+        public string currentName
+        {
+            get { return CurrentName; }
+            set
+            {
+                if (CurrentName != value)
+                {
+                    CurrentName = value;
+                    NotifyPropertyChanged("currentName");
+                }
+            }
+        }
+        private string CurrentDst;
+
+        public string currentDst
+        {
+            get { return CurrentDst; }
+            set
+            {
+                if (CurrentDst != value)
+                {
+                    CurrentDst = value;
+                    NotifyPropertyChanged("currentDst");
+                }
+            }
+        }
+        private string CurrentSrc;
+
+        public string currentSrc
+        {
+            get { return CurrentSrc; }
+            set
+            {
+                if (CurrentSrc != value)
+                {
+                    CurrentSrc = value;
+                    NotifyPropertyChanged("currentSrc");
+                }
+            }
+        }
+
+        private BackupType CurrentBackupType;
+
+        public BackupType currentBackupType
+        {
+            get { return CurrentBackupType; }
+            set
+            {
+                if (CurrentBackupType != value)
+                {
+                    CurrentBackupType = value;
+                    NotifyPropertyChanged("currentBackupType");
+                }
+            }
+        }
 
         // --- Constructor ---
         public ViewModel()
@@ -66,7 +142,7 @@ namespace EasySave.NS_ViewModel
 
             // Initialize Work List
             works = new List<Work>();
-
+            
             //works.Add(new Work("soleil", "c:/users/user/desktop/test", "c:/users/user/desktop/soleil", BackupType.DIFFRENTIAL));
 
             // Initialize Settings
@@ -81,8 +157,37 @@ namespace EasySave.NS_ViewModel
 
 
         }
+       
+/*        private ICommand AddWorkCommand;
 
+        public ICommand addWorkCommand
+        {
+            get
+            {
+                if (AddWorkCommand == null)
+                {
+                    AddWorkCommand = new RelayCommand<object>((obj) => works.Add(new Work()));
+                    //works.Add(new Work { name = workCurrent.name, src = "c:/users/user/desktop/test", dst = "c:/users/user/desktop/soleil", backupType = BackupType.DIFFRENTIAL });
 
+                   // AddWorkCommand = new RelayCommand<object>((obj) => works.Add(new Work{ name = "zaza", src = "c:/users/user/desktop/test", dst = "c:/users/user/desktop/soleil", backupType = BackupType.DIFFRENTIAL }));
+                    SaveWorks();
+                }
+                return AddWorkCommand;
+            }
+        }*/
+        public void TESTANTHO()
+        {
+            works.Add(new Work
+            {
+                name = currentName,
+                src = currentSrc,
+                dst = currentDst,
+                backupType = currentBackupType
+            });
+            SaveWorks();
+        }
+
+       
         // --- Methods ---
         // Add Work
         public int AddWork(string _name, string _src, string _dst, BackupType _backupType)
