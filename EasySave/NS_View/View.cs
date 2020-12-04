@@ -137,17 +137,17 @@ namespace EasySave.NS_View
         {
             int length = _name.Length;
 
-            if (length >= 1 && length <= 20)
+           if (length >= 1 && length <= 20)
             {
-                /*if (!this.viewModel.works.Exists(work => work.name == _name))
+                if (!this.viewModel.works.Exists(work => work.name == _name))
                 {
                     return true;
-                }*/
+                }
                 ConsoleUpdate(214);
                 return true;
             }
             ConsoleUpdate(215);
-            return false;
+            return true;
         }
 
         //Check if the input is an integer

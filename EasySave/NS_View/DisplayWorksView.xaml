@@ -14,33 +14,19 @@
 
     <Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-
-        </Grid.ColumnDefinitions>
-
-        <Grid Background="AliceBlue" Grid.Column=" 0" >
-            <Label> coucou </Label>
-            <Label Content="{Binding name}"></Label>
-
-        </Grid>
+       
         
         <Grid Background="Pink" Grid.Column=" 1" >
-            <ListBox x:Name="DisplayWorks"  ItemsSource="{Binding works}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Label >hello test ca marche !</Label>
-                            <Label Content="- "></Label>
-                            <Label Content="{Binding name}"></Label>
-                            <Label Content="{Binding src}"></Label>
-                            <Label >hello test ca marche :) !</Label>
-
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <ListView ItemsSource="{Binding works}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding name}" Header="Name" Width="100"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding src}" Header="Source" Width="250"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding dst}" Header="Destination" Width="250"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding backupType}" Header="Backup Type" Width="150"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
     </Grid>
 </Page>
