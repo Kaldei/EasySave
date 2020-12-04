@@ -38,7 +38,8 @@ namespace EasySave.NS_View
             for (int i = 0; i < Length; i++)
             {
                 SelectedWorks[i] = ListWorks.Items.IndexOf(ListWorks.SelectedItems[i]);
-            } 
+            }
+            Array.Reverse(SelectedWorks);
             viewModel.testRemove(SelectedWorks);
            // ListWorks.SelectedItems;
         }
