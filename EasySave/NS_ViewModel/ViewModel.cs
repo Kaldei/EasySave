@@ -456,7 +456,7 @@ namespace EasySave.NS_ViewModel
             {
                 this.view.DisplayFiledError(failedFile);
             }
-            this.view.DisplayBackupRecap(_work.name, transferTime);
+            //this.view.DisplayBackupRecap(_work.name, transferTime);
 
             if (failedFiles.Count == 0)
             {

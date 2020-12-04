@@ -50,14 +50,14 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            int Length = ListWorks.SelectedItems.Count;
+            int Length = _listWorks.SelectedItems.Count;
             if(Length > 0)
             {
                 int[] SelectedWorks = new int[Length];
 
                 for (int i = 0; i < Length; i++)
                 {
-                    SelectedWorks[i] = ListWorks.Items.IndexOf(ListWorks.SelectedItems[i]);
+                    SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
                 }
                 Array.Reverse(SelectedWorks);
                 viewModel.LaunchBackupWork(SelectedWorks);
