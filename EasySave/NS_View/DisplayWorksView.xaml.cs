@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasySave.NS_ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,22 @@ namespace EasySave.NS_View
     /// </summary>
     public partial class DisplayWorksView : Page
     {
+        ViewModel viewModel = new ViewModel();
+
         public DisplayWorksView()
         {
             InitializeComponent();
+            DataContext = viewModel;
+        }
+
+        private void RemoveOne_Clicked(object sender, RoutedEventArgs e)
+        {
+            //ListWorks.Items.RemoveAt(ListWorks.SelectedIndex);
+
+           // ListWorks.SelectedItems;
+        }
+        private void RemoveAll_Clicked(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
