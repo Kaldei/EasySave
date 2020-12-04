@@ -187,6 +187,11 @@ namespace EasySave.NS_ViewModel
             SaveWorks();
         }
 
+        public void testRemove()
+        {
+
+            SaveWorks();
+        }
        
         // --- Methods ---
         // Add Work
