@@ -57,61 +57,6 @@ namespace EasySave.NS_ViewModel
             }
         }
         
-        private string CurrentName;
-        public string currentName
-        {
-            get { return CurrentName; }
-            set
-            {
-                if (CurrentName != value)
-                {
-                    CurrentName = value;
-                    NotifyPropertyChanged("currentName");
-                }
-            }
-        }
-
-        private string CurrentDst;
-        public string currentDst
-        {
-            get { return CurrentDst; }
-            set
-            {
-                if (CurrentDst != value)
-                {
-                    CurrentDst = value;
-                    NotifyPropertyChanged("currentDst");
-                }
-            }
-        }
-
-        private string CurrentSrc;
-        public string currentSrc
-        {
-            get { return CurrentSrc; }
-            set
-            {
-                if (CurrentSrc != value)
-                {
-                    CurrentSrc = value;
-                    NotifyPropertyChanged("currentSrc");
-                }
-            }
-        }
-
-        private BackupType CurrentBackupType;
-        public BackupType currentBackupType
-        {
-            get { return CurrentBackupType; }
-            set
-            {
-                if (CurrentBackupType != value)
-                {
-                    CurrentBackupType = value;
-                    NotifyPropertyChanged("currentBackupType");
-                }
-            }
-        }
 
         // --- Constructor ---
         public ViewModel()
@@ -128,39 +73,8 @@ namespace EasySave.NS_ViewModel
 
             // Load Settings at the beginning of the program (from ./Settings.json)
             LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
-
-
-        }
-       
-/*        private ICommand AddWorkCommand;
-
-        public ICommand addWorkCommand
-        {
-            get
-            {
-                if (AddWorkCommand == null)
-                {
-                    AddWorkCommand = new RelayCommand<object>((obj) => works.Add(new Work()));
-                    //works.Add(new Work { name = workCurrent.name, src = "c:/users/user/desktop/test", dst = "c:/users/user/desktop/soleil", backupType = BackupType.DIFFRENTIAL });
-
-                   // AddWorkCommand = new RelayCommand<object>((obj) => works.Add(new Work{ name = "zaza", src = "c:/users/user/desktop/test", dst = "c:/users/user/desktop/soleil", backupType = BackupType.DIFFRENTIAL }));
-                    SaveWorks();
-                }
-                return AddWorkCommand;
-            }
-        }*/
-
-        public void testRemove( int[] _works)
-        {
-           
-            foreach(int  work in _works)
-            {
-                this.works.RemoveAt(work);
-            }
-            SaveWorks();
         }
 
-       
        
         // --- Methods ---
         // Add Work
@@ -580,21 +494,6 @@ namespace EasySave.NS_ViewModel
             {
                 // Return Error Code
                 return 216;
-            }
-        }
-
-        private void RemoveWork()
-        {
-            if (this.works.Count > 0)
-            {
-                int RemoveChoice = this.view.RemoveWorkChoice() - 1;
-                if (RemoveChoice == -1) return;
-
-                this.view.ConsoleUpdate(this.RemoveWork(RemoveChoice));
-            }
-            else
-            {
-                this.view.ConsoleUpdate(204);
             }
         }
 

@@ -45,7 +45,7 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="5">
             <Label>Type :</Label>
-            <ComboBox x:Name="_backupType" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}}}"/>
+            <ComboBox x:Name="_backupType" SelectedIndex="0" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}}}"/>
         </StackPanel>
         <CheckBox Grid.Column="1" Grid.Row="6" FlowDirection="RightToLeft" HorizontalAlignment="Left" VerticalAlignment="Center">Check to encrypt files</CheckBox>
         <Button Grid.Column="1" Grid.Row="7" Width="150" Height="30" Click="AddWork_Clicked">Ajouter</Button>
