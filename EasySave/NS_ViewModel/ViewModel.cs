@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace EasySave.NS_ViewModel
 {
@@ -187,10 +188,19 @@ namespace EasySave.NS_ViewModel
             SaveWorks();
         }
 
-        public void testRemove()
+        public void testRemove( int[] _works)
+        {
+           
+            foreach(int  work in _works)
+            {
+                this.works.RemoveAt(work);
+            }
+            SaveWorks();
+        }
+
+        public void testSave()
         {
 
-            SaveWorks();
         }
        
         // --- Methods ---
