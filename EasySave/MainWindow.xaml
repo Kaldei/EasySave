@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasySave"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="EasySave" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Background="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+            <Label HorizontalAlignment="Center"  Content="EasySave 2.0"/>
+        </StackPanel>
+        <StackPanel Background="Gray" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4">
+            <Button> Show Works </Button>
+            <Button> Add Work </Button>
+            <Button>Remove Backup</Button>
+            <Button>Launch Backup</Button>
+        </StackPanel>
     </Grid>
 </Window>
