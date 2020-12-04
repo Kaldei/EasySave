@@ -139,7 +139,7 @@ namespace EasySave.NS_View
 
             if (length >= 1 && length <= 20)
             {
-                if (!this.viewModel.model.works.Exists(work => work.name == _name))
+                if (!this.viewModel.works.Exists(work => work.name == _name))
                 {
                     return true;
                 }
@@ -167,7 +167,7 @@ namespace EasySave.NS_View
         //Display all works 
         private void LoadWorks(int _shift)
         {
-            var works = this.viewModel.model.works;
+            var works = this.viewModel.works;
 
             for (int i = 0; i < works.Count; i++)
             {
@@ -202,7 +202,7 @@ namespace EasySave.NS_View
             ConsoleUpdate(2);
 
             //Check if the user's input is a valid integer
-            return CheckChoiceMenu(Console.ReadLine(), 0, this.viewModel.model.works.Count + 1);
+            return CheckChoiceMenu(Console.ReadLine(), 0, this.viewModel.works.Count + 1);
         }
 
         //Choose the work to remove
@@ -216,7 +216,7 @@ namespace EasySave.NS_View
             ConsoleUpdate(2);
 
             //Check if the user's input is a valid integer
-            return CheckChoiceMenu(Console.ReadLine(), 0, this.viewModel.model.works.Count);
+            return CheckChoiceMenu(Console.ReadLine(), 0, this.viewModel.works.Count);
         }
 
         //Check if the input is a integer and in the good range
