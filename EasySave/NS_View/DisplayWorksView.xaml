@@ -30,16 +30,21 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Click="RemoveOne_Clicked">
-                Delete
+            <Button Grid.Column="0" Click="Remove_Clicked">
+                Remove
             </Button>
 
-            <Button Grid.Column="1" Click="RemoveAll_Clicked" >
-                Delete All
+            <Button Grid.Column="1" Click="Save_Clicked" >
+                Save
             </Button>
             
+            <Button Grid.Column="2" Click="SelectAll_Clicked" >
+                Select All
+            </Button>
+
         </Grid>
     </Grid>
 </Page>
