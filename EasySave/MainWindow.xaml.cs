@@ -42,11 +42,6 @@ namespace EasySave
             DataContext = new AddWorkView();
         }
 
-        private void RemoveWorkButton(object sender, RoutedEventArgs e)
-        {
-            DataContext = new RemoveWorkView();
-        }
-
         private void DisplayWorksButton(object sender, RoutedEventArgs e)
         {
             DataContext = new DisplayWorksView();
