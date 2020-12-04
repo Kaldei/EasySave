@@ -1,35 +1,153 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using EasySave.NS_Model;
 using EasySave.NS_View;
+using EasySave.NS_Model;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace EasySave.NS_ViewModel
 {
     class ViewModel
     {
         // --- Attributes ---
-        public Model model;
         public View view;
+        private string stateFilePath = "./State.json";
+        private string settingsFilePath = "./Settings.json";
+        public List<Work> works { get; set; }
+        public Settings settings { get; set; }
+
+        // Prepare options to indent JSON Files
+        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
 
 
         // --- Constructor ---
         public ViewModel()
         {
-            // Instantiate Model & View
-            this.model = new Model();
+            // Instantiate View
             this.view = new View(this);
 
+            // Initialize Work List
+            this.works = new List<Work>();
+
+            // Initialize Settings
+            this.settings = Settings.GetInstance();
+            this.settings.Update("", new List<String>(), new List<String>());
+
             // Load Works at the beginning of the program (from ./State.json)
-            this.view.ConsoleUpdate(this.model.LoadWorks());
+            this.view.ConsoleUpdate(LoadWorks());
 
             // Load Settings at the beginning of the program (from ./Settings.json)
-            this.model.LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
+            LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
+
+
         }
 
 
         // --- Methods ---
+        // Add Work
+        public int AddWork(string _name, string _src, string _dst, BackupType _backupType)
+        {
+            try
+            {
+                // Add Work in the program (at the end of the List)
+                this.works.Add(new Work(_name, _src, _dst, _backupType));
+                SaveWorks();
+
+                // Return Success Code
+                return 101;
+            }
+            catch
+            {
+                // Return Error Code
+                return 201;
+            }
+        }
+
+        // Remove Work
+        public int RemoveWork(int _index)
+        {
+            try
+            {
+                // Remove Work from the program (at index)
+                this.works.RemoveAt(_index);
+                SaveWorks();
+
+                // Return Success Code
+                return 103;
+            }
+            catch
+            {
+                // Return Error Code
+                return 203;
+            }
+        }
+
+        // Load Works and States (at the beginning of the program)
+        public int LoadWorks()
+        {
+            // Check if backupWorkSave.json File exists
+            if (File.Exists(stateFilePath))
+            {
+                try
+                {
+                    // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
+                    this.works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(this.stateFilePath));
+                }
+                catch
+                {
+                    // Return Error Code
+                    return 200;
+                }
+            }
+            else
+            {
+                // Create Settings File
+                File.WriteAllText(this.stateFilePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
+            }
+            // Return Success Code
+            return 100;
+        }
+
+        // Save Works
+        public void SaveWorks()
+        {
+            // Write Work list into JSON file (at ./BackupWorkSave.json)
+            File.WriteAllText(this.stateFilePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
+        }
+
+        // Load Settings (at the beginning of the program)
+        public int LoadSettings()
+        {
+            // Check if backupWorkSave.json File exists
+            if (File.Exists(settingsFilePath))
+            {
+                try
+                {
+                    // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
+                    this.settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(this.settingsFilePath));
+                }
+                catch
+                {
+                    // Return Error Code
+                    return 200;
+                }
+            }
+            else
+            {
+                // Create Settings File
+                File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
+            }
+            // Return Success Code
+            return 100;
+        }
+
+
+
+
         public void Run()
         {
             bool isRunning = true;
@@ -68,7 +186,7 @@ namespace EasySave.NS_ViewModel
 
         private void DisplayWorks()
         {
-            if (this.model.works.Count > 0)
+            if (this.works.Count > 0)
             {
                 this.view.DisplayWorks();
             }
@@ -80,7 +198,7 @@ namespace EasySave.NS_ViewModel
 
         private void AddWork()
         {
-            if (this.model.works.Count < 5)
+            if (this.works.Count < 5)
             {
                 string addWorkName = view.AddWorkName();
                 if (addWorkName == "0") return;
@@ -109,7 +227,7 @@ namespace EasySave.NS_ViewModel
                         addWorkBackupType = BackupType.FULL;
                         break;
                 }
-                this.view.ConsoleUpdate(model.AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
+                this.view.ConsoleUpdate(AddWork(addWorkName, addWorkSrc, addWorkDest, addWorkBackupType));
             }
             else
             {
@@ -119,7 +237,7 @@ namespace EasySave.NS_ViewModel
 
         private void LaunchBackupWork()
         {
-            if (this.model.works.Count > 0)
+            if (this.works.Count > 0)
             {
                 int userChoice = view.LaunchBackupChoice();
 
@@ -134,15 +252,15 @@ namespace EasySave.NS_ViewModel
 
                     // Run every work one by one
                     case 1:
-                        foreach (Work work in this.model.works)
+                        foreach (Work work in this.works)
                         {
                             // Get id of one Running Business Software from the List (-1 if none) 
-                            businessSoftwaresId = this.model.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
+                            businessSoftwaresId = this.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
 
-                            // Prevents from Launching Backups if one Business Software is Running
+                            // Prevents from Lauching Backups if one Business Software is Running
                             if (businessSoftwaresId != -1)
                             {
-                                Console.WriteLine($"{this.model.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                                Console.WriteLine($"{this.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
                             }
                             else
                             {
@@ -156,17 +274,17 @@ namespace EasySave.NS_ViewModel
                     // Run one work from his ID in the list
                     default:
                         // Get id of one Running Business Software from the List (-1 if none) 
-                        businessSoftwaresId = this.model.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
+                        businessSoftwaresId = this.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
 
-                        // Prevents from Launching Backups if one Business Software is Running
+                        // Prevents from Lauching Backups if one Business Software is Running
                         if (businessSoftwaresId != -1)
                         {
-                            Console.WriteLine($"{this.model.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                            Console.WriteLine($"{this.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
                         }
                         else
                         {
                             int indexWork = userChoice - 2;
-                            this.view.ConsoleUpdate(LaunchBackupType(this.model.works[indexWork]));
+                            this.view.ConsoleUpdate(LaunchBackupType(this.works[indexWork]));
                         }
 
                         break;
@@ -178,6 +296,7 @@ namespace EasySave.NS_ViewModel
                 this.view.ConsoleUpdate(204);
             }
         }
+
         public int LaunchBackupType(Work _work)
         {
             DirectoryInfo dir = new DirectoryInfo(_work.src);
@@ -232,7 +351,7 @@ namespace EasySave.NS_ViewModel
         {
             long totalSize = 0;
 
-            // Get every files of the source directory
+            // Get evvery files of the source directory
             FileInfo[] files = _dir.GetFiles("*.*", SearchOption.AllDirectories);
 
             // Calcul the size of every files
@@ -271,7 +390,7 @@ namespace EasySave.NS_ViewModel
             if (filesToCopy.Count == 0)
             {
                 _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
-                this.model.SaveWorks();
+                this.SaveWorks();
                 this.view.ConsoleUpdate(3);
                 this.view.DisplayBackupRecap(_work.name, 0);
                 return 105;
@@ -328,7 +447,7 @@ namespace EasySave.NS_ViewModel
 
             // Update the current work status
             _work.state = null;
-            this.model.SaveWorks();
+            this.SaveWorks();
             this.view.ConsoleUpdate(3);
 
             foreach (string failedFile in failedFiles)
@@ -351,12 +470,12 @@ namespace EasySave.NS_ViewModel
 
         private void RemoveWork()
         {
-            if (this.model.works.Count > 0)
+            if (this.works.Count > 0)
             {
                 int RemoveChoice = this.view.RemoveWorkChoice() - 1;
                 if (RemoveChoice == -1) return;
 
-                this.view.ConsoleUpdate(this.model.RemoveWork(RemoveChoice));
+                this.view.ConsoleUpdate(this.RemoveWork(RemoveChoice));
             }
             else
             {
@@ -380,7 +499,7 @@ namespace EasySave.NS_ViewModel
                 long curSize = _files[i].Length;
                 leftSize -= curSize;
 
-                if(this.model.CopyFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent))
+                if (this.CopyFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent))
                 {
                     this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent);
                 }
@@ -390,6 +509,48 @@ namespace EasySave.NS_ViewModel
                 }
             }
             return failedFiles;
+        }
+
+        public bool CopyFile(Work _work, FileInfo _currentFile, long _curSize, string _dst, long _leftSize, int _totalFile, int fileIndex, int _pourcent)
+        {
+            // Time at when file copy start (use by SaveLog())
+            DateTime startTimeFile = DateTime.Now;
+            string curDirPath = _currentFile.DirectoryName;
+            string dstDirectory = _dst;
+
+            // If there is a directoy, we add the relative path from the directory dst
+            if (Path.GetRelativePath(_work.src, curDirPath).Length > 1)
+            {
+                dstDirectory += Path.GetRelativePath(_work.src, curDirPath) + "\\";
+
+                // If the directory dst doesn't exist, we create it
+                if (!Directory.Exists(dstDirectory))
+                {
+                    Directory.CreateDirectory(dstDirectory);
+                }
+            }
+
+            // Get the current dstFile
+            string dstFile = dstDirectory + _currentFile.Name;
+
+            try
+            {
+                // Update the current work status
+                _work.state.UpdateState(_pourcent, (_totalFile - fileIndex), _leftSize, _currentFile.FullName, dstFile);
+                SaveWorks();
+
+                // Copy the current file
+                _currentFile.CopyTo(dstFile, true);
+
+                // Save Log
+                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, false);
+                return true;
+            }
+            catch
+            {
+                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, true);
+                return false;
+            }
         }
     }
 }
