@@ -45,6 +45,24 @@ namespace EasySave.NS_View
         }
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
+            int Length = ListWorks.SelectedItems.Count;
+            if(Length > 0)
+            {
+                int[] SelectedWorks = new int[Length];
+
+                for (int i = 0; i < Length; i++)
+                {
+                    SelectedWorks[i] = ListWorks.Items.IndexOf(ListWorks.SelectedItems[i]);
+                }
+                Array.Reverse(SelectedWorks);
+                viewModel.LaunchBackupWork(SelectedWorks);
+                
+
+            } else
+            {
+                Console.WriteLine("Pas de works !");
+            }
+           
 
         }
 
