@@ -31,6 +31,9 @@ namespace EasySave.NS_View
 
         private void AddWork_Clicked(object sender, RoutedEventArgs e)
         {
+            string src = RectifyPath(_src.Text);
+            string dst = RectifyPath(_dst.Text);
+
             bool isValidWorkName = CheckName(_name.Text);
             if (isValidWorkName)
             {
@@ -44,7 +47,7 @@ namespace EasySave.NS_View
                 return;
             }
 
-            bool isValidSource = Directory.Exists(RectifyPath(_src.Text));
+            bool isValidSource = Directory.Exists(src);
             if (isValidSource)
             {
                 _srcLabel.Foreground = Brushes.Black;
@@ -57,7 +60,7 @@ namespace EasySave.NS_View
                 return;
             }
 
-            bool isValidDestination = CheckWorkDst(RectifyPath(_src.Text), RectifyPath(_dst.Text));
+            bool isValidDestination = CheckWorkDst(src, dst);
             if (isValidDestination)
             {
                 _dstLabel.Foreground = Brushes.Black;
@@ -70,7 +73,7 @@ namespace EasySave.NS_View
                 return;
             }
 
-            viewModel.AddWork(_name.Text, _src.Text, _dst.Text, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
+            viewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
             // TODO : CALL RETRUN MENU
         }
 
