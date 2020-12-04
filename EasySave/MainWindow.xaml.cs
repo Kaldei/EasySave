@@ -28,7 +28,6 @@ namespace EasySave
 
             DataContext = new DisplayWorksView();
 
-
             /*            // Init Program
                         ViewModel viewModel = new ViewModel();
                         DataContext = new ShowWorksView();
@@ -37,5 +36,21 @@ namespace EasySave
                         // Run Program
                         viewModel.Run();*/
         }
+
+        private void AddWorkButton(object sender, RoutedEventArgs e)
+        {
+            DataContext = new AddWorkView();
+        }
+
+        private void RemoveWorkButton(object sender, RoutedEventArgs e)
+        {
+            DataContext = new RemoveWorkView();
+        }
+
+        private void DisplayWorksButton(object sender, RoutedEventArgs e)
+        {
+            DataContext = new DisplayWorksView();
+        }
+
     }
 }

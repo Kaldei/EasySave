@@ -12,14 +12,36 @@
     <Window.DataContext>
         <view:DisplayWorksView></view:DisplayWorksView>
     </Window.DataContext>
-    
+
     <Grid Background="Red">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="20"/>
+
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Frame  Grid.Column="1"  Content="{Binding}"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Click="AddWorkButton">
+                Add Work
+            </Button>
+
+            <Button Grid.Row="1" Click="RemoveWorkButton">
+                Delete Work
+            </Button>
+
+            <Button Grid.Row="2" Click="DisplayWorksButton">
+                Display Work
+            </Button>
+        </Grid>
+        <Frame  Grid.Column="1"  Content="{Binding}" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Window>

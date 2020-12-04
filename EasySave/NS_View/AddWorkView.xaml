@@ -1,0 +1,53 @@
+﻿<Page x:Class="EasySave.NS_View.AddWorkView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:model="clr-namespace:EasySave.NS_Model"
+      xmlns:local="clr-namespace:EasySave.NS_View"
+      xmlns:viewModel="clr-namespace:EasySave.NS_ViewModel"
+
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddWorkView">
+    
+    <!--<Page.DataContext>
+        <viewModel:ViewModel></viewModel:ViewModel>
+    </Page.DataContext> -->
+    
+
+    
+    <Grid Background="Pink">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Grid.Column="0" Content="{Binding currentName}"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="{Binding currentSrc}"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="{Binding currentDst}"></Label>
+        <Label Grid.Row="4" Grid.Column="0">type :</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding currentName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding currentSrc, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding currentDst , UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+        <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150"
+              ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}} }" SelectedValue="{Binding currentBackupType, UpdateSourceTrigger=PropertyChanged}"      />
+
+        <Button Grid.Column="7" Grid.Row="1" Click="AddWork_Clicked">Ajouter</Button>
+
+    </Grid>
+</Page>
