@@ -14,7 +14,7 @@
 
         // --- Contructors ---
         // Constructor used by LoadWorks()
-        public State() {}
+        public State() { }
 
         // Constructor used by DoBackup()
         public State(int _totalFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
