@@ -195,7 +195,6 @@ namespace EasySave.NS_ViewModel
                         break;
 
                     case 3:
-                        LaunchBackupWork();
                         break;
 
                     case 4:
@@ -264,67 +263,41 @@ namespace EasySave.NS_ViewModel
             }
         }
         */
-        private void LaunchBackupWork()
+
+        public void LaunchBackupWork(int[] idWorkToSave)
         {
-            if (this.works.Count > 0)
+            int businessSoftwaresId;
+
+            if (this.works.Count > 0 && idWorkToSave.Length > 0)
             {
-                int userChoice = view.LaunchBackupChoice();
-
-                // Used to Check if one Business Software is Running
-                int businessSoftwaresId;
-
-                switch (userChoice)
+                for (int i = 0; i < idWorkToSave.Length; i++)
                 {
-                    // Return to the menu
-                    case 0:
-                        return;
+                    // Get id of one Running Business Software from the List (-1 if none) 
+                    businessSoftwaresId = this.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
 
-                    // Run every work one by one
-                    case 1:
-                        foreach (Work work in this.works)
-                        {
-                            // Get id of one Running Business Software from the List (-1 if none) 
-                            businessSoftwaresId = this.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
-
-                            // Prevents from Lauching Backups if one Business Software is Running
-                            if (businessSoftwaresId != -1)
-                            {
-                                Console.WriteLine($"{this.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
-                            }
-                            else
-                            {
-                                this.view.ConsoleUpdate(LaunchBackupType(work));
-                                this.view.ConsoleUpdate(4);
-                            }
-                            Console.ReadLine();
-                        }
-                        break;
-
-                    // Run one work from his ID in the list
-                    default:
-                        // Get id of one Running Business Software from the List (-1 if none) 
-                        businessSoftwaresId = this.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
-
-                        // Prevents from Lauching Backups if one Business Software is Running
-                        if (businessSoftwaresId != -1)
-                        {
-                            Console.WriteLine($"{this.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
-                        }
-                        else
-                        {
-                            int indexWork = userChoice - 2;
-                            this.view.ConsoleUpdate(LaunchBackupType(this.works[indexWork]));
-                        }
-
-                        break;
+                    // Prevents from Lauching Backups if one Business Software is Running
+                    if (businessSoftwaresId != -1)
+                    {
+                        Console.WriteLine($"{this.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                    }
+                    else
+                    {
+                        LaunchBackupType(this.works[idWorkToSave[i]]);
+                        // this.view.ConsoleUpdate(LaunchBackupType(this.works[idWorkToSave[i]]));
+                        // this.view.ConsoleUpdate(4);
+                    }
                 }
-                this.view.ConsoleUpdate(1);
+                
+                    // Retour menu 
+                //this.view.ConsoleUpdate(1);
             }
             else
             {
-                this.view.ConsoleUpdate(204);
+                    // PAS DE WORK
+                // this.view.ConsoleUpdate(204);
             }
         }
+        
 
         public int LaunchBackupType(Work _work)
         {
@@ -417,10 +390,10 @@ namespace EasySave.NS_ViewModel
 
             // Test if there is file to copy
             if (filesToCopy.Count == 0)
-            {
+            { 
                 _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
-                this.SaveWorks();
-                this.view.ConsoleUpdate(3);
+                this.SaveWorks(); 
+               // this.view.ConsoleUpdate(3);
                 this.view.DisplayBackupRecap(_work.name, 0);
                 return 105;
             }
@@ -477,7 +450,7 @@ namespace EasySave.NS_ViewModel
             // Update the current work status
             _work.state = null;
             this.SaveWorks();
-            this.view.ConsoleUpdate(3);
+            //this.view.ConsoleUpdate(3);
 
             foreach (string failedFile in failedFiles)
             {
@@ -515,7 +488,7 @@ namespace EasySave.NS_ViewModel
 
                 if (this.CopyFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent))
                 {
-                    this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent);
+                   // this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent);
                 }
                 else
                 {

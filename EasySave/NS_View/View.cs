@@ -232,7 +232,6 @@ namespace EasySave.NS_View
 
         public void DisplayCurrentState(string _name, int _fileLeft, long _leftSize, long _curSize, int _pourcent)
         {
-            Console.Clear();
             Console.WriteLine(
                 "Current backup : " + _name
                 + "\nSize of the current file : " + DiplaySize(_curSize)
