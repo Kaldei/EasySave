@@ -70,7 +70,7 @@ namespace EasySave.NS_View
                 return;
             }
 
-            viewModel.AddWork(_name.Text, _src.Text, _dst.Text, (BackupType)_backupType.SelectedItem);
+            viewModel.AddWork(_name.Text, _src.Text, _dst.Text, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
             // TODO : CALL RETRUN MENU
         }
 
