@@ -8,16 +8,16 @@ namespace EasySave.NS_Model
 {
     class Work : INotifyPropertyChanged
     {
+        // --- Attributes ---
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string nameP;
-        private string srcP;
-        private string dstP;
+        // Prepare options to indent JSON Files
+        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
 
-        private BackupType backupTypeP;
-        private State stateP;
-        private string lastBackupDateP;
-        // --- Attributes ---
+        private string nameP;
         public string name
         {
             get
@@ -37,6 +37,7 @@ namespace EasySave.NS_Model
             }
         }
 
+        private string srcP;
         public string src
         {
             get
@@ -56,6 +57,7 @@ namespace EasySave.NS_Model
             }
         }
 
+        private string dstP;
         public string dst
         {
             get
@@ -75,6 +77,7 @@ namespace EasySave.NS_Model
             }
         }
 
+        private BackupType backupTypeP;
         public BackupType backupType
         {
             get
@@ -94,7 +97,7 @@ namespace EasySave.NS_Model
             }
         }
 
-         
+        private State stateP;
         public State state {
             get
             {
@@ -112,6 +115,8 @@ namespace EasySave.NS_Model
                 }
             }
         }
+
+        private string lastBackupDateP;
         public string lastBackupDate
         {
             get
@@ -130,13 +135,6 @@ namespace EasySave.NS_Model
                 }
             }
         }
-
-        // Prepare options to indent JSON Files
-        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        };
-
 
 
         // --- Constructors ---
