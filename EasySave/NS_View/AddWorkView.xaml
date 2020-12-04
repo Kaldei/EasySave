@@ -32,19 +32,19 @@
         <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28">Add a work</TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
         <StackPanel Grid.Column="1" Grid.Row="2">
-            <Label>Name :</Label>
+            <Label x:Name="_nameLabel">Name:</Label>
             <TextBox x:Name="_name"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="3">
-            <Label>Source :</Label>
+            <Label x:Name="_srcLabel">Source:</Label>
             <TextBox x:Name="_src"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="4">
-            <Label>Destination :</Label>
+            <Label x:Name="_dstLabel">Destination:</Label>
             <TextBox x:Name="_dst"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="5">
-            <Label>Type :</Label>
+            <Label>Type:</Label>
             <ComboBox x:Name="_backupType" SelectedIndex="0" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}}}"/>
         </StackPanel>
         <CheckBox Grid.Column="1" Grid.Row="6" FlowDirection="RightToLeft" HorizontalAlignment="Left" VerticalAlignment="Center">Check to encrypt files</CheckBox>
