@@ -10,19 +10,25 @@ namespace EasySave.NS_Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private string nameP;
+        private string srcP;
+        private string dstP;
 
+        private BackupType backupTypeP;
+        private State stateP;
+        private string lastBackupDateP;
         // --- Attributes ---
         public string name
         {
             get
             {
-                return name;
+                return nameP;
             }
             set
             {
-                if (value != name)
+                if (value != nameP)
                 {
-                    name = value;
+                    nameP = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("name"));
@@ -35,13 +41,13 @@ namespace EasySave.NS_Model
         {
             get
             {
-                return src;
+                return srcP;
             }
             set
             {
-                if (value != src)
+                if (value != srcP)
                 {
-                    src = value;
+                    srcP = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("src"));
@@ -54,13 +60,13 @@ namespace EasySave.NS_Model
         {
             get
             {
-                return dst;
+                return dstP;
             }
             set
             {
-                if (value != dst)
+                if (value != dstP)
                 {
-                    dst = value;
+                    dstP = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("dst"));
@@ -73,13 +79,13 @@ namespace EasySave.NS_Model
         {
             get
             {
-                return backupType;
+                return backupTypeP;
             }
             set
             {
-                if (value != backupType)
+                if (value != backupTypeP)
                 {
-                    backupType = value;
+                    backupTypeP = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("backupType"));
@@ -88,19 +94,17 @@ namespace EasySave.NS_Model
             }
         }
 
-        // public string src { get; set; }
-        // public string dst { get; set; }
-        //public BackupType backupType { get; set; }
+         
         public State state {
             get
             {
-                return state;
+                return stateP;
             }
             set
             {
-                if (value != state)
+                if (value != stateP)
                 {
-                    state = value;
+                    stateP = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("state"));
@@ -112,13 +116,13 @@ namespace EasySave.NS_Model
         {
             get
             {
-                return lastBackupDate;
+                return lastBackupDateP;
             }
             set
             {
-                if (value != lastBackupDate)
+                if (value != lastBackupDateP)
                 {
-                    lastBackupDate = value;
+                    lastBackupDateP = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("lastBackupDate"));
