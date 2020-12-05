@@ -4,7 +4,7 @@
     <img src="https://www.flaticon.com/svg/static/icons/svg/3790/3790894.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center"> EasySave </h3>
+  <h1 align="center"> EasySave v1.1 (Console Version)</h3>
 
   <p align="center">
     A little backup software by ProSoft
@@ -58,13 +58,8 @@ Like any software in the ProSoft Suite, the software will fit into the pricing p
 * Unit price: 200 € HT
 * Annual maintenance contract 5/7 8-17h (updates included): 12% purchase price (tacit renewal annual contract with revaluation based on the SYNTEC index)
 
-During this project we are responsible of the archiutecture of the application, the development and the managment of differents versions, but also the user documentation.
+During this project we are responsible of the architecture of the application, the development and the management of different versions, but also the user documentation.
 In order for our code to be reusable by another team, we have respected certain constraints and tools (cf <a href="#built-with">Built With</a>).
-
-### Release dates : 
-* Version 1 : 25-11-2020
-* Version 2 : 07-12-2020
-* Version 3 : 17-12-2020
 
 ### Built With
 
@@ -75,72 +70,43 @@ This is the list of the major technologies that we used in this project.
 * [Visual Paradigm](https://online.visual-paradigm.com/fr/)
 
 
-## Version 1.0 - Console Version
-
-The specification for this version are the following :
-* The software use the .Net Core.
-* The software allow the user to do 5 backup works
-* One backup work is defined by : 
-    * Name
-    * Source
-    * Destination
-    * A type (Complete or Differential)
-* The user can request that one of the backup jobs run or that the jobs run sequentially.
-* The directories (sources and targets) can be on local disks, External or network drives.
-* All items in the source directory are affected by the backup.
-
-### Log file
-
-The software must write in real time in a daily log file the history of the actions of the backup jobs. The minimum information expected is:
-* Horodatage   
-* Appellation du travail de sauvegarde 
-* Adresse complète du fichier Source (format UNC) 
-* Adresse complète du fichier de destination (format UNC) 
-* Taille du fichier  
-* Temps de transfert du fichier en ms (négatif si erreur)   
-
-### State file
-
-The software must record in real time, in a single file, the progress of the backup jobs. The minimum information expected is:
-* Timestamp
-* Name of the backup job
-* Status of the Backup job (ex: Active, Not Active ...)
-* If the job is active
-    * The total number of eligible files
-    * The size of the files to be transferred
-    * Progression
-    * Number of remaining files
-    * Size of the remaining files
-    * Full address of the Source file being backed up
-    * Full address of the destination file
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
-You need to follow the differents steps below to run the software properly.
-
-### Prerequisites
-
-In order to run this project you need to have :
-
-* Visual Studio 2019 or the .NET SDK
-* Github 
-
 ### Installation
 
-1. Clone the repo
+1. If you have git, you can clone the repo with this command:
    ```sh
    git clone https://ACALCGLK@dev.azure.com/ACALCGLK/EasySave/_git/EasySave
    ```
-2. You can now open the project on Visual Studio
+2. Or you can directly download as Zip.
 
-<!-- USAGE EXAMPLES -->
-## Usage
+### Folders
+In this project you will found different folders :
+* EasySave_Code : Contains the EasySave's code.
+* EasySave_Exe : Contains EasySave Executable and [User Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FUSERDOC.md).
+* UML_Diagrams : Contains EasySave's UML Diagrams and [UML Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FUMLDOC.md).
 
-Now that you have clone the project, you can open it. To launch the software you need to execute the EasySave.exe file or use Visual Studio.
-You can now display, add, remove and execute any backup work via the main menu interface.
 
-_For more examples, please refer to the [User Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FDOCUMENTATION.md)_
+## Release dates : 
+### Console Versions:
+* Version 1 : 25-11-2020
+* Version 1.1 : 07-12-2020
+
+### Graphical Versions:
+* Version 2 : 07-12-2020
+* Version 3 : 17-12-2020
+
+
+## EasySave v1.1 - Release Notes:
+
+### New Feature: 
+* Adding Language Settings Part.
+* Adding French Language.
+
+### Application Enhancement:
+* Enhance MVVM (Moving code from Model Class to ViewModel)
+
 
 <!-- ROADMAP 
 ## Roadmap
