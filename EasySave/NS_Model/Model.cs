@@ -1,19 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using EasySave.NS_View;
-using EasySave.NS_Model;
-using System.Diagnostics;
+using System.IO;
+using System.Text;
 using System.Text.Json;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Windows.Controls;
 
-namespace EasySave.NS_ViewModel
+namespace EasySave.NS_Model
 {
-    class ViewModel
+    public class Model
     {
         // --- Attributes ---
         // Prepare options to indent JSON Files
@@ -22,16 +15,20 @@ namespace EasySave.NS_ViewModel
             WriteIndented = true
         };
 
-        private string stateFilePath = "./State.json";
-        private string settingsFilePath = "./Settings.json";
+        public string stateFilePath { get; set; }
+        public string settingsFilePath { get; set; }
 
         public List<Work> works { get; set; }
         public Settings settings { get; set; }
 
 
         // --- Constructor ---
-        public ViewModel()
+        public Model()
         {
+            // Initialize Config Files Path
+            stateFilePath = "./State.json";
+            settingsFilePath = "./Settings.json";
+
             // Initialize Work List
             works = new List<Work>();
 
@@ -68,7 +65,7 @@ namespace EasySave.NS_ViewModel
             else
             {
                 // Create Settings File
-                File.WriteAllText(this.stateFilePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
+                SaveWorks();
             }
             // Return Success Code
             return 100;
@@ -101,10 +98,17 @@ namespace EasySave.NS_ViewModel
             else
             {
                 // Create Settings File
-                File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
+                SaveSettings();
             }
             // Return Success Code
             return 100;
+        }
+
+        // Save Settings
+        public void SaveSettings()
+        {
+            // Write Work list into JSON file (at ./BackupWorkSave.json)
+            File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
         }
     }
 }

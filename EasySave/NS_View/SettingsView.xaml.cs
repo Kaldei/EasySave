@@ -21,12 +21,20 @@ namespace EasySave.NS_View
     /// </summary>
     public partial class SettingsView : Page
     {
-        ViewModel viewModel = new ViewModel();
+        // ----- Attributes -----
+        private SettingsViewModel settingsViewModel { get; set; }
+        public MainWindow mainWindow { get; set; }
 
-        public SettingsView()
+
+        // ----- Constructor -----
+        public SettingsView(SettingsViewModel _settingsViewModel, MainWindow _mainWindow)
         {
+            // Initaialize Page content
+            this.settingsViewModel = _settingsViewModel;
+            this.mainWindow = _mainWindow;
+            DataContext = this.settingsViewModel;
             InitializeComponent();
-            DataContext = viewModel;
+            
         }
 
         private void ChangeLanguage(object sender, RoutedEventArgs e)
@@ -52,8 +60,8 @@ namespace EasySave.NS_View
             }
 
             // Update Crypto Soft Path
-            this.viewModel.settings.cryptoSoftPath = _cryptoSoftPath.Text;
-            this.viewModel.SaveSettings();
+            this.settingsViewModel.model.settings.cryptoSoftPath = _cryptoSoftPath.Text;
+            this.settingsViewModel.model.SaveSettings();
         }
 
         private void addExtensionButton_Click(object sender, RoutedEventArgs e)
@@ -73,13 +81,15 @@ namespace EasySave.NS_View
             }
 
             // Add Extension
-            this.viewModel.settings.cryptoExtensions.Add(_addExtension.Text);
-            this.viewModel.SaveSettings();
+            this.settingsViewModel.model.settings.cryptoExtensions.Add(_addExtension.Text);
+            this.settingsViewModel.model.SaveSettings();
+
+            // TODO : Reload
         }
 
         private bool checkExtension(string _addExtension)
         {
-            if (_addExtension.StartsWith(".") && !this.viewModel.settings.cryptoExtensions.Exists(extention => extention == _addExtension))
+            if (_addExtension.StartsWith(".") && !this.settingsViewModel.model.settings.cryptoExtensions.Exists(extention => extention == _addExtension))
             {
                 return true;
             }
@@ -89,8 +99,10 @@ namespace EasySave.NS_View
         private void removeExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove Extension
-            this.viewModel.settings.cryptoExtensions.Remove((string)_removeExtension.SelectedItem);
-            this.viewModel.SaveSettings();
+            this.settingsViewModel.model.settings.cryptoExtensions.Remove((string)_removeExtension.SelectedItem);
+            this.settingsViewModel.model.SaveSettings();
+
+            // TODO : Reload
         }
 
         private void addBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
@@ -110,13 +122,15 @@ namespace EasySave.NS_View
             }
 
             // Add Business Software
-            this.viewModel.settings.businessSoftwares.Add(_addBusinessSoftware.Text);
-            this.viewModel.SaveSettings();
+            this.settingsViewModel.model.settings.businessSoftwares.Add(_addBusinessSoftware.Text);
+            this.settingsViewModel.model.SaveSettings();
+
+            // TODO : Reload
         }
 
         private bool checkBusinessSoftware(string _addBusinessSoftware)
         {
-            if (!this.viewModel.settings.businessSoftwares.Exists(businessSoftware => businessSoftware == _addBusinessSoftware))
+            if (!this.settingsViewModel.model.settings.businessSoftwares.Exists(businessSoftware => businessSoftware == _addBusinessSoftware))
             {
                 return true;
             }
@@ -126,8 +140,15 @@ namespace EasySave.NS_View
         private void removeBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove Business Sofware
-            this.viewModel.settings.businessSoftwares.Remove((string)_removeBusinessSoftware.SelectedItem);
-            this.viewModel.SaveSettings();
+            this.settingsViewModel.model.settings.businessSoftwares.Remove((string)_removeBusinessSoftware.SelectedItem);
+            this.settingsViewModel.model.SaveSettings();
+
+            // TODO : Reload
+        }
+
+        private void returnMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.mainWindow.ChangePage("menu");
         }
     }
 }

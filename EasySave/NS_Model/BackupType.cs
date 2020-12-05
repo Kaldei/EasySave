@@ -1,6 +1,6 @@
 ﻿namespace EasySave.NS_Model
 {
-    enum BackupType
+    public enum BackupType
     {
         FULL,
         DIFFRENTIAL

@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace EasySave.NS_Model
 {
-    class Work
+    public class Work
     {
         // --- Attributes ---
         // Prepare options to indent JSON Files

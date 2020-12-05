@@ -34,7 +34,7 @@
 
             <StackPanel Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border CornerRadius="90" BorderThickness="6" HorizontalAlignment="Center" BorderBrush="LightGray">
-                    <Button Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray">←</Button>
+                    <Button x:Name="returnMenuButton" Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray" Click="returnMenuButton_Click">←</Button>
                 </Border>
             </StackPanel>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.settings}"></TextBlock>
@@ -49,7 +49,7 @@
                     <ColumnDefinition Width="60"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2" Text="{Binding settings.cryptoSoftPath}"/>
+                <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2" Text="{Binding model.settings.cryptoSoftPath}"/>
                 <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="50" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0">Save</Button>
             </Grid>
         </StackPanel>
@@ -79,7 +79,7 @@
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox x:Name="_removeExtension" SelectedIndex="0" ItemsSource="{Binding settings.cryptoExtensions}"/>
+                    <ComboBox x:Name="_removeExtension" SelectedIndex="0" ItemsSource="{Binding model.settings.cryptoExtensions}"/>
                     <Button x:Name="removeExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeExtensionButton_Click">X</Button>
                 </Grid>
             </Grid>
@@ -111,7 +111,7 @@
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox x:Name="_removeBusinessSoftware" SelectedIndex="0" ItemsSource="{Binding settings.businessSoftwares}"/>
+                    <ComboBox x:Name="_removeBusinessSoftware" SelectedIndex="0" ItemsSource="{Binding model.settings.businessSoftwares}"/>
                     <Button x:Name="removeBusinessSoftwareButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeBusinessSoftwareButton_Click">X</Button>
                 </Grid>
             </Grid>

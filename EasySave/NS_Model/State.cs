@@ -1,6 +1,6 @@
 ﻿namespace EasySave.NS_Model
 {
-    class State
+    public class State
     {
         // --- Attributes ---
         public int totalFile { get; set; }
