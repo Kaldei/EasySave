@@ -30,6 +30,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Background="White" >
@@ -52,7 +53,13 @@
 
             <StackPanel Grid.Column="3" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="3" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="SelectAll_Clicked" Content="{x:Static language:Lang.selectAll}"></Button>
+                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="SelectAll_Clicked" Content="{x:Static language:Lang.selectAll}"></Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="4" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="Settings_Clicked" Content="Settings"></Button>
                 </Border>
             </StackPanel>
         </Grid>
