@@ -6,155 +6,22 @@ using System.ComponentModel;
 
 namespace EasySave.NS_Model
 {
-    class Work : INotifyPropertyChanged
+    class Work
     {
         // --- Attributes ---
-        public event PropertyChangedEventHandler PropertyChanged;
-
         // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
 
-        private string nameP;
-        public string name
-        {
-            get
-            {
-                return nameP;
-            }
-            set
-            {
-                if (value != nameP)
-                {
-                    nameP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("name"));
-                    }
-                }
-            }
-        }
-
-        private string srcP;
-        public string src
-        {
-            get
-            {
-                return srcP;
-            }
-            set
-            {
-                if (value != srcP)
-                {
-                    srcP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("src"));
-                    }
-                }
-            }
-        }
-
-        private string dstP;
-        public string dst
-        {
-            get
-            {
-                return dstP;
-            }
-            set
-            {
-                if (value != dstP)
-                {
-                    dstP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("dst"));
-                    }
-                }
-            }
-        }
-
-        private BackupType backupTypeP;
-        public BackupType backupType
-        {
-            get
-            {
-                return backupTypeP;
-            }
-            set
-            {
-                if (value != backupTypeP)
-                {
-                    backupTypeP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("backupType"));
-                    }
-                }
-            }
-        }
-
-        private bool isCryptedP;
-        public bool isCrypted
-        {
-            get
-            {
-                return isCryptedP;
-            }
-            set
-            {
-                if (value != isCryptedP)
-                {
-                    isCryptedP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("backupType"));
-                    }
-                }
-            }
-        }
-
-        private State stateP;
-        public State state {
-            get
-            {
-                return stateP;
-            }
-            set
-            {
-                if (value != stateP)
-                {
-                    stateP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("state"));
-                    }
-                }
-            }
-        }
-
-        private string lastBackupDateP;
-        public string lastBackupDate
-        {
-            get
-            {
-                return lastBackupDateP;
-            }
-            set
-            {
-                if (value != lastBackupDateP)
-                {
-                    lastBackupDateP = value;
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("lastBackupDate"));
-                    }
-                }
-            }
-        }
+        public string name { get; set; }
+        public string src { get; set; }
+        public string dst { get; set; }
+        public BackupType backupType { get; set; }
+        public bool isCrypted { get; set; }
+        public State state { get; set; }
+        public string lastBackupDate { get; set; }
 
 
         // --- Constructors ---

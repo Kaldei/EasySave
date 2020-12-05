@@ -19,12 +19,12 @@ namespace EasySave.NS_View
     /// </summary>
     public partial class DisplayWorksView : Page
     {
-        ViewModel viewModel = new ViewModel();
+        MenuViewModel menuViewModel = new MenuViewModel();
 
         public DisplayWorksView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = menuViewModel;
         }
 
         private void Remove_Clicked(object sender, RoutedEventArgs e)
@@ -44,8 +44,9 @@ namespace EasySave.NS_View
             // Remove Selected Works
             foreach (int index in SelectedWorks)
             {
-                viewModel.RemoveWork(index);
+                menuViewModel.RemoveWork(index);
             }
+
         }
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
@@ -60,7 +61,7 @@ namespace EasySave.NS_View
                     SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
                 }
                 Array.Reverse(SelectedWorks);
-                viewModel.LaunchBackupWork(SelectedWorks);
+                menuViewModel.LaunchBackupWork(SelectedWorks);
                 
 
             } else
@@ -74,7 +75,7 @@ namespace EasySave.NS_View
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)
         {
             // Select All or Unselect All If there are All Alerady Selected
-            if (_listWorks.SelectedItems.Count != viewModel.works.Count)
+            if (_listWorks.SelectedItems.Count != menuViewModel.works.Count)
             {
                 _listWorks.SelectAll();            
             }
