@@ -7,16 +7,27 @@ using EasySave.NS_Model;
 
 namespace EasySave.NS_ViewModel
 {
-    class MenuViewModel : ViewModel
+    public class MenuViewModel
     {
+        // ----- Attributes -----
+        public Model model { get; set; }
+
+
+        // ----- Constructor -----
+        public MenuViewModel(Model _model)
+        {
+            this.model = _model;
+        }
+
+
         // ----- Methods -----
         public int RemoveWork(int _index)
         {
             try
             {
                 // Remove Work from the program (at index)
-                this.works.RemoveAt(_index);
-                SaveWorks();
+                this.model.works.RemoveAt(_index);
+                this.model.SaveWorks();
 
                 // Return Success Code
                 return 103;
@@ -32,21 +43,21 @@ namespace EasySave.NS_ViewModel
         {
             int businessSoftwaresId;
 
-            if (this.works.Count > 0 && idWorkToSave.Length > 0)
+            if (this.model.works.Count > 0 && idWorkToSave.Length > 0)
             {
                 for (int i = 0; i < idWorkToSave.Length; i++)
                 {
                     // Get id of one Running Business Software from the List (-1 if none) 
-                    businessSoftwaresId = this.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
+                    businessSoftwaresId = this.model.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
 
                     // Prevents from Lauching Backups if one Business Software is Running
                     if (businessSoftwaresId != -1)
                     {
-                        Console.WriteLine($"{this.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                        Console.WriteLine($"{this.model.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
                     }
                     else
                     {
-                        LaunchBackupType(this.works[idWorkToSave[i]]);
+                        LaunchBackupType(this.model.works[idWorkToSave[i]]);
                         // this.view.ConsoleUpdate(LaunchBackupType(this.works[idWorkToSave[i]]));
                         // this.view.ConsoleUpdate(4);
                     }
@@ -161,7 +172,7 @@ namespace EasySave.NS_ViewModel
             if (filesToCopy.Count == 0)
             {
                 _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
-                this.SaveWorks();
+                this.model.SaveWorks();
                 // this.view.ConsoleUpdate(3);
                // this.view.DisplayBackupRecap(_work.name, 0);
                 return 105;
@@ -224,7 +235,7 @@ namespace EasySave.NS_ViewModel
 
                     // Update the current work status
                     _work.state = null;
-                    this.SaveWorks();
+                    this.model.SaveWorks();
                     //this.view.ConsoleUpdate(3); //TODO
 
                     foreach (string failedFile in failedFiles)
@@ -309,11 +320,11 @@ namespace EasySave.NS_ViewModel
             {
                 // Update the current work status
                 _work.state.UpdateState(_pourcent, (_totalFile - fileIndex), _leftSize, _currentFile.FullName, dstFile);
-                SaveWorks();
+                this.model.SaveWorks();
                 int elapsedTime = -1;
 
                 // Copy the current file
-                if (!(this.settings.cryptoSoftPath.Length != 0 && this.settings.cryptoExtensions.Count != 0 && _currentFile.Name.Contains(".") && this.settings.cryptoExtensions.Contains(_currentFile.Name.Substring(_currentFile.Name.LastIndexOf(".")))))
+                if (!(this.model.settings.cryptoSoftPath.Length != 0 && this.model.settings.cryptoExtensions.Count != 0 && _currentFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(_currentFile.Name.Substring(_currentFile.Name.LastIndexOf(".")))))
                 {
                     _currentFile.CopyTo(dstFile, true);
                     elapsedTime = (int)(DateTime.Now - startTimeFile).TotalMilliseconds;
@@ -323,7 +334,7 @@ namespace EasySave.NS_ViewModel
                 {
                     try
                     {
-                        ProcessStartInfo process = new ProcessStartInfo(this.settings.cryptoSoftPath);
+                        ProcessStartInfo process = new ProcessStartInfo(this.model.settings.cryptoSoftPath);
                         process.Arguments = "source " + _currentFile.FullName + " destination " + dstFile;
                         var proc = Process.Start(process);
                         proc.WaitForExit();

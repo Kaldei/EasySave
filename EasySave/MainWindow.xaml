@@ -9,9 +9,6 @@
         mc:Ignorable="d"
         Title="EasySave" Height="450" Width="800">
 
-    <Window.DataContext>
-        <view:DisplayWorksView></view:DisplayWorksView>
-    </Window.DataContext>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -34,7 +31,8 @@
 
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
+            
+            <!--
             <Button Grid.Row="0" Click="AddWorkButton">
                 Add Work
             </Button>
@@ -46,6 +44,7 @@
             <Button Grid.Row="2" Click="SettingsButton">
                 Settings
             </Button>
+            -->
         </Grid>
 
         <Frame  Grid.Column="1" Grid.Row="1" Content="{Binding}" NavigationUIVisibility="Hidden"/>
