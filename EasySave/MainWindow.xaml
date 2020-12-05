@@ -13,14 +13,35 @@
         <view:DisplayWorksView></view:DisplayWorksView>
     </Window.DataContext>
 
-    <Grid Background="Red">
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
 
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
 
-        <Grid Grid.Column="0">
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Click="SelectEnLanguage" Background="Transparent" BorderBrush="Transparent">
+                <Image Source="https://images.emojiterra.com/mozilla/512px/1f1ec-1f1e7.png" Height="20" Width="20" HorizontalAlignment="Left" />
+            </Button>
+            <Button Grid.Column="1" Click="SelectFrLanguage" Background="Transparent" BorderBrush="Transparent">
+                <Image Source="https://images.emojiterra.com/mozilla/512px/1f1eb-1f1f7.png" Height="20" Width="20" HorizontalAlignment="Left"/>
+            </Button>
+        </Grid>
+
+
+        <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -37,7 +58,8 @@
                 Display Work
             </Button>
         </Grid>
-        <Frame  Grid.Column="1"  Content="{Binding}" NavigationUIVisibility="Hidden"/>
+
+        <Frame  Grid.Column="1" Grid.Row="1" Content="{Binding}" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Window>
