@@ -33,13 +33,13 @@ namespace EasySave.NS_ViewModel
             this.settings = Settings.GetInstance();
             this.settings.Update(Languages.EN);
 
-            // Load Works at the beginning of the program (from ./State.json)
-
             // Load Settings at the beginning of the program (from ./Settings.json)
             LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
 
             // Instantiate View
             this.view = new View(this, this.settings.language.ToString());
+
+            // Load Works at the beginning of the program (from ./State.json)
             this.view.ConsoleUpdate(LoadWorks());
         }
 
@@ -322,7 +322,7 @@ namespace EasySave.NS_ViewModel
         {
             long totalSize = 0;
 
-            // Get evvery files of the source directory
+            // Get every files of the source directory
             FileInfo[] files = _dir.GetFiles("*.*", SearchOption.AllDirectories);
 
             // Calcul the size of every files
@@ -338,7 +338,7 @@ namespace EasySave.NS_ViewModel
         {
             long totalSize = 0;
 
-            // Get evvery files of the source directory
+            // Get every files of the source directory
             FileInfo[] srcFiles = _dir.GetFiles("*.*", SearchOption.AllDirectories);
             List<FileInfo> filesToCopy = new List<FileInfo>();
 

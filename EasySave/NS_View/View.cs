@@ -216,6 +216,7 @@ namespace EasySave.NS_View
             Console.Clear();
             ConsoleUpdate(309);
             ConsoleUpdate(2);
+            Console.WriteLine();
             Console.WriteLine("1. English");
             Console.WriteLine("2. Français");
 
@@ -677,7 +678,7 @@ namespace EasySave.NS_View
                     case 306:
                         Console.WriteLine(
                             "Choisir un travail à sauvegarder : " +
-                            "\n\n1 - tous");
+                            "\n\n1 - Tous");
                         break;
 
                     case 307:
@@ -734,7 +735,7 @@ namespace EasySave.NS_View
                     case 306:
                         Console.WriteLine(
                             "Choose the work to save : " +
-                            "\n\n1 - all");
+                            "\n\n1 - All");
                         break;
 
                     case 307:
