@@ -313,7 +313,7 @@ namespace EasySave.NS_ViewModel
                 int elapsedTime = -1;
 
                 // Copy the current file
-                if (this.settings.cryptoSoftPath.Length > 0)
+                if (this.settings.cryptoSoftPath.Length == 0 || this.settings.cryptoExtensions.Count == 0)
                 {
                     _currentFile.CopyTo(dstFile, true);
                     elapsedTime = (int)(DateTime.Now - startTimeFile).TotalMilliseconds;
