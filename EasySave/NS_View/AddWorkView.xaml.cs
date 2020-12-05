@@ -21,12 +21,12 @@ namespace EasySave.NS_View
     /// </summary>
     public partial class AddWorkView : Page
     {
-        ViewModel viewModel = new ViewModel();
+        AddWorkViewModel addWorkViewModel = new AddWorkViewModel();
 
         public AddWorkView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = addWorkViewModel;
         }
 
         private void AddWork_Clicked(object sender, RoutedEventArgs e)
@@ -73,7 +73,7 @@ namespace EasySave.NS_View
                 return;
             }
 
-            viewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
+            addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
             // TODO : CALL RETRUN MENU
         }
 
@@ -82,7 +82,7 @@ namespace EasySave.NS_View
             int length = _name.Length;
             if (length >= 1 && length <= 20)
             {
-                if (!this.viewModel.works.Exists(work => work.name == _name))
+                if (!this.addWorkViewModel.works.Exists(work => work.name == _name))
                 {
                     return true;
                 }
