@@ -41,16 +41,9 @@ namespace EasySave
             DataContext = new DisplayWorksView();
         }
 
-        private void SelectFrLanguage(object sender, RoutedEventArgs e)
+        private void SettingsButton(object sender, RoutedEventArgs e)
         {
-            Langs.Lang.Culture = new CultureInfo("fr-FR");
-
+            DataContext = new SettingsView();
         }
-
-        private void SelectEnLanguage(object sender, RoutedEventArgs e)
-        {
-            Langs.Lang.Culture = new CultureInfo("en-US");
-        }
-
     }
 }
