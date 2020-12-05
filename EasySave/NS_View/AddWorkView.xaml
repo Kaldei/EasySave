@@ -5,16 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:model="clr-namespace:EasySave.NS_Model"
       xmlns:local="clr-namespace:EasySave.NS_View"
-      
+      xmlns:language="clr-namespace:EasySave.Langs"
+
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddWorkView">
 
 
-    <Grid Background="White">
+    <Grid Background="White" RenderTransformOrigin="1,0.5">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="4"/>
+            <RowDefinition Height="2"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -29,25 +30,72 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28">Add a work</TextBlock>
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <Trigger Property="StackPanel.IsMouseOver" Value="True">
+                                <Setter Property="Border.BorderBrush" Value="Black" />
+                                <Setter Property="Button.Background" Value="Black" />
+                                <Setter Property="Button.Foreground" Value="White" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Border CornerRadius="90" BorderThickness="6" HorizontalAlignment="Center" BorderBrush="LightGray">
+                    <Button Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray">←</Button>
+                </Border>
+            </StackPanel>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.addWork}"></TextBlock>
+        </Grid>
         <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
-        <StackPanel Grid.Column="1" Grid.Row="2">
-            <Label x:Name="_nameLabel">Name:</Label>
+
+        <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+            <Label x:Name="_nameLabel" Content="{x:Static language:Lang.name}"></Label>
             <TextBox x:Name="_name"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="3">
-            <Label x:Name="_srcLabel">Source:</Label>
+
+        <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
+            <Label x:Name="_srcLabel" Content="{x:Static language:Lang.source}"></Label>
             <TextBox x:Name="_src"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="4">
-            <Label x:Name="_dstLabel">Destination:</Label>
+
+        <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
+            <Label x:Name="_dstLabel" Content="{x:Static language:Lang.destination}"></Label>
             <TextBox x:Name="_dst"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="5">
-            <Label>Type:</Label>
+
+        <StackPanel Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">
+            <Label Content="{x:Static language:Lang.backupType}"></Label>
             <ComboBox x:Name="_backupType" SelectedIndex="0" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:BackupType}}}"/>
         </StackPanel>
-        <CheckBox x:Name="_isCrypted" Grid.Column="1" Grid.Row="6" FlowDirection="RightToLeft" HorizontalAlignment="Left" VerticalAlignment="Center">Check to encrypt files</CheckBox>
-        <Button Grid.Column="1" Grid.Row="7" Width="150" Height="30" Click="AddWork_Clicked">Ajouter</Button>
+
+        <Grid Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="{x:Static language:Lang.checkEncrypt}"></Label>
+            <CheckBox Grid.Column="1" x:Name="_isCrypted" BorderBrush="Black" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <CheckBox.Style>
+                    <Style TargetType="CheckBox">
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="LightGreen" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
+        </Grid>
+        <Button Grid.Column="1" Grid.Row="7" Width="150" Height="30" Click="AddWork_Clicked"  Content="{x:Static language:Lang.add}"></Button>
     </Grid>
 </Page>

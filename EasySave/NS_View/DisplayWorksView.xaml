@@ -3,43 +3,82 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:language="clr-namespace:EasySave.Langs"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DisplayWorksView">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height ="50"></RowDefinition>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid Background="Pink" Grid.Row=" 0" >
+            <StackPanel Background="White" >
+                <Border CornerRadius="90" BorderBrush="Green" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="Green" Foreground="White" FontSize="26" Padding="-3, -15, -3, -7" BorderBrush="Green">+</Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Background="White" Margin="10, 0" >
+                <Border CornerRadius="90" BorderBrush="Red" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="Red" Foreground="White" FontSize="26" Padding="2, -14, 2, -7" BorderBrush="Red" Click="Remove_Clicked">-</Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="Save_Clicked">></Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="3" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="3" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="SelectAll_Clicked" Content="{x:Static language:Lang.selectAll}"></Button>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="{x:Static language:Lang.searchName}"></Label>
+            <TextBox Grid.Column="1" Width="80" Height="20"></TextBox>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
             <ListView Name="_listWorks" ItemsSource="{Binding works}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding name}" Header="Name" Width="75"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding src}" Header="Source" Width="250"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding dst}" Header="Destination" Width="250"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding backupType}" Header="Backup Type" Width="100"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding isCrypted}" Header="Encrypt" Width="100"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding name}" Header="{x:Static language:Lang.name}" Width="90"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding src}" Header="{x:Static language:Lang.source}" Width="250"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding dst}" Header="{x:Static language:Lang.destination}" Width="250"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding backupType}" Header="{x:Static language:Lang.backupType}" Width="100"></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding isCrypted}" Header="{x:Static language:Lang.encrypt}" Width="50"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
-        </Grid>
-        
-        
-        <Grid Grid.Row=" 1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="0" Click="Remove_Clicked">Remove</Button>
-            <Button Grid.Column="1" Click="Save_Clicked" >Save</Button>
-            <Button Grid.Column="2" Click="SelectAll_Clicked" >Select All</Button>
-
         </Grid>
     </Grid>
 </Page>
