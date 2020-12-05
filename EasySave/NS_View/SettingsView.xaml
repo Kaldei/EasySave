@@ -1,0 +1,138 @@
+﻿<Page x:Class="EasySave.NS_View.SettingsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:language="clr-namespace:EasySave.Langs"
+      mc:Ignorable="d" 
+      d:DesignHeight="400.43" d:DesignWidth="800"
+      Title="SettingsView">
+      
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="2"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border CornerRadius="90" BorderThickness="6" HorizontalAlignment="Center" BorderBrush="LightGray">
+                    <Button Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray">←</Button>
+                </Border>
+            </StackPanel>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.settings}"></TextBlock>
+        </Grid>
+        <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
+        <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+            <Label x:Name="cryptoSoftPathLabel">CryptoSoft Path:</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="29*"/>
+                    <ColumnDefinition Width="291*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2" Text="{Binding settings.cryptoSoftPath}"/>
+                <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="50" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0">Save</Button>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
+            <Label x:Name="addExtensionLabel">File Extension to Encrypt:</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="_addExtension"/>
+                    <Button x:Name="addExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="addExtensionButton_Click">+</Button>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox x:Name="_removeExtension" SelectedIndex="0" ItemsSource="{Binding settings.cryptoExtensions}"/>
+                    <Button x:Name="removeExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeExtensionButton_Click">X</Button>
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
+            <Label x:Name="addBusinessSoftwareLabel">Business Software:</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="_addBusinessSoftware" Grid.ColumnSpan="2"/>
+                    <Button x:Name="addBusinessSoftwareButton" Grid.Column="2" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Margin="2,3,2,4" Click="addBusinessSoftwareButton_Click">+</Button>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox x:Name="_removeBusinessSoftware" SelectedIndex="0" ItemsSource="{Binding settings.businessSoftwares}"/>
+                    <Button x:Name="removeBusinessSoftwareButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeBusinessSoftwareButton_Click">X</Button>
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <Label Content="{x:Static language:Lang.language}"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Button Grid.Column="0" Click="ChangeLanguage" Tag="en-US" Background="Transparent" BorderBrush="Transparent">
+                    <Image Source="https://images.emojiterra.com/mozilla/512px/1f1ec-1f1e7.png" Height="20" Width="20" HorizontalAlignment="Left" />
+                </Button>
+                <Button Grid.Column="1" Click="ChangeLanguage" Tag="fr-FR" Background="Transparent" BorderBrush="Transparent">
+                    <Image Source="https://images.emojiterra.com/mozilla/512px/1f1eb-1f1f7.png" Height="20" Width="20" HorizontalAlignment="Left"/>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

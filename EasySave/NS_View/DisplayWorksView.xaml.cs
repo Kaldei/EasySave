@@ -85,5 +85,9 @@ namespace EasySave.NS_View
             }
         }
 
+        private void Settings_Clicked(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
     }
 }

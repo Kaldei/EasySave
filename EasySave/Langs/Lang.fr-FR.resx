@@ -135,6 +135,9 @@
   <data name="encrypt" xml:space="preserve">
     <value>Crypter</value>
   </data>
+  <data name="language" xml:space="preserve">
+    <value>Langue :</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Nom</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="selectAll" xml:space="preserve">
     <value>Tout sélectionner</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Parametres</value>
   </data>
   <data name="source" xml:space="preserve">
     <value>Source</value>

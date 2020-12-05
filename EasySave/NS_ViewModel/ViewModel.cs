@@ -25,9 +25,8 @@ namespace EasySave.NS_ViewModel
         private string stateFilePath = "./State.json";
         private string settingsFilePath = "./Settings.json";
 
-        public Settings settings { get; set; }
-
         public List<Work> works { get; set; }
+        public Settings settings { get; set; }
 
 
         // --- Constructor ---
@@ -107,5 +106,13 @@ namespace EasySave.NS_ViewModel
             // Return Success Code
             return 100;
         }
+
+        // Save Settings
+        public void SaveSettings()
+        {
+            // Write Work list into JSON file (at ./BackupWorkSave.json)
+            File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
+        }
+
     }
 }

@@ -135,17 +135,20 @@
   <data name="encrypt" xml:space="preserve">
     <value>Encrypted</value>
   </data>
+  <data name="language" xml:space="preserve">
+    <value>Language:</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="name1" xml:space="preserve">
-    <value>Nom</value>
   </data>
   <data name="searchName" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="selectAll" xml:space="preserve">
     <value>Select All</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="source" xml:space="preserve">
     <value>Source</value>
