@@ -15,18 +15,27 @@ using System.Windows.Shapes;
 namespace EasySave.NS_View
 {
     /// <summary>
-    /// Logique d'interaction pour DisplayWorksView.xaml
+    /// Interaction logic for MenuView.xaml
     /// </summary>
-    public partial class DisplayWorksView : Page
+    public partial class MenuView : Page
     {
-        MenuViewModel menuViewModel = new MenuViewModel();
+        // ----- Attributes -----
+        private MenuViewModel menuViewModel { get; set; }
+        public MainWindow mainWindow { get; set; }
 
-        public DisplayWorksView()
+
+        // ----- Constructor -----
+        public MenuView(MenuViewModel _menuViewModel, MainWindow _mainWindow)
         {
+            // Initaialize Page content
+            this.menuViewModel = _menuViewModel;
+            this.mainWindow = _mainWindow;
+            DataContext = this.menuViewModel;
             InitializeComponent();
-            DataContext = menuViewModel;
         }
 
+
+        // ----- Methods
         private void Remove_Clicked(object sender, RoutedEventArgs e)
         {
             int nbrTotalWorks = _listWorks.SelectedItems.Count;
@@ -47,12 +56,13 @@ namespace EasySave.NS_View
                 menuViewModel.RemoveWork(index);
             }
 
+            // TODO : Reload
         }
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
             int Length = _listWorks.SelectedItems.Count;
-            if(Length > 0)
+            if (Length > 0)
             {
                 int[] SelectedWorks = new int[Length];
 
@@ -62,22 +72,23 @@ namespace EasySave.NS_View
                 }
                 Array.Reverse(SelectedWorks);
                 menuViewModel.LaunchBackupWork(SelectedWorks);
-                
 
-            } else
+
+            }
+            else
             {
                 Console.WriteLine("Pas de works !");
             }
-           
+
 
         }
 
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)
         {
             // Select All or Unselect All If there are All Alerady Selected
-            if (_listWorks.SelectedItems.Count != menuViewModel.works.Count)
+            if (_listWorks.SelectedItems.Count != menuViewModel.model.works.Count)
             {
-                _listWorks.SelectAll();            
+                _listWorks.SelectAll();
             }
             else
             {
@@ -87,7 +98,12 @@ namespace EasySave.NS_View
 
         private void Settings_Clicked(object sender, RoutedEventArgs e)
         {
-            // TODO
+            this.mainWindow.ChangePage("settings");
+        }
+
+        private void addWorkButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.mainWindow.ChangePage("addWork");
         }
     }
 }

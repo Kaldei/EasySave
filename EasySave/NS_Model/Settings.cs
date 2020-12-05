@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EasySave.NS_Model
 {
-    class Settings
+    public class Settings
     {
         // --- Attributes ---
         public static Settings instance { get; set; }

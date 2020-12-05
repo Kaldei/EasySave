@@ -21,16 +21,25 @@ namespace EasySave.NS_View
     /// </summary>
     public partial class AddWorkView : Page
     {
-        AddWorkViewModel addWorkViewModel = new AddWorkViewModel();
+        // ----- Attributes -----
+        private AddWorkViewModel addWorkViewModel { get; set; }
+        public MainWindow mainWindow { get; set; }
 
-        public AddWorkView()
+
+        // ----- Constructor -----
+        public AddWorkView(AddWorkViewModel _addWorkViewModel, MainWindow _mainWindow)
         {
+            // Initaialize Page content
+            this.addWorkViewModel = _addWorkViewModel;
+            this.mainWindow = _mainWindow;
+            DataContext = this.addWorkViewModel;
             InitializeComponent();
-            DataContext = addWorkViewModel;
+            
         }
 
         private void AddWork_Clicked(object sender, RoutedEventArgs e)
         {
+            // Check User Input
             string src = RectifyPath(_src.Text);
             string dst = RectifyPath(_dst.Text);
 
@@ -73,8 +82,11 @@ namespace EasySave.NS_View
                 return;
             }
 
+            // Add Work If All User Input are OK
             addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
-            // TODO : CALL RETRUN MENU
+
+            // Return to Menu
+            this.mainWindow.ChangePage("menu");
         }
 
         private bool CheckName(string _name)
@@ -82,7 +94,7 @@ namespace EasySave.NS_View
             int length = _name.Length;
             if (length >= 1 && length <= 20)
             {
-                if (!this.addWorkViewModel.works.Exists(work => work.name == _name))
+                if (!this.addWorkViewModel.model.works.Exists(work => work.name == _name))
                 {
                     return true;
                 }
@@ -123,6 +135,11 @@ namespace EasySave.NS_View
                 return false;
             }
             return false;
+        }
+
+        private void returnMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.mainWindow.ChangePage("menu");
         }
     }
 }

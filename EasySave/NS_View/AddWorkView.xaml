@@ -50,7 +50,7 @@
                     </Style>
                 </StackPanel.Style>
                 <Border CornerRadius="90" BorderThickness="6" HorizontalAlignment="Center" BorderBrush="LightGray">
-                    <Button Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray">←</Button>
+                    <Button x:Name="returnMenuButton" Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray" Click="returnMenuButton_Click">←</Button>
                 </Border>
             </StackPanel>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.addWork}"></TextBlock>
