@@ -65,10 +65,15 @@ namespace EasySave.NS_ViewModel
 
         public int LaunchBackupType(Work _work)
         {
+            // Check if the source exists
+            if (!Directory.Exists(_work.src))
+            {
+                return 0; // TODO Error Code
+            }
             DirectoryInfo dir = new DirectoryInfo(_work.src);
 
-            // Check if the source & destionation folder exists
-            if (!dir.Exists && !Directory.Exists(_work.dst))
+            // Check if the destionation folder exists
+            if (!Directory.Exists(_work.dst))
             {
                 // Return Error Code
                 return 207;
@@ -187,50 +192,66 @@ namespace EasySave.NS_ViewModel
         // Do Backup
         private int DoBackup(Work _work, FileInfo[] _files, long _totalSize)
         {
-            // Create the state file
-            DateTime startTime = DateTime.Now;
-            string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
+            DriveInfo disk = new DriveInfo(_work.dst.Substring(0, 1));
 
-            // Update the current work status
-            _work.state = new State(_files.Length, _totalSize, _work.src, dst);
-            _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss");
-
-            // Create the dst folder
-            try
+            if (disk.IsReady)
             {
-                Directory.CreateDirectory(dst);
-            }
-            catch
-            {
-                return 210;
-            }
-            List<string> failedFiles = CopyFiles(_work, _files, _totalSize, dst);
+                if (disk.TotalFreeSpace > _totalSize)
+                {
+                    // Create the state file
+                    DateTime startTime = DateTime.Now;
+                    string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
 
-            // Calculate the time of the all process of copy
-            DateTime endTime = DateTime.Now;
-            TimeSpan workTime = endTime - startTime;
-            double transferTime = workTime.TotalMilliseconds;
+                    // Update the current work status
+                    _work.state = new State(_files.Length, _totalSize, _work.src, dst);
+                    _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss");
 
-            // Update the current work status
-            _work.state = null;
-            this.SaveWorks();
-            //this.view.ConsoleUpdate(3);
+                    // Create the dst folder
+                    try
+                    {
+                        Directory.CreateDirectory(dst);
+                    }
+                    catch
+                    {
+                        return 210;
+                    }
+                    List<string> failedFiles = CopyFiles(_work, _files, _totalSize, dst);
 
-            foreach (string failedFile in failedFiles)
-            {
-                //this.view.DisplayFiledError(failedFile);
-            }
-            //this.view.DisplayBackupRecap(_work.name, transferTime);
+                    // Calculate the time of the all process of copy
+                    DateTime endTime = DateTime.Now;
+                    TimeSpan workTime = endTime - startTime;
+                    double transferTime = workTime.TotalMilliseconds;
 
-            if (failedFiles.Count == 0)
-            {
-                // Return Success Code
-                return 104;
+                    // Update the current work status
+                    _work.state = null;
+                    this.SaveWorks();
+                    //this.view.ConsoleUpdate(3); //TODO
+
+                    foreach (string failedFile in failedFiles)
+                    {
+                        //this.view.DisplayFiledError(failedFile); //TODO
+                    }
+                    //this.view.DisplayBackupRecap(_work.name, transferTime); //TODO
+
+                    if (failedFiles.Count == 0)
+                    {
+                        // Return Success Code
+                        return 104;
+                    }
+                    else
+                    {
+                        // Return Error Code
+                        return 216;
+                    }
+                }
+                else
+                {
+                    return 0; // No space //TODO
+                }
             }
             else
             {
-                // Return Error Code
-                return 216;
+                return 0; // Disk unknown //TODO
             }
         }
 
@@ -250,9 +271,9 @@ namespace EasySave.NS_ViewModel
                 long curSize = _files[i].Length;
                 leftSize -= curSize;
 
-                if (this.CopyFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent))
+                if (this.BackupFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent)) // ----------------------
                 {
-                    // this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent);
+                    //this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent); // TODO
                 }
                 else
                 {
@@ -262,7 +283,7 @@ namespace EasySave.NS_ViewModel
             return failedFiles;
         }
 
-        public bool CopyFile(Work _work, FileInfo _currentFile, long _curSize, string _dst, long _leftSize, int _totalFile, int fileIndex, int _pourcent)
+        public bool BackupFile(Work _work, FileInfo _currentFile, long _curSize, string _dst, long _leftSize, int _totalFile, int fileIndex, int _pourcent)
         {
             // Time at when file copy start (use by SaveLog())
             DateTime startTimeFile = DateTime.Now;
@@ -289,17 +310,40 @@ namespace EasySave.NS_ViewModel
                 // Update the current work status
                 _work.state.UpdateState(_pourcent, (_totalFile - fileIndex), _leftSize, _currentFile.FullName, dstFile);
                 SaveWorks();
+                int elapsedTime = -1;
 
                 // Copy the current file
-                _currentFile.CopyTo(dstFile, true);
+                if (this.settings.cryptoSoftPath.Length > 0)
+                {
+                    _currentFile.CopyTo(dstFile, true);
+                    elapsedTime = (int)(DateTime.Now - startTimeFile).TotalMilliseconds;
+                }
+                // Crypt the current file
+                else
+                {
+                    try
+                    {
+                        ProcessStartInfo process = new ProcessStartInfo(this.settings.cryptoSoftPath);
+                        process.Arguments = "source " + _currentFile.FullName + " destination " + dstFile;
+                        var proc = Process.Start(process);
+                        proc.WaitForExit();
+                        elapsedTime = proc.ExitCode;
+                    }
+                    catch
+                    {
+                        // TODO Error cannot found the process
+                    }
+
+
+                }
 
                 // Save Log
-                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, false);
+                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, elapsedTime);
                 return true;
             }
             catch
             {
-                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, true);
+                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, -1);
                 return false;
             }
         }
