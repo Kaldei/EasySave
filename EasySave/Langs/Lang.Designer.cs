@@ -79,6 +79,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Backup is finish with error..
+        /// </summary>
+        public static string backupFinishedWithError {
+            get {
+                return ResourceManager.GetString("backupFinishedWithError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Backup Type.
         /// </summary>
         public static string backupType {
@@ -93,6 +102,24 @@ namespace EasySave.Langs {
         public static string businessSoftware {
             get {
                 return ResourceManager.GetString("businessSoftware", resourceCulture);
+            }
+        }
+
+        /// <summary>    
+        ///   Recherche une chaîne localisée semblable à Can not continue backup. Business Software is open..
+        /// </summary>
+        public static string businessSoftwareOn {
+            get {
+                return ResourceManager.GetString("businessSoftwareOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can not create destination folder..
+        /// </summary>
+        public static string cannotCreateDstFolder {
+            get {
+                return ResourceManager.GetString("cannotCreateDstFolder", resourceCulture);
             }
         }
         
@@ -115,11 +142,38 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Cryptosoft path error..
+        /// </summary>
+        public static string cryptoSoftPathError {
+            get {
+                return ResourceManager.GetString("cryptoSoftPathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Cryptosoft path is not found..
+        /// </summary>
+        public static string cryptoSoftPathNotFound {
+            get {
+                return ResourceManager.GetString("cryptoSoftPathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Destination.
         /// </summary>
         public static string destination {
             get {
                 return ResourceManager.GetString("destination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Disk error..
+        /// </summary>
+        public static string diskError {
+            get {
+                return ResourceManager.GetString("diskError", resourceCulture);
             }
         }
         
@@ -138,6 +192,15 @@ namespace EasySave.Langs {
         public static string extensionFile {
             get {
                 return ResourceManager.GetString("extensionFile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Failed to add work..
+        /// </summary>
+        public static string errorAddWork {
+            get {
+                return ResourceManager.GetString("errorAddWork", resourceCulture);
             }
         }
         
@@ -196,11 +259,20 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Directory doesn&apos;t exist. Please enter a valid directory source..
+        ///   Recherche une chaîne localisée semblable à Directory doesnot exist. Please enter a valid directory source..
         /// </summary>
         public static string incorrectSource {
             get {
                 return ResourceManager.GetString("incorrectSource", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Failed to remove work..
+        /// </summary>
+        public static string errorRemoveWork {
+            get {
+                return ResourceManager.GetString("errorRemoveWork", resourceCulture);
             }
         }
         
@@ -228,6 +300,33 @@ namespace EasySave.Langs {
         public static string save {
             get {
                 return ResourceManager.GetString("save", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No change since last backup..
+        /// </summary>
+        public static string noChangeSinceLastBackup {
+            get {
+                return ResourceManager.GetString("noChangeSinceLastBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Please select a work..
+        /// </summary>
+        public static string noSelectedWork {
+            get {
+                return ResourceManager.GetString("noSelectedWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No space for destination folder..
+        /// </summary>
+        public static string noSpaceDstFolder {
+            get {
+                return ResourceManager.GetString("noSpaceDstFolder", resourceCulture);
             }
         }
         
@@ -264,6 +363,42 @@ namespace EasySave.Langs {
         public static string source {
             get {
                 return ResourceManager.GetString("source", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unvailable backup type..
+        /// </summary>
+        public static string unavailableBackupType {
+            get {
+                return ResourceManager.GetString("unavailableBackupType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Destination directory doesn&apos;t found..
+        /// </summary>
+        public static string unavailableDstPath {
+            get {
+                return ResourceManager.GetString("unavailableDstPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Source directory doesn&apos;t found..
+        /// </summary>
+        public static string unavailableSrcPath {
+            get {
+                return ResourceManager.GetString("unavailableSrcPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Failed: Unknown Error..
+        /// </summary>
+        public static string unknownError {
+            get {
+                return ResourceManager.GetString("unknownError", resourceCulture);
             }
         }
     }

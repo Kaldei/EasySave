@@ -123,11 +123,20 @@
   <data name="addWork" xml:space="preserve">
     <value>Ajouter un travail</value>
   </data>
+  <data name="backupFinishedWithError" xml:space="preserve">
+    <value>Sauvergarde effectuée avec erreur.</value>
+  </data>
   <data name="backupType" xml:space="preserve">
     <value>Type de Sauvegarde</value>
   </data>
   <data name="businessSoftware" xml:space="preserve">
     <value>Logiciel métier :</value>
+  </data>
+  <data name="businessSoftwareOn" xml:space="preserve">
+    <value>Sauvegarde en pause. Logiciel métier ouvert.</value>
+  </data>
+  <data name="cannotCreateDstFolder" xml:space="preserve">
+    <value>Echec lors de la création du dossier destination.</value>
   </data>
   <data name="checkEncrypt" xml:space="preserve">
     <value>Cocher pour crypter les fichiers</value>
@@ -135,8 +144,17 @@
   <data name="cryptosoftPath" xml:space="preserve">
     <value>Chemin de CryptoSoft :</value>
   </data>
+  <data name="cryptoSoftPathError" xml:space="preserve">
+    <value>Erreur dans le chemin d'accès de CryptoPath.</value>
+  </data>
+  <data name="cryptoSoftPathNotFound" xml:space="preserve">
+    <value>Chemin d'accès de CryptoPath introuvable.</value>
+  </data>
   <data name="destination" xml:space="preserve">
     <value>Destination</value>
+  </data>
+  <data name="diskError" xml:space="preserve">
+    <value>Erreur disque.</value>
   </data>
   <data name="encrypt" xml:space="preserve">
     <value>Crypter</value>
@@ -165,6 +183,12 @@
   <data name="incorrectSource" xml:space="preserve">
     <value>Le dossier source n'existe pas.</value>
   </data>
+  <data name="errorAddWork" xml:space="preserve">
+    <value>Failed to add work.</value>
+  </data>
+  <data name="errorRemoveWork" xml:space="preserve">
+    <value>Failed to remove work.</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Langue :</value>
   </data>
@@ -173,6 +197,15 @@
   </data>
   <data name="save" xml:space="preserve">
     <value>Enregistrer</value>
+  </data>
+  <data name="noChangeSinceLastBackup" xml:space="preserve">
+    <value>Aucun changements dans les fichiers depuis la sauvegarde précédente.</value>
+  </data>
+  <data name="noSelectedWork" xml:space="preserve">
+    <value>Veuillez selectionner un travail.</value>
+  </data>
+  <data name="noSpaceDstFolder" xml:space="preserve">
+    <value>Place insuffisante pour le dossier destination.</value>
   </data>
   <data name="searchName" xml:space="preserve">
     <value>Recherche</value>
@@ -185,5 +218,17 @@
   </data>
   <data name="source" xml:space="preserve">
     <value>Source</value>
+  </data>
+  <data name="unavailableBackupType" xml:space="preserve">
+    <value>Erreur dans le type de sauvegarde.</value>
+  </data>
+  <data name="unavailableDstPath" xml:space="preserve">
+    <value>Dossier destination introuvable.</value>
+  </data>
+  <data name="unavailableSrcPath" xml:space="preserve">
+    <value>Dossier source introuvable.</value>
+  </data>
+  <data name="unknownError" xml:space="preserve">
+    <value>Echec: Erreur inconnue.</value>
   </data>
 </root>

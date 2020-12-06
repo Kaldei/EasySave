@@ -9,6 +9,8 @@ using System.Text.Json;
 
 namespace EasySave.NS_Model
 {
+    public delegate void ErrorMsg(string _errorName);
+
     public class Model : ObservableObject
     {
         // --- Attributes ---
@@ -17,6 +19,8 @@ namespace EasySave.NS_Model
         {
             WriteIndented = true
         };
+
+        public ErrorMsg errorMsg;
 
         public string stateFilePath { get; set; }
         public string settingsFilePath { get; set; }
