@@ -45,12 +45,12 @@ namespace EasySave
             this.addWorkViewModel = new AddWorkViewModel(model);
             this.settingsViewModel = new SettingsViewModel(model);
 
+            // Load Language
+            Langs.Lang.Culture = new CultureInfo(model.settings.language);
+
             // Set Main Window Datacontent
             menuView = new MenuView(menuViewModel, this);
             DataContext = menuView;
-
-            // Load Language
-            Langs.Lang.Culture = new CultureInfo("en-US");
 
             // Initialize Main Window
             InitializeComponent();
@@ -90,5 +90,24 @@ namespace EasySave
                     return;
             }
         }
+
+        public void RefreshLanguage()
+        {
+            if (menuView != null)
+            {
+                menuView = new MenuView(menuViewModel, this);
+            }
+            if (addWorkView != null)
+            {
+                addWorkView = new AddWorkView(addWorkViewModel, this);
+            }
+            if (settingsView != null)
+            {
+                settingsView = new SettingsView(settingsViewModel, this);
+                DataContext = settingsView;
+            }
+
+        }
+
     }
 }

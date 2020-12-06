@@ -126,8 +126,14 @@
   <data name="backupType" xml:space="preserve">
     <value>Type de Sauvegarde</value>
   </data>
+  <data name="businessSoftware" xml:space="preserve">
+    <value>Logiciel métier :</value>
+  </data>
   <data name="checkEncrypt" xml:space="preserve">
     <value>Cocher pour crypter les fichiers</value>
+  </data>
+  <data name="cryptosoftPath" xml:space="preserve">
+    <value>Chemin de CryptoSoft :</value>
   </data>
   <data name="destination" xml:space="preserve">
     <value>Destination</value>
@@ -135,11 +141,38 @@
   <data name="encrypt" xml:space="preserve">
     <value>Crypter</value>
   </data>
+  <data name="extensionFile" xml:space="preserve">
+    <value>Extension des fichiers à crypter :</value>
+  </data>
+  <data name="incorrectBusinessSoftware" xml:space="preserve">
+    <value>Logiciel métier incorrect.</value>
+  </data>
+  <data name="incorrectCryptosoftPath" xml:space="preserve">
+    <value>Le chemin d'accès de CryptoSoft est introuvable.</value>
+  </data>
+  <data name="incorrectDestinationExist" xml:space="preserve">
+    <value>Le dossier destination n'existe pas. </value>
+  </data>
+  <data name="incorrectDestinationSource" xml:space="preserve">
+    <value>Choississez un dossier destination différent du dossier source.</value>
+  </data>
+  <data name="incorrectExtension" xml:space="preserve">
+    <value>Extensions incorrectes.</value>
+  </data>
+  <data name="incorrectName" xml:space="preserve">
+    <value>Entrer un nom entre 1 et 20 caractères.</value>
+  </data>
+  <data name="incorrectSource" xml:space="preserve">
+    <value>Le dossier source n'existe pas.</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Langue :</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Nom</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Enregistrer</value>
   </data>
   <data name="searchName" xml:space="preserve">
     <value>Recherche</value>
@@ -148,7 +181,7 @@
     <value>Tout sélectionner</value>
   </data>
   <data name="settings" xml:space="preserve">
-    <value>Parametres</value>
+    <value>Paramètres</value>
   </data>
   <data name="source" xml:space="preserve">
     <value>Source</value>
