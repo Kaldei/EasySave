@@ -21,21 +21,18 @@ namespace EasySave.NS_ViewModel
 
 
         // ----- Methods -----
-        public int RemoveWork(int _index)
+        public void RemoveWork(int _index)
         {
             try
             {
                 // Remove Work from the program (at index)
                 this.model.works.RemoveAt(_index);
                 this.model.SaveWorks();
-
-                // Return Success Code
-                return 103;
             }
             catch
             {
                 // Return Error Code
-                return 203;
+                model.errorMsg?.Invoke("errorRemoveWork");
             }
         }
 
@@ -50,7 +47,8 @@ namespace EasySave.NS_ViewModel
                     {
                         if(Process.GetProcessesByName(businessSoftware).Length > 0)
                         {
-                            //Console.WriteLine($"{businessSoftware} is running"); // ---- TODO : Handle Error Message in View ---- //
+                            // Return Error Code
+                            model.errorMsg?.Invoke("businessSoftwareOn");
                             return;
                         }
                     }
@@ -64,18 +62,20 @@ namespace EasySave.NS_ViewModel
             }
             else
             {
-                // PAS DE WORK
-                // this.view.ConsoleUpdate(204);
+                // Return Error Code
+                model.errorMsg?.Invoke("noSelectedWork");
             }
         }
 
 
-        public int LaunchBackupType(Work _work)
+        public void LaunchBackupType(Work _work)
         {
             // Check if the source exists
             if (!Directory.Exists(_work.src))
             {
-                return 0; // TODO Error Code
+                // Return Error Code
+                model.errorMsg?.Invoke("unavailableSrcPath");
+                return ;
             }
             DirectoryInfo dir = new DirectoryInfo(_work.src);
 
@@ -83,7 +83,8 @@ namespace EasySave.NS_ViewModel
             if (!Directory.Exists(_work.dst))
             {
                 // Return Error Code
-                return 207;
+                model.errorMsg?.Invoke("unavailableDstPath");
+                return;
             }
 
             // Run the correct backup (Full or Diff)
@@ -95,16 +96,20 @@ namespace EasySave.NS_ViewModel
                     // If there is no first full backup, we create the first one (reference of the next diff backup)
                     if (fullBackupDir != null)
                     {
-                        return DifferentialBackupSetup(_work, dir, fullBackupDir);
+                        DifferentialBackupSetup(_work, dir, fullBackupDir);
+                        return;
                     }
-                    return FullBackupSetup(_work, dir);
+                    FullBackupSetup(_work, dir);
+                    return;
 
                 case BackupType.FULL:
-                    return FullBackupSetup(_work, dir);
+                    FullBackupSetup(_work, dir);
+                    return;
 
                 default:
                     // Return Error Code
-                    return 208;
+                    model.errorMsg?.Invoke("unavailableBackupType");
+                    return;
             }
         }
 
@@ -125,7 +130,7 @@ namespace EasySave.NS_ViewModel
         }
 
         // Full Backup
-        private int FullBackupSetup(Work _work, DirectoryInfo _dir)
+        private void FullBackupSetup(Work _work, DirectoryInfo _dir)
         {
             long totalSize = 0;
 
@@ -137,11 +142,11 @@ namespace EasySave.NS_ViewModel
             {
                 totalSize += file.Length;
             }
-            return DoBackup(_work, files, totalSize);
+            DoBackup(_work, files, totalSize);
         }
 
         // Differential Backup
-        private int DifferentialBackupSetup(Work _work, DirectoryInfo _dir, string _fullBackupDir)
+        private void DifferentialBackupSetup(Work _work, DirectoryInfo _dir, string _fullBackupDir)
         {
             long totalSize = 0;
 
@@ -169,11 +174,10 @@ namespace EasySave.NS_ViewModel
             {
                 _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
-                // this.view.ConsoleUpdate(3);
-               // this.view.DisplayBackupRecap(_work.name, 0);
-                return 105;
+                // Return Error Code
+                model.errorMsg?.Invoke("noChangeSinceLastBackup");
             }
-            return DoBackup(_work, filesToCopy.ToArray(), totalSize);
+            DoBackup(_work, filesToCopy.ToArray(), totalSize);
         }
 
         // Check if the file or the src is the same as the full backup one to know if the files need to be copied or not
@@ -197,7 +201,7 @@ namespace EasySave.NS_ViewModel
         }
 
         // Do Backup
-        private int DoBackup(Work _work, FileInfo[] _files, long _totalSize)
+        private void DoBackup(Work _work, FileInfo[] _files, long _totalSize)
         {
             DriveInfo disk = new DriveInfo(_work.dst.Substring(0, 1));
 
@@ -220,7 +224,8 @@ namespace EasySave.NS_ViewModel
                     }
                     catch
                     {
-                        return 210;
+                        // Return Error Code
+                        model.errorMsg?.Invoke("cannotCreateDstFolder");
                     }
                     List<string> failedFiles = CopyFiles(_work, _files, _totalSize, dst);
 
@@ -240,25 +245,22 @@ namespace EasySave.NS_ViewModel
                     }
                     //this.view.DisplayBackupRecap(_work.name, transferTime); //TODO
 
-                    if (failedFiles.Count == 0)
+                    if (failedFiles.Count != 0)
                     {
                         // Return Success Code
-                        return 104;
-                    }
-                    else
-                    {
-                        // Return Error Code
-                        return 216;
+                        model.errorMsg?.Invoke("backupFinishedWithError");
                     }
                 }
                 else
                 {
-                    return 0; // No space //TODO
+                    // Return Error Code
+                    model.errorMsg?.Invoke("noSpaceDstFolder");
                 }
             }
             else
             {
-                return 0; // Disk unknown //TODO
+                // Return Error Code
+                model.errorMsg?.Invoke("diskError");
             }
         }
 
@@ -270,22 +272,30 @@ namespace EasySave.NS_ViewModel
             int totalFile = _files.Length;
             List<string> failedFiles = new List<string>();
 
-            // Copy every file
-            for (int i = 0; i < _files.Length; i++)
+            if (this.model.settings.cryptoSoftPath.Length != 0 && this.model.settings.cryptoExtensions.Count != 0)
             {
-                // Update the size remaining to copy (octet)
-                int pourcent = (i * 100 / totalFile);
-                long curSize = _files[i].Length;
-                leftSize -= curSize;
+                // Copy every file
+                for (int i = 0; i < _files.Length; i++)
+                {
+                    // Update the size remaining to copy (octet)
+                    int pourcent = (i * 100 / totalFile);
+                    long curSize = _files[i].Length;
+                    leftSize -= curSize;
 
-                if (this.BackupFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent)) // ----------------------
-                {
-                    //this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent); // TODO
+                    if (this.BackupFile(_work, _files[i], curSize, _dst, leftSize, totalFile, i, pourcent)) // ----------------------
+                    {
+                        //this.view.DisplayCurrentState(_work.name, (totalFile - i), leftSize, curSize, pourcent); // TODO
+                    }
+                    else
+                    {
+                        failedFiles.Add(_files[i].Name);
+                    }
                 }
-                else
-                {
-                    failedFiles.Add(_files[i].Name);
-                }
+            }
+            else
+            {
+                // Return Error Code
+                model.errorMsg?.Invoke("cryptoSoftPathNotFound");
             }
             return failedFiles;
         }
@@ -338,10 +348,9 @@ namespace EasySave.NS_ViewModel
                     }
                     catch
                     {
-                        // TODO Error cannot found the process
+                        // Return Error Code
+                        model.errorMsg?.Invoke("cryptoSoftPathError");
                     }
-
-
                 }
 
                 // Save Log
