@@ -35,7 +35,25 @@ namespace EasySave.NS_View
             this.mainWindow = _mainWindow;
             DataContext = this.settingsViewModel;
             InitializeComponent();
-            
+            updateSelectedLanguage();
+
+        }
+
+
+        // ----- Methods -----
+        // Select Language in Settings View
+        public void updateSelectedLanguage()
+        {
+            if (this.settingsViewModel.model.settings.language == "en-US")
+            {
+                enButton.BorderBrush = Brushes.DodgerBlue;
+                frButton.BorderBrush = null;
+            }
+            else if (this.settingsViewModel.model.settings.language == "fr-FR")
+            {
+                enButton.BorderBrush = null;
+                frButton.BorderBrush = Brushes.DodgerBlue;
+            }
         }
 
         private void ChangeLanguage(object sender, RoutedEventArgs e)
@@ -47,6 +65,8 @@ namespace EasySave.NS_View
 
             // Change Program Language
             Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
+
+            updateSelectedLanguage();
         }
 
         private void cryptoSoftathButton_Click(object sender, RoutedEventArgs e)
