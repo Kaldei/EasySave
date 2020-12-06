@@ -90,5 +90,24 @@ namespace EasySave
                     return;
             }
         }
+
+        public void RefreshLanguage()
+        {
+            if (menuView != null)
+            {
+                menuView = new MenuView(menuViewModel, this);
+            }
+            if (addWorkView != null)
+            {
+                addWorkView = new AddWorkView(addWorkViewModel, this);
+            }
+            if (settingsView != null)
+            {
+                settingsView = new SettingsView(settingsViewModel, this);
+                DataContext = settingsView;
+            }
+
+        }
+
     }
 }
