@@ -13,6 +13,9 @@ using System.Windows.Shapes;
 using EasySave.NS_ViewModel;
 using EasySave.NS_Model;
 using System.IO;
+using System.Resources;
+using System.Reflection;
+using System.Globalization;
 
 namespace EasySave.NS_View
 {
@@ -43,16 +46,17 @@ namespace EasySave.NS_View
             string src = RectifyPath(_src.Text);
             string dst = RectifyPath(_dst.Text);
 
+
             bool isValidWorkName = CheckName(_name.Text);
             if (isValidWorkName)
             {
                 _nameLabel.Foreground = Brushes.Black;
-                _nameLabel.Content = "Name:";
+                _nameLabel.Content = Langs.Lang.name;
             } 
             else
             {
                 _nameLabel.Foreground = Brushes.Red;
-                _nameLabel.Content = "Name: Incorrect!";
+                _nameLabel.Content = Langs.Lang.incorrectName;
                 return;
             }
 
@@ -60,12 +64,12 @@ namespace EasySave.NS_View
             if (isValidSource)
             {
                 _srcLabel.Foreground = Brushes.Black;
-                _srcLabel.Content = "Source:";
+                _srcLabel.Content = Langs.Lang.source;
             } 
             else
             {
                 _srcLabel.Foreground = Brushes.Red;
-                _srcLabel.Content = "Source: Incorrect!";
+                _srcLabel.Content = Langs.Lang.incorrectSource;
                 return;
             }
 
@@ -73,14 +77,15 @@ namespace EasySave.NS_View
             if (isValidDestination)
             {
                 _dstLabel.Foreground = Brushes.Black;
-                _dstLabel.Content = "Destination:";
+                _dstLabel.Content = Langs.Lang.destination;
+
             }
             else
             {
                 _dstLabel.Foreground = Brushes.Red;
-                _dstLabel.Content = "Destination: Incorrect!";
                 return;
             }
+
 
             // Add Work If All User Input are OK
             addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, (bool)_isCrypted.IsChecked);
@@ -133,17 +138,20 @@ namespace EasySave.NS_View
                     {
                         if (_src != _dst.Substring(0, _src.Length))
                         {
+                         
                             return true;
                         }
                         else
                         {
                             return false;
                         }
-                    }
+                    }               
                     return true;
                 }
+                _dstLabel.Content = Langs.Lang.incorrectDestinationSource;
                 return false;
             }
+            _dstLabel.Content = Langs.Lang.incorrectDestinationExist;
             return false;
         }
 
