@@ -41,7 +41,7 @@
         </Grid>
         <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
         <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
-            <Label x:Name="cryptoSoftPathLabel">CryptoSoft Path:</Label>
+            <Label x:Name="cryptoSoftPathLabel" Content="{x:Static language:Lang.cryptosoftPath}"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="29*"/>
@@ -50,12 +50,12 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2" Text="{Binding model.settings.cryptoSoftPath}"/>
-                <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="50" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0">Save</Button>
+                <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="50" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
             </Grid>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
-            <Label x:Name="addExtensionLabel">File Extension to Encrypt:</Label>
+            <Label x:Name="addExtensionLabel" Content="{x:Static language:Lang.extensionFile}"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -86,7 +86,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
-            <Label x:Name="addBusinessSoftwareLabel">Business Software:</Label>
+            <Label x:Name="addBusinessSoftwareLabel" Content="{x:Static language:Lang.businessSoftware}"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
