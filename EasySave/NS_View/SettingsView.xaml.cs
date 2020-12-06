@@ -60,13 +60,21 @@ namespace EasySave.NS_View
         {
             // Change Language Setting
             var button = sender as Button;
-            this.settingsViewModel.model.settings.language = button.Tag.ToString();
-            this.settingsViewModel.model.SaveSettings();
 
-            // Change Program Language
-            Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
+            if (this.settingsViewModel.model.settings.language != button.Tag.ToString())
+            {
+                this.settingsViewModel.model.settings.language = button.Tag.ToString();
+                this.settingsViewModel.model.SaveSettings();
 
-            updateSelectedLanguage();
+                // Change Program Language
+
+                Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
+
+                updateSelectedLanguage();
+
+                mainWindow.RefreshLanguage();
+            }
+            
         }
 
         private void cryptoSoftathButton_Click(object sender, RoutedEventArgs e)
