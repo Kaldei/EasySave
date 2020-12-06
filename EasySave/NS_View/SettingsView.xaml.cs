@@ -85,7 +85,8 @@ namespace EasySave.NS_View
             this.settingsViewModel.model.settings.cryptoExtensions.Add(_addExtension.Text);
             this.settingsViewModel.model.SaveSettings();
 
-            // TODO : Reload
+            // reset Field
+            _addExtension.Text = "";
         }
 
         private bool checkExtension(string _addExtension)
@@ -110,7 +111,8 @@ namespace EasySave.NS_View
             this.settingsViewModel.model.settings.cryptoExtensions.Remove((string)_removeExtension.SelectedItem);
             this.settingsViewModel.model.SaveSettings();
 
-            // TODO : Reload
+            // Reset Item
+            _removeExtension.SelectedIndex = 0;
         }
 
         private void addBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
@@ -133,7 +135,8 @@ namespace EasySave.NS_View
             this.settingsViewModel.model.settings.businessSoftwares.Add(_addBusinessSoftware.Text);
             this.settingsViewModel.model.SaveSettings();
 
-            // TODO : Reload
+            // reset Field
+            _addBusinessSoftware.Text = "";
         }
 
         private bool checkBusinessSoftware(string _addBusinessSoftware)
@@ -154,7 +157,8 @@ namespace EasySave.NS_View
             this.settingsViewModel.model.settings.businessSoftwares.Remove((string)_removeBusinessSoftware.SelectedItem);
             this.settingsViewModel.model.SaveSettings();
 
-            // TODO : Reload
+            // Reset Item
+            _removeBusinessSoftware.SelectedIndex = 0;
         }
 
         private void returnMenuButton_Click(object sender, RoutedEventArgs e)
