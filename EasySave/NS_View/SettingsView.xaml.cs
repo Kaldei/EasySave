@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasySave.NS_Model;
 using EasySave.NS_ViewModel;
 
 namespace EasySave.NS_View
@@ -89,8 +90,15 @@ namespace EasySave.NS_View
 
         private bool checkExtension(string _addExtension)
         {
-            if (_addExtension.StartsWith(".") && !this.settingsViewModel.model.settings.cryptoExtensions.Exists(extention => extention == _addExtension))
+            if (_addExtension.StartsWith("."))
             {
+                foreach (string extension in this.settingsViewModel.model.settings.cryptoExtensions)
+                {
+                    if (extension == _addExtension)
+                    {
+                        return false;
+                    }
+                }
                 return true;
             }
             return false;
@@ -130,11 +138,14 @@ namespace EasySave.NS_View
 
         private bool checkBusinessSoftware(string _addBusinessSoftware)
         {
-            if (!this.settingsViewModel.model.settings.businessSoftwares.Exists(businessSoftware => businessSoftware == _addBusinessSoftware))
+            foreach (string businessSoftware in this.settingsViewModel.model.settings.businessSoftwares)
             {
-                return true;
+                if (businessSoftware == _addBusinessSoftware)
+                {
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
 
         private void removeBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)

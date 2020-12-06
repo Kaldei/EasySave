@@ -41,26 +41,22 @@ namespace EasySave.NS_ViewModel
 
         public void LaunchBackupWork(int[] idWorkToSave)
         {
-            int businessSoftwaresId;
-
             if (this.model.works.Count > 0 && idWorkToSave.Length > 0)
             {
                 for (int i = 0; i < idWorkToSave.Length; i++)
                 {
                     // Get id of one Running Business Software from the List (-1 if none) 
-                    businessSoftwaresId = this.model.settings.businessSoftwares.FindIndex(x => Process.GetProcessesByName(x).Length > 0);
-
-                    // Prevents from Lauching Backups if one Business Software is Running
-                    if (businessSoftwaresId != -1)
+                    foreach (string businessSoftware in this.model.settings.businessSoftwares)
                     {
-                        Console.WriteLine($"{this.model.settings.businessSoftwares[businessSoftwaresId]} is running"); // ---- TODO : Handle Error Message in View ---- //
+                        if(Process.GetProcessesByName(businessSoftware).Length > 0)
+                        {
+                            //Console.WriteLine($"{businessSoftware} is running"); // ---- TODO : Handle Error Message in View ---- //
+                            return;
+                        }
                     }
-                    else
-                    {
-                        LaunchBackupType(this.model.works[idWorkToSave[i]]);
-                        // this.view.ConsoleUpdate(LaunchBackupType(this.works[idWorkToSave[i]]));
-                        // this.view.ConsoleUpdate(4);
-                    }
+                    LaunchBackupType(this.model.works[idWorkToSave[i]]);
+                    // this.view.ConsoleUpdate(LaunchBackupType(this.works[idWorkToSave[i]]));
+                    // this.view.ConsoleUpdate(4);
                 }
 
                 // Retour menu 
