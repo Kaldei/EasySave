@@ -50,7 +50,7 @@ namespace EasySave.NS_Model
 
             // Initialize Settings
             this.settings = Settings.GetInstance();
-            this.settings.Update("", new ObservableCollection<string>(), new ObservableCollection<string>());
+            this.settings.Update("", new ObservableCollection<string>(), new ObservableCollection<string>(), "en-US");
 
             // Load Works at the beginning of the program (from ./State.json)
             LoadWorks();

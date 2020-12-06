@@ -35,13 +35,46 @@ namespace EasySave.NS_View
             this.mainWindow = _mainWindow;
             DataContext = this.settingsViewModel;
             InitializeComponent();
-            
+            updateSelectedLanguage();
+
+        }
+
+
+        // ----- Methods -----
+        // Select Language in Settings View
+        public void updateSelectedLanguage()
+        {
+            if (this.settingsViewModel.model.settings.language == "en-US")
+            {
+                enButton.BorderBrush = Brushes.DodgerBlue;
+                frButton.BorderBrush = null;
+            }
+            else if (this.settingsViewModel.model.settings.language == "fr-FR")
+            {
+                enButton.BorderBrush = null;
+                frButton.BorderBrush = Brushes.DodgerBlue;
+            }
         }
 
         private void ChangeLanguage(object sender, RoutedEventArgs e)
         {
+            // Change Language Setting
             var button = sender as Button;
-            Langs.Lang.Culture = new CultureInfo(button.Tag.ToString());
+
+            if (this.settingsViewModel.model.settings.language != button.Tag.ToString())
+            {
+                this.settingsViewModel.model.settings.language = button.Tag.ToString();
+                this.settingsViewModel.model.SaveSettings();
+
+                // Change Program Language
+
+                Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
+
+                updateSelectedLanguage();
+
+                mainWindow.RefreshLanguage();
+            }
+            
         }
 
         private void cryptoSoftathButton_Click(object sender, RoutedEventArgs e)
@@ -51,12 +84,12 @@ namespace EasySave.NS_View
             if (isValidCryptoSoftPath)
             {
                 cryptoSoftPathLabel.Foreground = Brushes.Black;
-                cryptoSoftPathLabel.Content = "CryptoSoft Path:";
+                cryptoSoftPathLabel.Content = Langs.Lang.cryptosoftPath;
             }
             else
             {
                 cryptoSoftPathLabel.Foreground = Brushes.Red;
-                cryptoSoftPathLabel.Content = "CryptoSoft Path: Incorrect!";
+                cryptoSoftPathLabel.Content = Langs.Lang.incorrectCryptosoftPath;
                 return;
             }
 
@@ -72,12 +105,12 @@ namespace EasySave.NS_View
             if (isValidExtention)
             {
                 addExtensionLabel.Foreground = Brushes.Black;
-                addExtensionLabel.Content = "File Extension to Encrypt:";
+                addExtensionLabel.Content = Langs.Lang.extensionFile;
             }
             else
             {
                 addExtensionLabel.Foreground = Brushes.Red;
-                addExtensionLabel.Content = "File Extension to Encrypt: Incorrect Extension Given!";
+                addExtensionLabel.Content = Langs.Lang.incorrectExtension;
                 return;
             }
 
@@ -122,12 +155,12 @@ namespace EasySave.NS_View
             if (isValidExtention)
             {
                 addBusinessSoftwareLabel.Foreground = Brushes.Black;
-                addBusinessSoftwareLabel.Content = "Business Software:";
+                addBusinessSoftwareLabel.Content = Langs.Lang.businessSoftware;
             }
             else
             {
                 addBusinessSoftwareLabel.Foreground = Brushes.Red;
-                addBusinessSoftwareLabel.Content = "Business Software: Incorrect Business Software Given!";
+                addBusinessSoftwareLabel.Content = Langs.Lang.incorrectBusinessSoftware;
                 return;
             }
 

@@ -45,6 +45,9 @@ namespace EasySave.NS_Model
             }
         }
 
+        public string language { get; set; }
+
+
         // --- Constructors ---
         // Constructor used by LoadSettings
         private Settings() { }
@@ -62,11 +65,12 @@ namespace EasySave.NS_Model
         }
 
         // Update Settings
-        public void Update(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _businessSoftwares)
+        public void Update(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _businessSoftwares, string _language)
         {
             this.cryptoSoftPath = _cryptoSoftPath;
             this.cryptoExtensions = _cryptoExtensions;
             this.businessSoftwares = _businessSoftwares;
+            this.language = _language;
         }
     }
 }
