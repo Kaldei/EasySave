@@ -123,11 +123,20 @@
   <data name="addWork" xml:space="preserve">
     <value>Add a work</value>
   </data>
+  <data name="backupFinishedWithError" xml:space="preserve">
+    <value>Backup is finish with error.</value>
+  </data>
   <data name="backupType" xml:space="preserve">
     <value>Backup Type</value>
   </data>
   <data name="businessSoftware" xml:space="preserve">
     <value>Business software:</value>
+  </data>
+  <data name="businessSoftwareOn" xml:space="preserve">
+    <value>Can't continue backup. Business Software is open.</value>
+  </data>
+  <data name="cannotCreateDstFolder" xml:space="preserve">
+    <value>Can not create destination folder.</value>
   </data>
   <data name="checkEncrypt" xml:space="preserve">
     <value>Check to encrypt files</value>
@@ -135,8 +144,17 @@
   <data name="cryptosoftPath" xml:space="preserve">
     <value>CryptoSoft Path:</value>
   </data>
+  <data name="cryptoSoftPathError" xml:space="preserve">
+    <value>Cryptosoft path error.</value>
+  </data>
+  <data name="cryptoSoftPathNotFound" xml:space="preserve">
+    <value>Cryptosoft path is not found.</value>
+  </data>
   <data name="destination" xml:space="preserve">
     <value>Destination</value>
+  </data>
+  <data name="diskError" xml:space="preserve">
+    <value>Disk error.</value>
   </data>
   <data name="encrypt" xml:space="preserve">
     <value>Encrypted</value>
@@ -165,6 +183,12 @@
   <data name="incorrectSource" xml:space="preserve">
     <value>Directory doesn't exist. Please enter a valid directory source.</value>
   </data>
+  <data name="errorAddWork" xml:space="preserve">
+    <value>Failed to add work.</value>
+  </data>
+  <data name="errorRemoveWork" xml:space="preserve">
+    <value>Failed to remove work.</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Language:</value>
   </data>
@@ -173,6 +197,14 @@
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
+  <data name="noChangeSinceLastBackup" xml:space="preserve">
+    <value>No change since last backup.</value>
+  </data>
+  <data name="noSelectedWork" xml:space="preserve">
+    <value>Please select a work.</value>
+  </data>
+  <data name="noSpaceDstFolder" xml:space="preserve">
+    <value>No space for destination folder.</value>
   </data>
   <data name="searchName" xml:space="preserve">
     <value>Search</value>
@@ -185,5 +217,17 @@
   </data>
   <data name="source" xml:space="preserve">
     <value>Source</value>
+  </data>
+  <data name="unavailableBackupType" xml:space="preserve">
+    <value>Unvailable backup type.</value>
+  </data>
+  <data name="unavailableDstPath" xml:space="preserve">
+    <value>Destination directory doesn't found.</value>
+  </data>
+  <data name="unavailableSrcPath" xml:space="preserve">
+    <value>Source directory doesn't found.</value>
+  </data>
+  <data name="unknownError" xml:space="preserve">
+    <value>Failed: Unknown Error.</value>
   </data>
 </root>

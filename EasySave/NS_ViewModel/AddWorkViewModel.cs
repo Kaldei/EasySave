@@ -17,21 +17,18 @@ namespace EasySave.NS_ViewModel
             this.model = _model;
         }
 
-        public int AddWork(string _name, string _src, string _dst, BackupType _backupType, bool _isCrypted)
+        public void AddWork(string _name, string _src, string _dst, BackupType _backupType, bool _isCrypted)
         {
             try
             {
                 // Add Work in the program (at the end of the List)
                 this.model.works.Add(new Work(_name, _src, _dst, _backupType, _isCrypted));
                 this.model.SaveWorks();
-
-                // Return Success Code
-                return 101;
             }
             catch
             {
                 // Return Error Code
-                return 201;
+                model.errorMsg?.Invoke("errorAddWork");
             }
         }
     }
