@@ -1,13 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 
 namespace EasySave.NS_Model
 {
-    public class Model
+    public class Model : INotifyPropertyChanged
     {
+        // --- Handler ---
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raises OnPropertychangedEvent when property changes
+        /// </summary>
+        /// <param name="name">String representing the property name</param>
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         // --- Attributes ---
         // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -18,7 +35,20 @@ namespace EasySave.NS_Model
         public string stateFilePath { get; set; }
         public string settingsFilePath { get; set; }
 
-        public List<Work> works { get; set; }
+        private ObservableCollection<Work> Works { get; set;}
+        public ObservableCollection<Work> works {
+            get {
+                return Works; 
+            }
+            set
+            {
+                if(Works != value)
+                {
+                    Works = value;
+                    OnPropertyChanged("works");
+                }
+            }
+        }
         public Settings settings { get; set; }
 
 
@@ -30,11 +60,11 @@ namespace EasySave.NS_Model
             settingsFilePath = "./Settings.json";
 
             // Initialize Work List
-            works = new List<Work>();
+            works = new ObservableCollection<Work>();
 
             // Initialize Settings
             this.settings = Settings.GetInstance();
-            this.settings.Update("", new List<String>(), new List<String>());
+            this.settings.Update("", new ObservableCollection<string>(), new ObservableCollection<string>());
 
             // Load Works at the beginning of the program (from ./State.json)
             LoadWorks();
@@ -54,7 +84,7 @@ namespace EasySave.NS_Model
                 try
                 {
                     // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
-                    this.works = JsonSerializer.Deserialize<List<Work>>(File.ReadAllText(this.stateFilePath));
+                    this.works = JsonSerializer.Deserialize<ObservableCollection<Work>>(File.ReadAllText(this.stateFilePath));
                 }
                 catch
                 {
