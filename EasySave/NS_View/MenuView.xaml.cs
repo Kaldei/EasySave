@@ -55,8 +55,6 @@ namespace EasySave.NS_View
             {
                 menuViewModel.RemoveWork(index);
             }
-
-            // TODO : Reload
         }
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
