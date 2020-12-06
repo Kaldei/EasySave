@@ -28,6 +28,7 @@ namespace EasySave
         private MenuView menuView { get; set; }
         private AddWorkView addWorkView { get; set; }
         private SettingsView settingsView { get; set; }
+        private ErrorView errorView { get; set; }
 
         public MenuViewModel menuViewModel { get; set; }
         public AddWorkViewModel addWorkViewModel { get; set; }
@@ -41,6 +42,7 @@ namespace EasySave
             Model model = new Model();
 
             // Initialize ViewModel
+            this.errorView = new ErrorView(model);
             this.menuViewModel = new MenuViewModel(model);
             this.addWorkViewModel = new AddWorkViewModel(model);
             this.settingsViewModel = new SettingsViewModel(model);
