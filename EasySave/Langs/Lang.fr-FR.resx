@@ -144,16 +144,25 @@
   <data name="extensionFile" xml:space="preserve">
     <value>Extension des fichiers à crypter :</value>
   </data>
-  <data name="incorectDestinationExist" xml:space="preserve">
+  <data name="incorrectBusinessSoftware" xml:space="preserve">
+    <value>Logiciel métier incorrect.</value>
+  </data>
+  <data name="incorrectCryptosoftPath" xml:space="preserve">
+    <value>Le chemin d'accès de CryptoSoft est introuvable.</value>
+  </data>
+  <data name="incorrectDestinationExist" xml:space="preserve">
     <value>Le dossier destination n'existe pas. </value>
   </data>
-  <data name="incorectDestinationSource" xml:space="preserve">
+  <data name="incorrectDestinationSource" xml:space="preserve">
     <value>Choississez un dossier destination différent du dossier source.</value>
   </data>
-  <data name="incorectName" xml:space="preserve">
+  <data name="incorrectExtension" xml:space="preserve">
+    <value>Extensions incorrectes.</value>
+  </data>
+  <data name="incorrectName" xml:space="preserve">
     <value>Entrer un nom entre 1 et 20 caractères.</value>
   </data>
-  <data name="incorectSource" xml:space="preserve">
+  <data name="incorrectSource" xml:space="preserve">
     <value>Le dossier source n'existe pas.</value>
   </data>
   <data name="language" xml:space="preserve">

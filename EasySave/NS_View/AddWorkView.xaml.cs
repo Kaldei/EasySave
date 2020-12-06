@@ -56,7 +56,7 @@ namespace EasySave.NS_View
             else
             {
                 _nameLabel.Foreground = Brushes.Red;
-                _nameLabel.Content = Langs.Lang.incorectName;
+                _nameLabel.Content = Langs.Lang.incorrectName;
                 return;
             }
 
@@ -69,7 +69,7 @@ namespace EasySave.NS_View
             else
             {
                 _srcLabel.Foreground = Brushes.Red;
-                _srcLabel.Content = Langs.Lang.incorectSource;
+                _srcLabel.Content = Langs.Lang.incorrectSource;
                 return;
             }
 
@@ -148,10 +148,10 @@ namespace EasySave.NS_View
                     }               
                     return true;
                 }
-                _dstLabel.Content = Langs.Lang.incorectDestinationSource;
+                _dstLabel.Content = Langs.Lang.incorrectDestinationSource;
                 return false;
             }
-            _dstLabel.Content = Langs.Lang.incorectDestinationExist;
+            _dstLabel.Content = Langs.Lang.incorrectDestinationExist;
             return false;
         }
 
