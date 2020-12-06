@@ -142,38 +142,65 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Incorrect Business Software Given!.
+        /// </summary>
+        public static string incorrectBusinessSoftware {
+            get {
+                return ResourceManager.GetString("incorrectBusinessSoftware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à CryptoSoft Path incorrect!.
+        /// </summary>
+        public static string incorrectCryptosoftPath {
+            get {
+                return ResourceManager.GetString("incorrectCryptosoftPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Directory doesn&apos;t exist. Please enter a valid directory direction..
         /// </summary>
-        public static string incorectDestinationExist {
+        public static string incorrectDestinationExist {
             get {
-                return ResourceManager.GetString("incorectDestinationExist", resourceCulture);
+                return ResourceManager.GetString("incorrectDestinationExist", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Choose a different path from the source..
         /// </summary>
-        public static string incorectDestinationSource {
+        public static string incorrectDestinationSource {
             get {
-                return ResourceManager.GetString("incorectDestinationSource", resourceCulture);
+                return ResourceManager.GetString("incorrectDestinationSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Incorrect extension given!.
+        /// </summary>
+        public static string incorrectExtension {
+            get {
+                return ResourceManager.GetString("incorrectExtension", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Enter a valid name (1 to 20 characters)..
         /// </summary>
-        public static string incorectName {
+        public static string incorrectName {
             get {
-                return ResourceManager.GetString("incorectName", resourceCulture);
+                return ResourceManager.GetString("incorrectName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Directory doesn&apos;t exist. Please enter a valid directory source..
         /// </summary>
-        public static string incorectSource {
+        public static string incorrectSource {
             get {
-                return ResourceManager.GetString("incorectSource", resourceCulture);
+                return ResourceManager.GetString("incorrectSource", resourceCulture);
             }
         }
         

@@ -144,16 +144,25 @@
   <data name="extensionFile" xml:space="preserve">
     <value>File extension to encrypt:</value>
   </data>
-  <data name="incorectDestinationExist" xml:space="preserve">
+  <data name="incorrectBusinessSoftware" xml:space="preserve">
+    <value>Incorrect Business Software Given!</value>
+  </data>
+  <data name="incorrectCryptosoftPath" xml:space="preserve">
+    <value>CryptoSoft Path incorrect!</value>
+  </data>
+  <data name="incorrectDestinationExist" xml:space="preserve">
     <value>Directory doesn't exist. Please enter a valid directory direction.</value>
   </data>
-  <data name="incorectDestinationSource" xml:space="preserve">
+  <data name="incorrectDestinationSource" xml:space="preserve">
     <value>Choose a different path from the source.</value>
   </data>
-  <data name="incorectName" xml:space="preserve">
+  <data name="incorrectExtension" xml:space="preserve">
+    <value>Incorrect extension given!</value>
+  </data>
+  <data name="incorrectName" xml:space="preserve">
     <value>Enter a valid name (1 to 20 characters).</value>
   </data>
-  <data name="incorectSource" xml:space="preserve">
+  <data name="incorrectSource" xml:space="preserve">
     <value>Directory doesn't exist. Please enter a valid directory source.</value>
   </data>
   <data name="language" xml:space="preserve">
