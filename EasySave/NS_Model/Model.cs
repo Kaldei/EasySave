@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasySave.Observable;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,23 +9,8 @@ using System.Text.Json;
 
 namespace EasySave.NS_Model
 {
-    public class Model : INotifyPropertyChanged
+    public class Model : ObservableObject
     {
-        // --- Handler ---
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises OnPropertychangedEvent when property changes
-        /// </summary>
-        /// <param name="name">String representing the property name</param>
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         // --- Attributes ---
         // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
