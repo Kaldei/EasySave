@@ -1,32 +1,18 @@
-﻿using System;
+﻿using EasySave.Observable;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace EasySave.NS_Model
 {
-    public class Settings : INotifyPropertyChanged
+    public class Settings : ObservableObject
     {
-        // --- Handler ---
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises OnPropertychangedEvent when property changes
-        /// </summary>
-        /// <param name="name">String representing the property name</param>
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         // --- Attributes ---
         public static Settings instance { get; set; }
         public string cryptoSoftPath { get; set; }
-        private ObservableCollection<String> CryptoExtensions { get; set; }
-        public ObservableCollection<String> cryptoExtensions
+        private ObservableCollection<string> CryptoExtensions { get; set; }
+        public ObservableCollection<string> cryptoExtensions
         {
             get
             {
@@ -42,8 +28,8 @@ namespace EasySave.NS_Model
             }
         }
 
-        private ObservableCollection<String> BusinessSoftwares { get; set; }
-        public ObservableCollection<String> businessSoftwares 
+        private ObservableCollection<string> BusinessSoftwares { get; set; }
+        public ObservableCollection<string> businessSoftwares 
         {
             get
             {
@@ -76,7 +62,7 @@ namespace EasySave.NS_Model
         }
 
         // Update Settings
-        public void Update(string _cryptoSoftPath, ObservableCollection<String> _cryptoExtensions, ObservableCollection<String> _businessSoftwares)
+        public void Update(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _businessSoftwares)
         {
             this.cryptoSoftPath = _cryptoSoftPath;
             this.cryptoExtensions = _cryptoExtensions;
