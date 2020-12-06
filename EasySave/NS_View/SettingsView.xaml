@@ -126,10 +126,10 @@
                 </Grid.ColumnDefinitions>
 
 
-                <Button Grid.Column="0" Click="ChangeLanguage" Tag="en-US" Background="Transparent" BorderBrush="Transparent">
+                <Button x:Name="enButton" Grid.Column="0" Click="ChangeLanguage" Tag="en-US" Background="Transparent" BorderBrush="Transparent">
                     <Image Source="https://images.emojiterra.com/mozilla/512px/1f1ec-1f1e7.png" Height="20" Width="20" HorizontalAlignment="Left" />
                 </Button>
-                <Button Grid.Column="1" Click="ChangeLanguage" Tag="fr-FR" Background="Transparent" BorderBrush="Transparent">
+                <Button x:Name="frButton" Grid.Column="1" Click="ChangeLanguage" Tag="fr-FR" Background="Transparent" BorderBrush="Transparent">
                     <Image Source="https://images.emojiterra.com/mozilla/512px/1f1eb-1f1f7.png" Height="20" Width="20" HorizontalAlignment="Left"/>
                 </Button>
             </Grid>
