@@ -126,8 +126,14 @@
   <data name="backupType" xml:space="preserve">
     <value>Backup Type</value>
   </data>
+  <data name="businessSoftware" xml:space="preserve">
+    <value>Business software:</value>
+  </data>
   <data name="checkEncrypt" xml:space="preserve">
     <value>Check to encrypt files</value>
+  </data>
+  <data name="cryptosoftPath" xml:space="preserve">
+    <value>CryptoSoft Path:</value>
   </data>
   <data name="destination" xml:space="preserve">
     <value>Destination</value>
@@ -135,11 +141,29 @@
   <data name="encrypt" xml:space="preserve">
     <value>Encrypted</value>
   </data>
+  <data name="extensionFile" xml:space="preserve">
+    <value>File extension to encrypt:</value>
+  </data>
+  <data name="incorectDestinationExist" xml:space="preserve">
+    <value>Directory doesn't exist. Please enter a valid directory direction.</value>
+  </data>
+  <data name="incorectDestinationSource" xml:space="preserve">
+    <value>Choose a different path from the source.</value>
+  </data>
+  <data name="incorectName" xml:space="preserve">
+    <value>Enter a valid name (1 to 20 characters).</value>
+  </data>
+  <data name="incorectSource" xml:space="preserve">
+    <value>Directory doesn't exist. Please enter a valid directory source.</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Language:</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="searchName" xml:space="preserve">
     <value>Search</value>
