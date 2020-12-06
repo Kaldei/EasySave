@@ -83,22 +83,25 @@ namespace EasySave.NS_View
             }
 
             // Add Work If All User Input are OK
-            addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, _isCrypted.IsEnabled);
+            addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, (bool)_isCrypted.IsChecked);
 
             // Return to Menu
             this.mainWindow.ChangePage("menu");
         }
 
-        private bool CheckName(string _name)
+       private bool CheckName(string _name)
         {
             int length = _name.Length;
             if (length >= 1 && length <= 20)
             {
-                if (!this.addWorkViewModel.model.works.Exists(work => work.name == _name))
+                foreach(Work work in this.addWorkViewModel.model.works)
                 {
-                    return true;
+                    if (work.name == _name)
+                    {
+                        return false;
+                    }
                 }
-                return false;
+                return true;
             }
             return false;
         }
