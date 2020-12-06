@@ -85,6 +85,13 @@ namespace EasySave.NS_View
             // Add Work If All User Input are OK
             addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, (bool)_isCrypted.IsChecked);
 
+            // Reset Fields
+            _name.Text = "";
+            _src.Text ="";
+            _dst.Text = "";
+            _backupType.SelectedIndex = 0;
+            _isCrypted.IsChecked = false;
+
             // Return to Menu
             this.mainWindow.ChangePage("menu");
         }

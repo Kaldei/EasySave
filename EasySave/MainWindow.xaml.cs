@@ -90,23 +90,5 @@ namespace EasySave
                     return;
             }
         }
-
-        /*
-        // Buttons du téco : TO DELETE
-        private void AddWorkButton(object sender, RoutedEventArgs e)
-        {
-            DataContext = addWorkView;
-        }
-
-        private void DisplayWorksButton(object sender, RoutedEventArgs e)
-        {
-            DataContext = menuView;
-        }
-
-        private void SettingsButton(object sender, RoutedEventArgs e)
-        {
-            DataContext = settingsView;
-        }
-        */
     }
 }
