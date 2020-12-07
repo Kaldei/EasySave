@@ -9,7 +9,7 @@
   <p align="center">
     A little backup software by ProSoft
     <br />
-    <a href="https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FDOCUMENTATION.md"><strong>User documentation »</strong></a>
+    <a href="https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FEasySave_Exe%2FUSERDOC.md"><strong>User documentation »</strong></a>
     <br />
   </p>
 </p>
