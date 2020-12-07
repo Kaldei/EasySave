@@ -37,7 +37,9 @@ From the Menu, enter 3 to Launch a Backup Work.
 * You can you choose between Launch one Backup (enter the number of the Backup) or Launch All Backup (enter 0).
 * Once you have choose one option, the Backup will begin and a screen will display information about the progression of the Backup.
 * In the same time the `State.json` file is updated with information on progression of the Backup.
+* Every time a File is saved, the today's Log file is updated.
 * When the backup work is over a message will be prompt.
+
 Note : If you launch a Differential Backup for the first time, it will automatically launch a Full Backup.
 
 ### 4. Remove a Work
@@ -56,16 +58,20 @@ From the Menu, enter 6 to Quit the program.
 ---
 ## Files & Storage
 ### Settings
-Settings (Selected Language) are store in `Settings.json`
+Settings (Selected Language) are store in `Settings.json`.
 
 Note: Please don't mess with that file it could prevent EasySave to work. If you have a problem with that file, delete it. Easy Save will recreate it properly.
 
 ### Works
-Works are saved in `State.json`. You have complementary information in that file, like the last time this Work was Launched). 
+Works information are saved in `State.json`. You have complementary information in that file, like the last time this Work was Launched). 
 
 Note: Please don't mess with that file it could prevent EasySave to work. If you have a problem with that file, delete it. Easy Save will recreate it properly.
 
 ### Logs
 Logs are stored in the `Logs` folder. In this folder you will find daily logs with that format `YYYY-MM-DD.json`.
-
-
+* The name of the Backup Work.
+* Source File saved.
+* Destination where the File is saved.
+* The Size of the File.
+* Start time of the File Save.
+* Time spent on the save of the File.
