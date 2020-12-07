@@ -133,7 +133,7 @@
     <value>Logiciel métier :</value>
   </data>
   <data name="businessSoftwareOn" xml:space="preserve">
-    <value>Sauvegarde en pause. Logiciel métier ouvert.</value>
+    <value>Impossible de lancer la sauvegarde. Logiciel métier ouvert.</value>
   </data>
   <data name="cannotCreateDstFolder" xml:space="preserve">
     <value>Echec lors de la création du dossier destination.</value>
@@ -230,5 +230,14 @@
   </data>
   <data name="unknownError" xml:space="preserve">
     <value>Echec: Erreur inconnue.</value>
+  </data>
+  <data name="inMessage" xml:space="preserve">
+    <value> en </value>
+  </data>
+  <data name="progressBarDone" xml:space="preserve">
+    <value>Toutes les sauvergardes effectuées.</value>
+  </data>
+  <data name="progressBasResult" xml:space="preserve">
+    <value> finit avec un total d'erreur </value>
   </data>
 </root>

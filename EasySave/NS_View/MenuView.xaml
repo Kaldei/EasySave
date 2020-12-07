@@ -65,6 +65,7 @@
             </StackPanel>
         </Grid>
 
+        <!--
         <Grid Grid.Row="1" Grid.Column="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -74,6 +75,7 @@
             <Label Content="{x:Static language:Lang.searchName}"></Label>
             <TextBox Grid.Column="1" Width="80" Height="20"></TextBox>
         </Grid>
+        -->
 
         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
             <ListView Name="_listWorks" ItemsSource="{Binding model.works}">

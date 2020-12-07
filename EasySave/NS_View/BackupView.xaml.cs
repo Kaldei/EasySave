@@ -39,14 +39,14 @@ namespace EasySave.NS_View
 
         public void UpdateBackupInfo(string _name, int _totalFileSuccess, int _totalFile, int _timeTaken)
         {
-            string info = (backupInfos.Count + 1) + ". " + _name + " finished with a total of " + _totalFileSuccess + "/" + _totalFile + " in " + _timeTaken + " ms";
+            string info = (backupInfos.Count + 1) + ". " + _name + Langs.Lang.progressBasResult + _totalFileSuccess + "/" + _totalFile + Langs.Lang.inMessage + _timeTaken + " ms";
             backupInfos.Add(info);
             BackuFinished.ItemsSource = null;
             BackuFinished.ItemsSource = backupInfos;
 
             if (backupInfos.Count == this.mainWindow.selectedWorksId.Length)
             {
-                MessageBox.Show("Every backup is finished");
+                MessageBox.Show(Langs.Lang.progressBarDone);
                 backupInfos = new List<string>();
                 this.mainWindow.ChangePage("menu");
             }

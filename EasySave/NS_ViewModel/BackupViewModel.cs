@@ -34,8 +34,13 @@ namespace EasySave.NS_ViewModel
                     {
                         if (Process.GetProcessesByName(businessSoftware).Length > 0)
                         {
+                            for (int j = i; j < idWorkToSave.Length; j++)
+                            {
+                                currentBackupInfo?.Invoke("error", 0, 0, 0);
+                            }
                             // Return Error Code
                             model.errorMsg?.Invoke("businessSoftwareOn");
+
                             return;
                         }
                     }

@@ -277,6 +277,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à  in .
+        /// </summary>
+        public static string inMessage {
+            get {
+                return ResourceManager.GetString("inMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Language:.
         /// </summary>
         public static string language {
@@ -318,6 +327,24 @@ namespace EasySave.Langs {
         public static string noSpaceDstFolder {
             get {
                 return ResourceManager.GetString("noSpaceDstFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Every backup is finished.
+        /// </summary>
+        public static string progressBarDone {
+            get {
+                return ResourceManager.GetString("progressBarDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à  finished with a total of .
+        /// </summary>
+        public static string progressBasResult {
+            get {
+                return ResourceManager.GetString("progressBasResult", resourceCulture);
             }
         }
         
