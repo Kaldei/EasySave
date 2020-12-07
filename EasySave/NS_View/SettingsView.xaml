@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="400.43" d:DesignWidth="800"
       Title="SettingsView">
-      
+
 
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -46,11 +46,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="29*"/>
                     <ColumnDefinition Width="291*"/>
-                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2" Text="{Binding model.settings.cryptoSoftPath}"/>
-                <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="50" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
+                <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2"/>
+                <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="70" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
             </Grid>
         </StackPanel>
 
