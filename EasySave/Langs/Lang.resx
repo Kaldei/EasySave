@@ -231,4 +231,13 @@
   <data name="unknownError" xml:space="preserve">
     <value>Failed: Unknown Error.</value>
   </data>
+  <data name="inMessage" xml:space="preserve">
+    <value> in </value>
+  </data>
+  <data name="progressBarDone" xml:space="preserve">
+    <value>Every backup is finished</value>
+  </data>
+  <data name="progressBasResult" xml:space="preserve">
+    <value> finished with a total of </value>
+  </data>
 </root>
