@@ -4,51 +4,68 @@
     <img src="https://www.flaticon.com/svg/static/icons/svg/3790/3790894.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h1 align="center"> EasySave v1.1 (Console Version)</h3>
+  <h2 align="center">EasySave v1.1 (Console Version)</h2>
+  <h3 align="center">User Documentation</h3>
 </p>
 
-# Menu
-Once you have launched EasySave (refer to Get Started guide), you will have to press a key to display the Menu. Here are the different options you have in the Menu :
+----
 
-## 0. Return to main menu
------------------
-> To return to the main menu
-* This choice is to return to the main menu if you selected the wrong option.
+## General
+When you launched EasySave, you will have to press a key to display the Menu. 
 
-## 1. Show all backup
------------------
-> In order to display work you need first to add one.
-* It will display all the works of the app.
+Here are the different options you have in the Menu :
 
-## 2. Add work
------------------
-> Before doing a backup you need to create one.
-* First you need to enter a name between 1 to 20 characters and a different name of other backup works.
-* Then you need to enter a valid source directory like this : `C:\Users\Desktop\File`.
-* And also a valid destination directory.
-* Finally you have to choose a type of backup (Differential / Full).
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/RQyQPyy/2.png" alt="2" border="0"></a>
 
-## 3. Make a backup
------------------
-> In order to do a differential backup you don't have to make a full, the first time the differential will make it automatically.
-* First you need to choose one backup or all.
-* Once you have choose one option, the backup will begin and a screen will display information about the progression of the backup.
-* When the backup work is finished a message will be prompt.
+### 0. Return to Menu
+From the Menu, enter 0 to return the main menu.
+* After choosing one of the options, you can return to the menu by enter 0.
 
-## 4. Remove a work
------------------
-> If you want to remove a work
-* First you have to choose a backup to remove.
-* Once you have choose one option, the backup work will be removed and the screen will display a confirmation message.
+### 1. Show Backup Works
+From the Menu, enter 1 to display Backup Works.
+* It will display all the works you saved.
 
-## 5. Choose Language
------------------
-> Change Program Language
-* You have the choice between English or French.
+### 2. Add a Work
+From the Menu, enter 2 to Create a Backup Work.
+* First you need to enter a Name between 1 to 20 characters. It has to be a unique.
+* Then you need to enter a valid Source directory like this : `C:\Users\Desktop\File`.
+* And also a valid destination Directory. The Destination of must not be a sub-folder of the source.
+* Finally you have to choose a Type of Backup (Differential / Full).
 
-## 6. Quit
------------------
-> To quit the app
-* This option is to quit the app properly
+### 3. Launch a Backup
+From the Menu, enter 3 to Launch a Backup Work.
+* You can you choose between Launch one Backup (enter the number of the Backup) or Launch All Backup (enter 0).
+* Once you have choose one option, the Backup will begin and a screen will display information about the progression of the Backup.
+* In the same time the `State.json` file is updated with information on progression of the Backup.
+* When the backup work is over a message will be prompt.
+Note : If you launch a Differential Backup for the first time, it will automatically launch a Full Backup.
+
+### 4. Remove a Work
+From the Menu, enter 4 to Remove a Backup Work.
+* Choose a Backup to Delete, it will be Deleted and then screen will display a confirmation message.
+
+### 5. Choose Language
+From the Menu, enter 5 to Choose your Language.
+* For now the program supports English and French.
+
+### 6. Quit
+
+From the Menu, enter 6 to Quit the program.
+* This option is to quit the app properly.
+
+---
+## Files & Storage
+### Settings
+Settings (Selected Language) are store in `Settings.json`
+
+Note: Please don't mess with that file it could prevent EasySave to work. If you have a problem with that file, delete it. Easy Save will recreate it properly.
+
+### Works
+Works are saved in `State.json`. You have complementary information in that file, like the last time this Work was Launched). 
+
+Note: Please don't mess with that file it could prevent EasySave to work. If you have a problem with that file, delete it. Easy Save will recreate it properly.
+
+### Logs
+Logs are stored in the `Logs` folder. In this folder you will find daily logs with that format `YYYY-MM-DD.json`.
 
 

@@ -34,7 +34,7 @@ namespace EasySave.NS_ViewModel
             this.settings.Update(Languages.EN);
 
             // Load Settings at the beginning of the program (from ./Settings.json)
-            LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
+            LoadSettings();
 
             // Instantiate View
             this.view = new View(this, this.settings.language.ToString());
@@ -103,7 +103,7 @@ namespace EasySave.NS_ViewModel
             else
             {
                 // Create Settings File
-                File.WriteAllText(this.stateFilePath, JsonSerializer.Serialize(this.works, this.jsonOptions));
+                SaveWorks();
             }
             // Return Success Code
             return 100;
@@ -136,10 +136,17 @@ namespace EasySave.NS_ViewModel
             else
             {
                 // Create Settings File
-                File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
+                SaveSettings();
             }
             // Return Success Code
             return 100;
+        }
+
+        // Save Settings
+        public void SaveSettings()
+        {
+            // Write Work list into JSON file (at ./BackupWorkSave.json)
+            File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
         }
 
         public void Run()
@@ -474,7 +481,9 @@ namespace EasySave.NS_ViewModel
                     break;
             }
             this.settings.Update(language);
+            this.SaveSettings();
             this.view.language = language.ToString();
+
         }
 
         private List<string> CopyFiles(Work _work, FileInfo[] _files, long _totalSize, string _dst)
@@ -505,7 +514,7 @@ namespace EasySave.NS_ViewModel
             return failedFiles;
         }
 
-        public bool CopyFile(Work _work, FileInfo _currentFile, long _curSize, string _dst, long _leftSize, int _totalFile, int fileIndex, int _pourcent)
+        private bool CopyFile(Work _work, FileInfo _currentFile, long _curSize, string _dst, long _leftSize, int _totalFile, int fileIndex, int _pourcent)
         {
             // Time at when file copy start (use by SaveLog())
             DateTime startTimeFile = DateTime.Now;

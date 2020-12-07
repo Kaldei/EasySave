@@ -703,7 +703,7 @@ namespace EasySave.NS_View
                             "Menu:" +
                             "\n1 - Show all works" +
                             "\n2 - Add a work" +
-                            "\n3 - Make a backup" +
+                            "\n3 - Launch a backup" +
                             "\n4 - Remove a work" +
                             "\n5 - Choose language" +
                             "\n6 - Quit");
