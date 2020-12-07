@@ -25,14 +25,17 @@ namespace EasySave
     public partial class MainWindow : Window
     {
         // ----- Attributes -----
+        public int[] selectedWorksId { get; set; }
         private MenuView menuView { get; set; }
         private AddWorkView addWorkView { get; set; }
         private SettingsView settingsView { get; set; }
+        private BackupView backupView { get; set; }
         private ErrorView errorView { get; set; }
 
         public MenuViewModel menuViewModel { get; set; }
         public AddWorkViewModel addWorkViewModel { get; set; }
         public SettingsViewModel settingsViewModel { get; set; }
+        public BackupViewModel backupViewModel { get; set; }
 
 
         // ----- Constructor -----
@@ -46,6 +49,7 @@ namespace EasySave
             this.menuViewModel = new MenuViewModel(model);
             this.addWorkViewModel = new AddWorkViewModel(model);
             this.settingsViewModel = new SettingsViewModel(model);
+            this.backupViewModel = new BackupViewModel(model);
 
             // Load Language
             Langs.Lang.Culture = new CultureInfo(model.settings.language);
@@ -89,6 +93,15 @@ namespace EasySave
                         settingsView = new SettingsView(settingsViewModel, this);
                     }
                     DataContext = settingsView;
+                    return;
+
+                case "backup":
+                    if (backupView == null)
+                    {
+                        backupView = new BackupView(backupViewModel, this);
+                    }
+                    DataContext = backupView;
+                    backupView.RunSave();
                     return;
             }
         }

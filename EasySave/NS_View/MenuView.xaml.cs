@@ -70,7 +70,9 @@ namespace EasySave.NS_View
             }
             Array.Sort(SelectedWorks);
             Array.Reverse(SelectedWorks);
-            menuViewModel.LaunchBackupWork(SelectedWorks);
+
+            this.mainWindow.selectedWorksId = SelectedWorks;
+            this.mainWindow.ChangePage("backup");
         }
 
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)
