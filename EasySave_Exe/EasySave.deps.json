@@ -1,0 +1,28 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "EasySave/1.0.0": {
+        "runtime": {
+          "EasySave.dll": {}
+        },
+        "resources": {
+          "fr-FR/EasySave.resources.dll": {
+            "locale": "fr-FR"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EasySave/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
