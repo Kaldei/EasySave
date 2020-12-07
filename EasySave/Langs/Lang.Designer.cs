@@ -104,9 +104,9 @@ namespace EasySave.Langs {
                 return ResourceManager.GetString("businessSoftware", resourceCulture);
             }
         }
-
-        /// <summary>    
-        ///   Recherche une chaîne localisée semblable à Can not continue backup. Business Software is open..
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can&apos;t continue backup. Business Software is open..
         /// </summary>
         public static string businessSoftwareOn {
             get {
@@ -187,20 +187,29 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à File extension to encrypt:.
-        /// </summary>
-        public static string extensionFile {
-            get {
-                return ResourceManager.GetString("extensionFile", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Failed to add work..
         /// </summary>
         public static string errorAddWork {
             get {
                 return ResourceManager.GetString("errorAddWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Failed to remove work..
+        /// </summary>
+        public static string errorRemoveWork {
+            get {
+                return ResourceManager.GetString("errorRemoveWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à File extension to encrypt:.
+        /// </summary>
+        public static string extensionFile {
+            get {
+                return ResourceManager.GetString("extensionFile", resourceCulture);
             }
         }
         
@@ -259,20 +268,11 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Directory doesnot exist. Please enter a valid directory source..
+        ///   Recherche une chaîne localisée semblable à Directory doesn&apos;t exist. Please enter a valid directory source..
         /// </summary>
         public static string incorrectSource {
             get {
                 return ResourceManager.GetString("incorrectSource", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Failed to remove work..
-        /// </summary>
-        public static string errorRemoveWork {
-            get {
-                return ResourceManager.GetString("errorRemoveWork", resourceCulture);
             }
         }
         
@@ -294,15 +294,6 @@ namespace EasySave.Langs {
             }
         }
         
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Save.
-        /// </summary>
-        public static string save {
-            get {
-                return ResourceManager.GetString("save", resourceCulture);
-            }
-        }
-
         /// <summary>
         ///   Recherche une chaîne localisée semblable à No change since last backup..
         /// </summary>
@@ -327,6 +318,15 @@ namespace EasySave.Langs {
         public static string noSpaceDstFolder {
             get {
                 return ResourceManager.GetString("noSpaceDstFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save.
+        /// </summary>
+        public static string save {
+            get {
+                return ResourceManager.GetString("save", resourceCulture);
             }
         }
         

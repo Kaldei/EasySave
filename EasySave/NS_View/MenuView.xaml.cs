@@ -54,7 +54,6 @@ namespace EasySave.NS_View
             // Remove Selected Works
             foreach (int index in SelectedWorks)
             {
-                MessageBox.Show(index.ToString());
                 menuViewModel.RemoveWork(index);
             }
         }
@@ -62,20 +61,16 @@ namespace EasySave.NS_View
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
             int Length = _listWorks.SelectedItems.Count;
-            
-                int[] SelectedWorks = new int[Length];
 
-                for (int i = 0; i < Length; i++)
-                {
-                    SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
-                }
-                Array.Reverse(SelectedWorks);
-                menuViewModel.LaunchBackupWork(SelectedWorks);
+            int[] SelectedWorks = new int[Length];
 
-
-           
-
-
+            for (int i = 0; i < Length; i++)
+            {
+                SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
+            }
+            Array.Sort(SelectedWorks);
+            Array.Reverse(SelectedWorks);
+            menuViewModel.LaunchBackupWork(SelectedWorks);
         }
 
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)

@@ -197,6 +197,7 @@
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
+  </data>
   <data name="noChangeSinceLastBackup" xml:space="preserve">
     <value>No change since last backup.</value>
   </data>

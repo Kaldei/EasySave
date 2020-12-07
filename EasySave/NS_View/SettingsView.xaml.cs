@@ -36,6 +36,7 @@ namespace EasySave.NS_View
             DataContext = this.settingsViewModel;
             InitializeComponent();
             updateSelectedLanguage();
+            _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
 
         }
 
@@ -74,13 +75,13 @@ namespace EasySave.NS_View
 
                 mainWindow.RefreshLanguage();
             }
-            
+
         }
 
         private void cryptoSoftathButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Crypto Soft Path given is Correct
-            bool isValidCryptoSoftPath = File.Exists(_cryptoSoftPath.Text);
+            bool isValidCryptoSoftPath = File.Exists(_cryptoSoftPath.Text) && _cryptoSoftPath.Text.EndsWith(".exe");
             if (isValidCryptoSoftPath)
             {
                 cryptoSoftPathLabel.Foreground = Brushes.Black;
@@ -90,12 +91,24 @@ namespace EasySave.NS_View
             {
                 cryptoSoftPathLabel.Foreground = Brushes.Red;
                 cryptoSoftPathLabel.Content = Langs.Lang.incorrectCryptosoftPath;
+
+                if (this.settingsViewModel.model.settings.cryptoSoftPath != "")
+                {
+                    _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
+                }
+                else
+                {
+                    _cryptoSoftPath.Text = "";
+                }
+
                 return;
             }
 
             // Update Crypto Soft Path
             this.settingsViewModel.model.settings.cryptoSoftPath = _cryptoSoftPath.Text;
             this.settingsViewModel.model.SaveSettings();
+
+            _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
         }
 
         private void addExtensionButton_Click(object sender, RoutedEventArgs e)

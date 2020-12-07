@@ -272,7 +272,7 @@ namespace EasySave.NS_ViewModel
             int totalFile = _files.Length;
             List<string> failedFiles = new List<string>();
 
-            if (this.model.settings.cryptoSoftPath.Length != 0 && this.model.settings.cryptoExtensions.Count != 0)
+            if (!(_work.isCrypted && this.model.settings.cryptoSoftPath.Length == 0))
             {
                 // Copy every file
                 for (int i = 0; i < _files.Length; i++)
