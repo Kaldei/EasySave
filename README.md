@@ -94,7 +94,7 @@ This is the list of the major technologies that we used in this project.
 In this project you will found different folders :
 * EasySave_Code: Contains EasySave's Code.
 * EasySave_Exe: Contains EasySave Executable and [User Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FEasySave_Exe%2FUSERDOC.md).
-* UML_Diagrams: Contains EasySave's UML Diagrams and [UML Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FUML_Diagrams%2FUMLDOC.md).
+* UML_Diagrams: Contains EasySave's UML Diagrams and [UML Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FUML%20Diagrams%2FUMLDOC.md).
 * CryptoSoft_Code: Contains CryptoSoft's Code.
 * CryptoSoft_Exe: Contains CryptoSoft Executable.
 
