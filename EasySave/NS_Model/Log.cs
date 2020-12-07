@@ -11,6 +11,7 @@ namespace EasySave.NS_Model
         public string size { get; set; }
         public string startTime { get; set; }
         public string elapsedTime { get; set; }
+        public string cryptedTime { get; set; }
 
 
         // --- Constructors ---
@@ -18,7 +19,7 @@ namespace EasySave.NS_Model
         public Log() { }
 
         // Constructor used to Add a Log
-        public Log(string _name, string _source, string _destination, string _size, string _startTime, string _elapsedTime)
+        public Log(string _name, string _source, string _destination, string _size, string _startTime, string _elapsedTime, string _cryptedTime)
         {
             this.name = _name;
             this.source = _source;
@@ -26,6 +27,7 @@ namespace EasySave.NS_Model
             this.size = _size;
             this.startTime = _startTime;
             this.elapsedTime = _elapsedTime;
+            this.cryptedTime = _cryptedTime;
         }
     }
 }

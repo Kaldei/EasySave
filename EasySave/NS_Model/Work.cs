@@ -42,7 +42,7 @@ namespace EasySave.NS_Model
 
         // --- Methods ----
         // Save Log 
-        public void SaveLog(DateTime _startTime, string _src, string _dst, long _size, int _elapsedTime)
+        public void SaveLog(DateTime _startTime, string _src, string _dst, long _size, int _elapsedTime, int _cryptedTime)
         {
             // Prepare times log
             string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -63,7 +63,7 @@ namespace EasySave.NS_Model
             }
 
             // Add Current Backuped File Log
-            logs.Add(new Log($"{this.name}", $"{_src}", $"{_dst}", $"{_size}", $"{_startTime}", $"{_elapsedTime}"));
+            logs.Add(new Log($"{this.name}", $"{_src}", $"{_dst}", $"{_size}", $"{_startTime}", $"{_elapsedTime}", $"{_cryptedTime}"));
 
             // Write Logs File
             File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
