@@ -43,6 +43,28 @@ This is the list of the major technologies that we used in this project.
 
 ---
 
+## EasySave v1.1 - Release Notes:
+
+### New Feature: 
+* Adding Language Settings Part.
+* Adding French Language.
+
+### Application Enhancement:
+* Enhance MVVM (Moving code from Model Class to ViewModel)
+
+---
+
+## Release dates : 
+### Console Versions:
+* Version 1 : 25-11-2020
+* Version 1.1 : 07-12-2020
+
+### Graphical Versions:
+* Version 2 : 07-12-2020
+* Version 3 : 17-12-2020
+
+---
+
 ## Getting Started
 
 ### Installation
@@ -58,28 +80,6 @@ In this project you will found different folders :
 * EasySave_Code : Contains the EasySave's code.
 * EasySave_Exe : Contains EasySave Executable and [User Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FEasySave_Exe%2FUSERDOC.md).
 * UML_Diagrams : Contains EasySave's UML Diagrams and [UML Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FUML_Diagrams%2FUMLDOC.md).
-
----
-
-## Release dates : 
-### Console Versions:
-* Version 1 : 25-11-2020
-* Version 1.1 : 07-12-2020
-
-### Graphical Versions:
-* Version 2 : 07-12-2020
-* Version 3 : 17-12-2020
-
----
-
-## EasySave v1.1 - Release Notes:
-
-### New Feature: 
-* Adding Language Settings Part.
-* Adding French Language.
-
-### Application Enhancement:
-* Enhance MVVM (Moving code from Model Class to ViewModel)
 
 ---
 
