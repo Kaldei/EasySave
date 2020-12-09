@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
+using System.Threading;
 using EasySave.NS_Model;
 
 public delegate void CurrentBackupInfo(string _name, int _totalFileSuccess, int _totalFile, int _timeTaken);
@@ -12,6 +13,8 @@ namespace EasySave.NS_ViewModel
     public class BackupViewModel
     {
         public CurrentBackupInfo currentBackupInfo;
+        public object sender { get; set; }
+        public DoWorkEventArgs e { get; set; }
 
         // ----- Attributes -----
         public Model model { get; set; }
@@ -23,8 +26,13 @@ namespace EasySave.NS_ViewModel
             this.model = _model;
         }
 
-        public void LaunchBackupWork(int[] idWorkToSave)
+        public void LaunchBackupWork(object _sender, DoWorkEventArgs _e)
         {
+            this.sender = _sender;
+            this.e = _e;
+
+            int[] idWorkToSave = new int[1] { 0 };
+
             if (this.model.works.Count > 0 && idWorkToSave.Length > 0)
             {
                 for (int i = 0; i < idWorkToSave.Length; i++)
@@ -264,6 +272,7 @@ namespace EasySave.NS_ViewModel
             int totalFileSuccess = _files.Length;
             List<string> failedFiles = new List<string>();
             DateTime startTimeBackup = DateTime.Now;
+            (sender as BackgroundWorker).ReportProgress(0, _work);
 
             if (!(_work.isCrypted && this.model.settings.cryptoSoftPath.Length == 0))
             {
@@ -271,7 +280,7 @@ namespace EasySave.NS_ViewModel
                 for (int i = 0; i < _files.Length; i++)
                 {
                     // Update the size remaining to copy (octet)
-                    int pourcent = (i * 100 / totalFile);
+                    int pourcent = ((i + 1) * 100 / totalFile);
                     long curSize = _files[i].Length;
                     leftSize -= curSize;
 
@@ -285,6 +294,9 @@ namespace EasySave.NS_ViewModel
                         _totalSize -= _files[i].Length;
                         failedFiles.Add(_files[i].Name);
                     }
+
+                    (sender as BackgroundWorker).ReportProgress(pourcent, _work);
+                    Thread.Sleep(1000);
                 }
             }
             else
@@ -294,7 +306,7 @@ namespace EasySave.NS_ViewModel
             }
 
             double timeTaken = (DateTime.Now - startTimeBackup).TotalMilliseconds;
-            currentBackupInfo?.Invoke(_work.name, totalFileSuccess, totalFile, (int)timeTaken);
+            //currentBackupInfo?.Invoke(_work.name, totalFileSuccess, totalFile, (int)timeTaken);
             return failedFiles;
         }
 
