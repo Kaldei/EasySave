@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EasySave.NS_Model
+﻿namespace EasySave.NS_Model
 {
     class Log
     {

@@ -1,16 +1,13 @@
-﻿using EasySave.NS_ViewModel;
-using System;
+﻿using EasySave.NS_Model;
+using EasySave.NS_ViewModel;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EasySave.NS_View
 {
@@ -40,9 +37,9 @@ namespace EasySave.NS_View
         public void UpdateBackupInfo(string _name, int _totalFileSuccess, int _totalFile, int _timeTaken)
         {
             string info = (backupInfos.Count + 1) + ". " + _name + Langs.Lang.progressBasResult + _totalFileSuccess + "/" + _totalFile + Langs.Lang.inMessage + _timeTaken + " ms";
-            backupInfos.Add(info);
-            BackuFinished.ItemsSource = null;
-            BackuFinished.ItemsSource = backupInfos;
+            //backupInfos.Add(info);
+            //BackuFinished.ItemsSource = null;
+            //BackuFinished.ItemsSource = backupInfos;
 
             if (backupInfos.Count == this.mainWindow.selectedWorksId.Length)
             {
@@ -54,7 +51,29 @@ namespace EasySave.NS_View
 
         public void RunSave()
         {
-            this.backupViewModel.LaunchBackupWork(this.mainWindow.selectedWorksId);
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += this.backupViewModel.LaunchBackupWork;
+            worker.ProgressChanged += updateContext;
+            worker.RunWorkerAsync();
+
+            //this.backupViewModel.LaunchBackupWork(this.mainWindow.selectedWorksId);
+        }
+
+        void updateContext(object sender, ProgressChangedEventArgs e)
+        {
+            Work work = (Work) e.UserState;
+            Name.Text = work.name;
+            Src.Text = work.state.currentPathSrc;
+            Dst.Text = work.state.currentPathDest;
+
+            ProgressBar.Value = e.ProgressPercentage;
+            Pourcent.Text = e.ProgressPercentage + "%";
+
+            if(e.ProgressPercentage == 100)
+            {
+                this.mainWindow.ChangePage("menu");
+            }
         }
     }
 }
