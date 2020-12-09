@@ -1,10 +1,6 @@
 ﻿using EasySave.Observable;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 
 namespace EasySave.NS_Model
@@ -20,7 +16,8 @@ namespace EasySave.NS_Model
             WriteIndented = true
         };
 
-        public ErrorMsg errorMsg;
+        public Settings settings { get; set; }
+        public ErrorMsg errorMsg { get; set; }
 
         public string stateFilePath { get; set; }
         public string settingsFilePath { get; set; }
@@ -39,7 +36,6 @@ namespace EasySave.NS_Model
                 }
             }
         }
-        public Settings settings { get; set; }
 
 
         // --- Constructor ---

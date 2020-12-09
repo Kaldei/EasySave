@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using EasySave.NS_Model;
+﻿using EasySave.NS_Model;
 
 namespace EasySave.NS_ViewModel
 {
