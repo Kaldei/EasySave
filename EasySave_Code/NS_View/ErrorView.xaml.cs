@@ -18,73 +18,71 @@ namespace EasySave.NS_View
 
         public void DisplayErrorMsg(string _errorName)
         {
+            string errorMsg = "";
 
             switch (_errorName)
             {
                 case "errorAddWork":
-                    MessageBox.Show(Lang.errorAddWork);
+                    errorMsg = Lang.errorAddWork;
                     break;
 
                 case "errorRemoveWork":
-                    MessageBox.Show(Lang.errorRemoveWork);
+                    errorMsg = Lang.errorRemoveWork;
                     break;
 
                 case "businessSoftwareOn":
-                    MessageBox.Show(Lang.businessSoftwareOn);
+                    errorMsg = Lang.businessSoftwareOn;
                     break;
 
                 case "noSelectedWork":
-                    MessageBox.Show(Lang.noSelectedWork);
+                    errorMsg = Lang.noSelectedWork;
                     break;
 
                 case "unavailableSrcPath":
-                    MessageBox.Show(Lang.unavailableSrcPath);
+                    errorMsg = Lang.unavailableSrcPath;
                     break;
 
                 case "unavailableDstPath":
-                    MessageBox.Show(Lang.unavailableDstPath);
+                    errorMsg = Lang.unavailableDstPath;
                     break;
 
                 case "unavailableBackupType":
-                    MessageBox.Show(Lang.unavailableBackupType);
+                    errorMsg = Lang.unavailableBackupType;
                     break;
 
                 case "noChangeSinceLastBackup":
-                    MessageBox.Show(Lang.noChangeSinceLastBackup);
+                    errorMsg = Lang.noChangeSinceLastBackup;
                     break;
 
                 case "cannotCreateDstFolder":
-                    MessageBox.Show(Lang.cannotCreateDstFolder);                  
+                    errorMsg = Lang.cannotCreateDstFolder;                  
                     break;
 
                 case "backupFinishedWithError":
-                    MessageBox.Show(Lang.backupFinishedWithError);
+                    errorMsg = Lang.backupFinishedWithError;
                     break;
 
                 case "noSpaceDstFolder":
-                    MessageBox.Show(Lang.noSpaceDstFolder);
+                    errorMsg = Lang.noSpaceDstFolder;
                     break;
 
                 case "diskError":
-                    MessageBox.Show(Lang.diskError);
+                    errorMsg = Lang.diskError;
                     break;
 
                 case "cryptoSoftPathNotFound":
-                    MessageBox.Show(Lang.cryptoSoftPathNotFound);
+                    errorMsg = Lang.cryptoSoftPathNotFound;
                     break;
 
                 case "cryptoSoftPathError":
-                    MessageBox.Show(Lang.cryptoSoftPathError);
+                    errorMsg = Lang.cryptoSoftPathError;
                     break;
 
                 default:
-                    MessageBox.Show(Lang.unknownError);
+                    errorMsg = Lang.unknownError;
                     break;
             }
-            
+            MessageBox.Show(errorMsg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-
-
     }
 }

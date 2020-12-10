@@ -366,12 +366,12 @@ namespace EasySave.NS_ViewModel
                 }
 
                 // Save Log
-                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, elapsedTime, cryptedTime);
+                _work.SaveLog(new Log($"{_work.name}", $"{_currentFile.FullName}", $"{dstFile}", $"{_curSize}", $"{startTimeFile}", $"{elapsedTime}", $"{cryptedTime}"));
                 return true;
             }
             catch
             {
-                _work.SaveLog(startTimeFile, _currentFile.FullName, dstFile, _curSize, -1, 0);
+                _work.SaveLog(new Log($"{_work.name}", $"{_currentFile.FullName}", $"{dstFile}", $"{_curSize}", $"{startTimeFile}", $"{-1}", $"{0}"));
                 return false;
             }
         }

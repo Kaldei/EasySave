@@ -56,20 +56,8 @@ namespace EasySave.NS_View
             string dst = RectifyPath(_dst.Text);
 
             // Checks user inputs
-            bool isValidWorkName = CheckName(_name.Text);
-            if (isValidWorkName)
-            {
-                nameLabel.Foreground = Brushes.Black;
-                nameLabel.Content = Langs.Lang.name;
-            } 
-            else
-            {
-                nameLabel.Foreground = Brushes.Red;
-                nameLabel.Content = Langs.Lang.incorrectName;
-                return;
-            }
-
-            bool isValidSource = Directory.Exists(src);
+            bool isValidWorkName = IsNameValid(_name.Text);
+            bool isValidSource = Directory.Exists(src); // TODO - Add a custom function to handle this error
             if (isValidSource)
             {
                 srcLabel.Foreground = Brushes.Black;
@@ -79,86 +67,87 @@ namespace EasySave.NS_View
             {
                 srcLabel.Foreground = Brushes.Red;
                 srcLabel.Content = Langs.Lang.incorrectSource;
-                return;
             }
 
             bool isValidDestination = CheckWorkDst(src, dst);
-            if (isValidDestination)
+
+            if(isValidWorkName && isValidSource && isValidDestination)
             {
-                dstLabel.Foreground = Brushes.Black;
-                dstLabel.Content = Langs.Lang.destination;
+                // Add Work If All User Input are OK
+                addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, (bool)_isCrypted.IsChecked);
 
+                // Reset Fields
+                _name.Text = "";
+                _src.Text = "";
+                _dst.Text = "";
+                _backupType.SelectedIndex = 0;
+                _isCrypted.IsChecked = false;
+
+                // Return to Menu
+                this.mainWindow.ChangePage("menu");
             }
-            else
-            {
-                dstLabel.Foreground = Brushes.Red;
-                return;
-            }
-
-            // Add Work If All User Input are OK
-            addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, (bool)_isCrypted.IsChecked);
-
-            // Reset Fields
-            _name.Text = "";
-            _src.Text ="";
-            _dst.Text = "";
-            _backupType.SelectedIndex = 0;
-            _isCrypted.IsChecked = false;
-
-            // Return to Menu
-            this.mainWindow.ChangePage("menu");
         }
 
-       private bool CheckName(string _name)
+       private bool IsNameValid(string _name)
         {
             int length = _name.Length;
+
             if (length >= 1 && length <= 20)
             {
                 foreach(Work work in this.addWorkViewModel.model.works)
                 {
                     if (work.name == _name)
                     {
+                        nameLabel.Foreground = Brushes.Red; // TODO - Possible to custom even more this error
+                        nameLabel.Content = Langs.Lang.incorrectName;
                         return false;
                     }
                 }
+                nameLabel.Foreground = Brushes.Black;
+                nameLabel.Content = Langs.Lang.name;
                 return true;
             }
+            nameLabel.Foreground = Brushes.Red;
+            nameLabel.Content = Langs.Lang.incorrectName; // TODO - Possible to custom even more this error
             return false;
         }
 
         private string RectifyPath(string _path)
         {
-            if (_path.Length >= 1)
-            {
-                _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
-                _path = _path.Replace("/", "\\");
-            }
+            _path += (_path.EndsWith("/") || _path.EndsWith("\\")) ? "" : "\\";
+            _path = _path.Replace("/", "\\");
             return _path.ToLower();
         }
 
         private bool CheckWorkDst(string _src, string _dst)
         {
-            if (Directory.Exists(_dst))
+            if (Directory.Exists(_dst)) // TODO - Better way to handle this
             {
                 if (_src != _dst)
                 {
                     if (_dst.Length > _src.Length)
                     {
-                        if (_src != _dst.Substring(0, _src.Length))
+                        if(_src != _dst.Substring(0, _src.Length))
                         {
-                         
+                            dstLabel.Foreground = Brushes.Black;
+                            dstLabel.Content = Langs.Lang.destination;
                             return true;
                         }
                         else
                         {
+                            dstLabel.Foreground = Brushes.Red; // TODO - Manage this error
                             return false;
                         }
-                    }               
+                    }
+                    dstLabel.Foreground = Brushes.Black;
+                    dstLabel.Content = Langs.Lang.destination;
                     return true;
                 }
+                dstLabel.Foreground = Brushes.Red;
                 dstLabel.Content = Langs.Lang.incorrectDestinationSource;
                 return false;
             }
+            dstLabel.Foreground = Brushes.Red;
             dstLabel.Content = Langs.Lang.incorrectDestinationExist;
             return false;
         }

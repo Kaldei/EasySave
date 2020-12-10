@@ -13,6 +13,8 @@ namespace EasySave
     {
         // ----- Attributes -----
         public int[] selectedWorksId { get; set; }
+        public Model model { get; set; }
+
         private MenuView menuView { get; set; }
         private AddWorkView addWorkView { get; set; }
         private SettingsView settingsView { get; set; }
@@ -29,14 +31,11 @@ namespace EasySave
         public MainWindow()
         {
             // Initialize Model
-            Model model = new Model();
+            this.model = new Model();
 
             // Initialize ViewModel
             this.errorView = new ErrorView(model);
             this.menuViewModel = new MenuViewModel(model);
-            this.addWorkViewModel = new AddWorkViewModel(model);
-            this.settingsViewModel = new SettingsViewModel(model);
-            this.backupViewModel = new BackupViewModel(model);
 
             // Load Language
             Langs.Lang.Culture = new CultureInfo(model.settings.language);
@@ -57,16 +56,13 @@ namespace EasySave
             switch (_route)
             {
                 case "menu":
-                    if (menuView == null)
-                    {
-                        menuView = new MenuView(menuViewModel, this);
-                    }
                     DataContext = menuView;
                     return;
 
                 case "addWork":
                     if (addWorkView == null)
                     {
+                        this.addWorkViewModel = new AddWorkViewModel(model);
                         addWorkView = new AddWorkView(addWorkViewModel, this);
                     }
                     DataContext = addWorkView;
@@ -75,6 +71,7 @@ namespace EasySave
                 case "settings":
                     if (settingsView == null)
                     {
+                        this.settingsViewModel = new SettingsViewModel(model);
                         settingsView = new SettingsView(settingsViewModel, this);
                     }
                     DataContext = settingsView;
@@ -83,6 +80,7 @@ namespace EasySave
                 case "backup":
                     if (backupView == null)
                     {
+                        this.backupViewModel = new BackupViewModel(model);
                         backupView = new BackupView(backupViewModel, this);
                     }
                     DataContext = backupView;
