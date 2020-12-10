@@ -49,6 +49,15 @@ namespace EasySave.NS_Model
         // Constructor used by LoadSettings
         private Settings() { }
 
+        // Constructor used by GetInstance
+        private Settings(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _businessSoftwares, string _language)
+        {
+            this.cryptoSoftPath = _cryptoSoftPath;
+            this.cryptoExtensions = _cryptoExtensions;
+            this.businessSoftwares = _businessSoftwares;
+            this.language = _language;
+        }
+
 
         // --- Methods ----
         // Singleton 
@@ -56,18 +65,9 @@ namespace EasySave.NS_Model
         {
             if (instance == null)
             {
-                instance = new Settings();
+                instance = new Settings("", new ObservableCollection<string>(), new ObservableCollection<string>(), "en-US");
             }
             return instance;
-        }
-
-        // Update Settings
-        public void Update(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _businessSoftwares, string _language)
-        {
-            this.cryptoSoftPath = _cryptoSoftPath;
-            this.cryptoExtensions = _cryptoExtensions;
-            this.businessSoftwares = _businessSoftwares;
-            this.language = _language;
         }
     }
 }

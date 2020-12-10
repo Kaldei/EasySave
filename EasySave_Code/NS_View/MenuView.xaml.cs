@@ -29,6 +29,25 @@ namespace EasySave.NS_View
         // ----- Methods
         private void Remove_Clicked(object sender, RoutedEventArgs e)
         {
+            int[] SelectedWorks = GetSelectedWorks();
+
+            // Remove Selected Works
+            foreach (int index in SelectedWorks)
+            {
+                menuViewModel.RemoveWork(index);
+            }
+        }
+
+        private void Save_Clicked(object sender, RoutedEventArgs e)
+        {
+            int[] SelectedWorks = GetSelectedWorks();
+
+            this.mainWindow.selectedWorksId = SelectedWorks;
+            this.mainWindow.ChangePage("backup");
+        }
+
+        private int[] GetSelectedWorks()
+        {
             int nbrTotalWorks = _listWorks.SelectedItems.Count;
             int[] SelectedWorks = new int[nbrTotalWorks];
 
@@ -41,29 +60,7 @@ namespace EasySave.NS_View
             // Sort and Reverse Array to be sure to Remove the Right Work
             Array.Sort(SelectedWorks);
             Array.Reverse(SelectedWorks);
-
-            // Remove Selected Works
-            foreach (int index in SelectedWorks)
-            {
-                menuViewModel.RemoveWork(index);
-            }
-        }
-
-        private void Save_Clicked(object sender, RoutedEventArgs e)
-        {
-            int Length = _listWorks.SelectedItems.Count;
-
-            int[] SelectedWorks = new int[Length];
-
-            for (int i = 0; i < Length; i++)
-            {
-                SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
-            }
-            Array.Sort(SelectedWorks);
-            Array.Reverse(SelectedWorks);
-
-            this.mainWindow.selectedWorksId = SelectedWorks;
-            this.mainWindow.ChangePage("backup");
+            return SelectedWorks;
         }
 
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)
@@ -79,14 +76,10 @@ namespace EasySave.NS_View
             }
         }
 
-        private void Settings_Clicked(object sender, RoutedEventArgs e)
+        private void ChangePage(object sender, RoutedEventArgs e)
         {
-            this.mainWindow.ChangePage("settings");
-        }
-
-        private void addWorkButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.mainWindow.ChangePage("addWork");
+            var button = sender as Button;
+            this.mainWindow.ChangePage(button.Tag.ToString());
         }
     }
 }
