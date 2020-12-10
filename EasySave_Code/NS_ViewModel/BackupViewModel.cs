@@ -341,7 +341,7 @@ namespace EasySave.NS_ViewModel
                 int cryptedTime = 0;
 
                 // Copy the current file
-                if (!(this.model.settings.cryptoSoftPath.Length != 0 && this.model.settings.cryptoExtensions.Count != 0 && _currentFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(_currentFile.Name.Substring(_currentFile.Name.LastIndexOf(".")))))
+                if (!(_work.isCrypted && this.model.settings.cryptoSoftPath.Length != 0 && this.model.settings.cryptoExtensions.Count != 0 && _currentFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(_currentFile.Name.Substring(_currentFile.Name.LastIndexOf(".")))))
                 {
                     _currentFile.CopyTo(dstFile, true);
                     elapsedTime = (int)(DateTime.Now - startTimeFile).TotalMilliseconds;
