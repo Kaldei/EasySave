@@ -58,18 +58,34 @@
         <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
 
         <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
-            <Label x:Name="_nameLabel" Content="{x:Static language:Lang.name}"></Label>
+            <Label x:Name="nameLabel" Content="{x:Static language:Lang.name}"></Label>
             <TextBox x:Name="_name"></TextBox>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
-            <Label x:Name="_srcLabel" Content="{x:Static language:Lang.source}"></Label>
-            <TextBox x:Name="_src"></TextBox>
+            <Label x:Name="srcLabel" Content="{x:Static language:Lang.source}"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="29*"/>
+                    <ColumnDefinition Width="291*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="_src" Grid.ColumnSpan="2"></TextBox>
+                <Button x:Name="srcOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="srcOpenFolderButton_Click">. . .</Button>
+            </Grid>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
-            <Label x:Name="_dstLabel" Content="{x:Static language:Lang.destination}"></Label>
-            <TextBox x:Name="_dst"></TextBox>
+            <Label x:Name="dstLabel" Content="{x:Static language:Lang.destination}"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="29*"/>
+                    <ColumnDefinition Width="291*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="_dst" Grid.ColumnSpan="2"></TextBox>
+                <Button x:Name="dstOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="dstOpenFolderButton_Click">. . .</Button>
+            </Grid>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">
@@ -96,6 +112,6 @@
                 </CheckBox.Style>
             </CheckBox>
         </Grid>
-        <Button Grid.Column="1" Grid.Row="7" Width="150" Height="30" Click="AddWork_Clicked"  Content="{x:Static language:Lang.add}"></Button>
+        <Button Grid.Column="1" Grid.Row="7" Width="150" Height="30" Click="AddWork_Click"  Content="{x:Static language:Lang.add}"></Button>
     </Grid>
 </Page>

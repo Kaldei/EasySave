@@ -4,6 +4,7 @@ using System.Windows.Media;
 using EasySave.NS_ViewModel;
 using EasySave.NS_Model;
 using System.IO;
+using System.Windows.Forms;
 
 namespace EasySave.NS_View
 {
@@ -15,6 +16,8 @@ namespace EasySave.NS_View
         // ----- Attributes -----
         private AddWorkViewModel addWorkViewModel { get; set; }
         public MainWindow mainWindow { get; set; }
+
+        private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
 
 
         // ----- Constructor -----
@@ -28,52 +31,69 @@ namespace EasySave.NS_View
             
         }
 
-        private void AddWork_Clicked(object sender, RoutedEventArgs e)
+
+        // ----- Methods -----
+        private void srcOpenFolderButton_Click(object sender, RoutedEventArgs e)
         {
-            // Check User Input
+            // Open Folder Browser
+            this.folderBrowserDialog.ShowDialog();
+            // Set Selected Path in Source TextBox
+            _src.Text = this.folderBrowserDialog.SelectedPath;
+        }
+
+        private void dstOpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open Folder Browser
+            this.folderBrowserDialog.ShowDialog();
+            // Set Selected Path in Destination TextBox
+            _dst.Text = this.folderBrowserDialog.SelectedPath;
+        }
+
+        private void AddWork_Click(object sender, RoutedEventArgs e)
+        {
+            // Rectify Paths
             string src = RectifyPath(_src.Text);
             string dst = RectifyPath(_dst.Text);
 
-
+            // Checks user inputs
             bool isValidWorkName = CheckName(_name.Text);
             if (isValidWorkName)
             {
-                _nameLabel.Foreground = Brushes.Black;
-                _nameLabel.Content = Langs.Lang.name;
+                nameLabel.Foreground = Brushes.Black;
+                nameLabel.Content = Langs.Lang.name;
             } 
             else
             {
-                _nameLabel.Foreground = Brushes.Red;
-                _nameLabel.Content = Langs.Lang.incorrectName;
+                nameLabel.Foreground = Brushes.Red;
+                nameLabel.Content = Langs.Lang.incorrectName;
                 return;
             }
 
             bool isValidSource = Directory.Exists(src);
             if (isValidSource)
             {
-                _srcLabel.Foreground = Brushes.Black;
-                _srcLabel.Content = Langs.Lang.source;
+                srcLabel.Foreground = Brushes.Black;
+                srcLabel.Content = Langs.Lang.source;
             } 
             else
             {
-                _srcLabel.Foreground = Brushes.Red;
-                _srcLabel.Content = Langs.Lang.incorrectSource;
+                srcLabel.Foreground = Brushes.Red;
+                srcLabel.Content = Langs.Lang.incorrectSource;
                 return;
             }
 
             bool isValidDestination = CheckWorkDst(src, dst);
             if (isValidDestination)
             {
-                _dstLabel.Foreground = Brushes.Black;
-                _dstLabel.Content = Langs.Lang.destination;
+                dstLabel.Foreground = Brushes.Black;
+                dstLabel.Content = Langs.Lang.destination;
 
             }
             else
             {
-                _dstLabel.Foreground = Brushes.Red;
+                dstLabel.Foreground = Brushes.Red;
                 return;
             }
-
 
             // Add Work If All User Input are OK
             addWorkViewModel.AddWork(_name.Text, src, dst, (BackupType)_backupType.SelectedItem, (bool)_isCrypted.IsChecked);
@@ -136,10 +156,10 @@ namespace EasySave.NS_View
                     }               
                     return true;
                 }
-                _dstLabel.Content = Langs.Lang.incorrectDestinationSource;
+                dstLabel.Content = Langs.Lang.incorrectDestinationSource;
                 return false;
             }
-            _dstLabel.Content = Langs.Lang.incorrectDestinationExist;
+            dstLabel.Content = Langs.Lang.incorrectDestinationExist;
             return false;
         }
 
