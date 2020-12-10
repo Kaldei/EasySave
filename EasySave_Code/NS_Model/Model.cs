@@ -50,7 +50,6 @@ namespace EasySave.NS_Model
 
             // Initialize Settings
             this.settings = Settings.GetInstance();
-            this.settings.Update("", new ObservableCollection<string>(), new ObservableCollection<string>(), "en-US");
 
             // Load Works at the beginning of the program (from ./State.json)
             LoadWorks();
@@ -62,7 +61,7 @@ namespace EasySave.NS_Model
 
         // --- Methods ---
         // Load Works and States (at the beginning of the program)
-        public int LoadWorks()
+        public void LoadWorks()
         {
             // Check if backupWorkSave.json File exists
             if (File.Exists(stateFilePath))
@@ -75,7 +74,7 @@ namespace EasySave.NS_Model
                 catch
                 {
                     // Return Error Code
-                    return 200;
+                    errorMsg?.Invoke("loadWorksError");
                 }
             }
             else
@@ -83,8 +82,6 @@ namespace EasySave.NS_Model
                 // Create Settings File
                 SaveWorks();
             }
-            // Return Success Code
-            return 100;
         }
 
         // Save Works
@@ -95,7 +92,7 @@ namespace EasySave.NS_Model
         }
 
         // Load Settings (at the beginning of the program)
-        public int LoadSettings()
+        public void LoadSettings()
         {
             // Check if backupWorkSave.json File exists
             if (File.Exists(settingsFilePath))
@@ -108,7 +105,7 @@ namespace EasySave.NS_Model
                 catch
                 {
                     // Return Error Code
-                    return 200;
+                    errorMsg?.Invoke("loadSettingsError");
                 }
             }
             else
@@ -116,8 +113,6 @@ namespace EasySave.NS_Model
                 // Create Settings File
                 SaveSettings();
             }
-            // Return Success Code
-            return 100;
         }
 
         // Save Settings

@@ -1,6 +1,6 @@
 ﻿namespace EasySave.NS_Model
 {
-    class Log
+    public class Log
     {
         // --- Attributes ---
         public string name { get; set; }
