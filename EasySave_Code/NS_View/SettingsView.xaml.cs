@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using EasySave.NS_ViewModel;
+using Microsoft.Win32;
 
 namespace EasySave.NS_View
 {
@@ -16,6 +17,8 @@ namespace EasySave.NS_View
         private SettingsViewModel settingsViewModel { get; set; }
         public MainWindow mainWindow { get; set; }
 
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+
 
         // ----- Constructor -----
         public SettingsView(SettingsViewModel _settingsViewModel, MainWindow _mainWindow)
@@ -25,13 +28,25 @@ namespace EasySave.NS_View
             this.mainWindow = _mainWindow;
             DataContext = this.settingsViewModel;
             InitializeComponent();
+
+            
             updateSelectedLanguage();
+            openFileDialog.Filter = "Text files (*.exe)|*.exe|All files (*.*)|*.*";
             _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
+        }
+
+       
+        // ----- Methods -----
+        // File Browser
+        private void cryptoSoftPathOpenFolderButtonButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open File Browser
+            this.openFileDialog.ShowDialog();
+            // Set Selected Path in CryptoSoft Path TextBox
+            _cryptoSoftPath.Text = this.openFileDialog.FileName;
 
         }
 
-
-        // ----- Methods -----
         // Select Language in Settings View
         public void updateSelectedLanguage()
         {
@@ -47,28 +62,31 @@ namespace EasySave.NS_View
             }
         }
 
+        // Click on flags
         private void ChangeLanguage(object sender, RoutedEventArgs e)
         {
-            // Change Language Setting
+            // Check 
             var button = sender as Button;
-
             if (this.settingsViewModel.model.settings.language != button.Tag.ToString())
             {
+                // Change Language Setting
                 this.settingsViewModel.model.settings.language = button.Tag.ToString();
                 this.settingsViewModel.model.SaveSettings();
 
                 // Change Program Language
-
                 Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
 
+                // Update Selected Language in View
                 updateSelectedLanguage();
 
+                // Reload App
                 mainWindow.RefreshLanguage();
             }
 
         }
 
-        private void cryptoSoftathButton_Click(object sender, RoutedEventArgs e)
+        // Change CryptoSoft Path
+        private void cryptoSoftPathButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Crypto Soft Path given is Correct
             bool isValidCryptoSoftPath = File.Exists(_cryptoSoftPath.Text) && _cryptoSoftPath.Text.EndsWith(".exe");
