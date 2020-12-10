@@ -67,15 +67,6 @@ namespace EasySave.NS_Model
             // Write Logs File
             File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
 
-            /*
-            // Log in .txt version
-            File.AppendAllText($"./Logs/{today}.txt", $"{startTime}: {this.name}" +
-                $"\nSource: {_src}" +
-                $"\nDestination: {_dst}" +
-                $"\nSize (Bytes): {_size}" +
-                $"\nElapsed Time: {elapsedTime}" +
-                "\n\r\n");
-            */
         }
     }
 }
