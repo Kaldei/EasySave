@@ -46,11 +46,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="29*"/>
                     <ColumnDefinition Width="291*"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2"/>
-                <Button x:Name="cryptoSoftathButton" Grid.Column="2" Width="70" HorizontalAlignment="Left" Click="cryptoSoftathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
+                <Button x:Name="cryptoSoftPathOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="cryptoSoftPathOpenFolderButtonButton_Click">. . .</Button>
+                <Button x:Name="cryptoSoftPathButton" Grid.Column="3" Width="70" HorizontalAlignment="Left" Click="cryptoSoftPathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
             </Grid>
         </StackPanel>
 
