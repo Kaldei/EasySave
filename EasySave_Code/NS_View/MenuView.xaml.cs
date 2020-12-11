@@ -32,17 +32,12 @@ namespace EasySave.NS_View
             int[] SelectedWorks = GetSelectedWorks();
 
             // Remove Selected Works
-            foreach (int index in SelectedWorks)
-            {
-                menuViewModel.RemoveWork(index);
-            }
+            menuViewModel.RemoveWorks(SelectedWorks);
         }
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            int[] SelectedWorks = GetSelectedWorks();
-
-            this.mainWindow.selectedWorksId = SelectedWorks;
+            this.mainWindow.selectedWorksId = GetSelectedWorks();
             this.mainWindow.ChangePage("backup");
         }
 

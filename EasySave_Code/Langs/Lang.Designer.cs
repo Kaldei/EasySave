@@ -295,6 +295,33 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Error while loading logs..
+        /// </summary>
+        public static string loadLogsError {
+            get {
+                return ResourceManager.GetString("loadLogsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Error while loading settings.
+        /// </summary>
+        public static string loadSettingsError {
+            get {
+                return ResourceManager.GetString("loadSettingsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Error while loading works..
+        /// </summary>
+        public static string loadWorksError {
+            get {
+                return ResourceManager.GetString("loadWorksError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Name.
         /// </summary>
         public static string name {
