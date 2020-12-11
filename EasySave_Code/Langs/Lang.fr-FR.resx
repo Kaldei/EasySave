@@ -175,7 +175,7 @@
     <value>Choississez un dossier destination différent du dossier source.</value>
   </data>
   <data name="incorrectExtension" xml:space="preserve">
-    <value>Extensions incorrectes.</value>
+    <value>Extension donnée incorrecte !</value>
   </data>
   <data name="incorrectName" xml:space="preserve">
     <value>Entrer un nom entre 1 et 20 caractères.</value>
@@ -248,5 +248,11 @@
   </data>
   <data name="loadWorksError" xml:space="preserve">
     <value>Erreur lors du chargement des travaux.</value>
+  </data>
+  <data name="incorrectPrioExtensionLabel" xml:space="preserve">
+    <value>Extension donnée incorrecte !</value>
+  </data>
+  <data name="prioExtensionLabel" xml:space="preserve">
+    <value>Extensions Prioritaires :</value>
   </data>
 </root>

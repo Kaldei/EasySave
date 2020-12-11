@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,57 +36,15 @@ namespace EasySave.NS_View
             _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
         }
 
-       
-        // ----- Methods -----
-        // File Browser
-        private void cryptoSoftPathOpenFolderButtonButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Open File Browser
-            this.openFileDialog.ShowDialog();
-            // Set Selected Path in CryptoSoft Path TextBox
-            _cryptoSoftPath.Text = this.openFileDialog.FileName;
 
+        // ----- Retrun to Menu -----
+        private void returnMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.mainWindow.ChangePage("menu");
         }
 
-        // Select Language in Settings View
-        public void updateSelectedLanguage()
-        {
-            if (this.settingsViewModel.model.settings.language == "en-US")
-            {
-                enButton.BorderBrush = Brushes.DodgerBlue;
-                frButton.BorderBrush = null;
-            }
-            else if (this.settingsViewModel.model.settings.language == "fr-FR")
-            {
-                enButton.BorderBrush = null;
-                frButton.BorderBrush = Brushes.DodgerBlue;
-            }
-        }
 
-        // Click on flags
-        private void ChangeLanguage(object sender, RoutedEventArgs e)
-        {
-            // Check 
-            var button = sender as Button;
-            if (this.settingsViewModel.model.settings.language != button.Tag.ToString())
-            {
-                // Change Language Setting
-                this.settingsViewModel.model.settings.language = button.Tag.ToString();
-                this.settingsViewModel.model.SaveSettings();
-
-                // Change Program Language
-                Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
-
-                // Update Selected Language in View
-                updateSelectedLanguage();
-
-                // Reload App
-                mainWindow.RefreshLanguage();
-            }
-
-        }
-
-        // Change CryptoSoft Path
+        // ----- CryptoSoft Path -----
         private void cryptoSoftPathButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Crypto Soft Path given is Correct
@@ -119,10 +78,48 @@ namespace EasySave.NS_View
             _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
         }
 
+
+        // ----- Priority Extensions ------
+        private void addPrioExtensionButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Check If Extension given is Correct
+            bool isValidExtention = checkExtension(_addPrioExtension.Text, this.settingsViewModel.model.settings.prioExtensions);
+            if (isValidExtention)
+            {
+                addPrioExtensionLabel.Foreground = Brushes.Black;
+                addPrioExtensionLabel.Content = Langs.Lang.prioExtensionLabel;
+            }
+            else
+            {
+                addPrioExtensionLabel.Foreground = Brushes.Red;
+                addPrioExtensionLabel.Content = Langs.Lang.incorrectPrioExtensionLabel;
+                return;
+            }
+
+            // Add Extension
+            this.settingsViewModel.model.settings.prioExtensions.Add(_addPrioExtension.Text);
+            this.settingsViewModel.model.SaveSettings();
+
+            // reset Field
+            _addPrioExtension.Text = "";
+        }
+
+        private void removePrioExtensionButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Remove Extension
+            this.settingsViewModel.model.settings.prioExtensions.Remove((string)_removePrioExtension.SelectedItem);
+            this.settingsViewModel.model.SaveSettings();
+
+            // Reset Item
+            _removePrioExtension.SelectedIndex = 0;
+        }
+
+
+        // ----- Extensions to Encrypt -----
         private void addExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Extension given is Correct
-            bool isValidExtention = checkExtension(_addExtension.Text);
+            bool isValidExtention = checkExtension(_addExtension.Text, this.settingsViewModel.model.settings.cryptoExtensions);
             if (isValidExtention)
             {
                 addExtensionLabel.Foreground = Brushes.Black;
@@ -143,22 +140,6 @@ namespace EasySave.NS_View
             _addExtension.Text = "";
         }
 
-        private bool checkExtension(string _addExtension)
-        {
-            if (_addExtension.StartsWith("."))
-            {
-                foreach (string extension in this.settingsViewModel.model.settings.cryptoExtensions)
-                {
-                    if (extension == _addExtension)
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
-
         private void removeExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove Extension
@@ -169,6 +150,8 @@ namespace EasySave.NS_View
             _removeExtension.SelectedIndex = 0;
         }
 
+
+        // ----- Business Software -----
         private void addBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Business Software isn't alerady in list
@@ -215,9 +198,73 @@ namespace EasySave.NS_View
             _removeBusinessSoftware.SelectedIndex = 0;
         }
 
-        private void returnMenuButton_Click(object sender, RoutedEventArgs e)
+
+        // ----- Language -----
+        // Select Language in Settings View
+        public void updateSelectedLanguage()
         {
-            this.mainWindow.ChangePage("menu");
+            if (this.settingsViewModel.model.settings.language == "en-US")
+            {
+                enButton.BorderBrush = Brushes.DodgerBlue;
+                frButton.BorderBrush = null;
+            }
+            else if (this.settingsViewModel.model.settings.language == "fr-FR")
+            {
+                enButton.BorderBrush = null;
+                frButton.BorderBrush = Brushes.DodgerBlue;
+            }
+        }
+
+        // Click on flags
+        private void ChangeLanguage(object sender, RoutedEventArgs e)
+        {
+            // Check 
+            var button = sender as Button;
+            if (this.settingsViewModel.model.settings.language != button.Tag.ToString())
+            {
+                // Change Language Setting
+                this.settingsViewModel.model.settings.language = button.Tag.ToString();
+                this.settingsViewModel.model.SaveSettings();
+
+                // Change Program Language
+                Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
+
+                // Update Selected Language in View
+                updateSelectedLanguage();
+
+                // Reload App
+                mainWindow.RefreshLanguage();
+            }
+
+        }
+
+
+        // ----- Shared Methods ------
+        // Extension Checker
+        private bool checkExtension(string _extension, ObservableCollection<string> extensionList)
+        {
+            if (_extension.StartsWith("."))
+            {
+                foreach (string extension in extensionList)
+                {
+                    if (extension == _extension)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        // File Browser
+        private void cryptoSoftPathOpenFolderButtonButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open File Browser
+            this.openFileDialog.ShowDialog();
+            // Set Selected Path in CryptoSoft Path TextBox
+            _cryptoSoftPath.Text = this.openFileDialog.FileName;
+
         }
     }
 }

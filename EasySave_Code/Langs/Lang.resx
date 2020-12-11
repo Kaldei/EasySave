@@ -175,7 +175,7 @@
     <value>Choose a different path from the source.</value>
   </data>
   <data name="incorrectExtension" xml:space="preserve">
-    <value>Incorrect extension given!</value>
+    <value>Incorrect Extension given!</value>
   </data>
   <data name="incorrectName" xml:space="preserve">
     <value>Enter a valid name (1 to 20 characters).</value>
@@ -248,5 +248,11 @@
   </data>
   <data name="loadWorksError" xml:space="preserve">
     <value>Error while loading works.</value>
+  </data>
+  <data name="incorrectPrioExtensionLabel" xml:space="preserve">
+    <value>Incorrect Extension given!</value>
+  </data>
+  <data name="prioExtensionLabel" xml:space="preserve">
+    <value>Priority Exentions:</value>
   </data>
 </root>
