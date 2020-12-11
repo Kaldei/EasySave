@@ -8,6 +8,8 @@ namespace EasySave.NS_Model
         // --- Attributes ---
         public static Settings instance { get; set; }
         public string cryptoSoftPath { get; set; }
+        public string language { get; set; }
+
         private ObservableCollection<string> CryptoExtensions { get; set; }
         public ObservableCollection<string> cryptoExtensions
         {
@@ -21,6 +23,23 @@ namespace EasySave.NS_Model
                 {
                     CryptoExtensions = value;
                     OnPropertyChanged("cryptoExtensions");
+                }
+            }
+        }
+
+        private ObservableCollection<string> PrioExtensions { get; set; }
+        public ObservableCollection<string> prioExtensions
+        {
+            get
+            {
+                return PrioExtensions;
+            }
+            set
+            {
+                if (PrioExtensions != value)
+                {
+                    PrioExtensions = value;
+                    OnPropertyChanged("prioExtensions");
                 }
             }
         }
@@ -42,18 +61,17 @@ namespace EasySave.NS_Model
             }
         }
 
-        public string language { get; set; }
-
-
+        
         // --- Constructors ---
         // Constructor used by LoadSettings
         private Settings() { }
 
         // Constructor used by GetInstance
-        private Settings(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _businessSoftwares, string _language)
+        private Settings(string _cryptoSoftPath, ObservableCollection<string> _cryptoExtensions, ObservableCollection<string> _prioExtensions, ObservableCollection<string> _businessSoftwares, string _language)
         {
             this.cryptoSoftPath = _cryptoSoftPath;
             this.cryptoExtensions = _cryptoExtensions;
+            this.prioExtensions = _prioExtensions;
             this.businessSoftwares = _businessSoftwares;
             this.language = _language;
         }
@@ -65,7 +83,7 @@ namespace EasySave.NS_Model
         {
             if (instance == null)
             {
-                instance = new Settings("", new ObservableCollection<string>(), new ObservableCollection<string>(), "en-US");
+                instance = new Settings("", new ObservableCollection<string>(), new ObservableCollection<string>(), new ObservableCollection<string>(), "en-US");
             }
             return instance;
         }

@@ -59,7 +59,7 @@ namespace EasySave.NS_Model
             LoadWorks();
 
             // Load Settings at the beginning of the program (from ./Settings.json)
-            LoadSettings(); // ---- TODO : Handle Error Message in View ---- //
+            LoadSettings();
 
             logs = new List<Log>();
         }
