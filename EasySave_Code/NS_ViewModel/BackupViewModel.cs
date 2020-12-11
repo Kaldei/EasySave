@@ -31,7 +31,7 @@ namespace EasySave.NS_ViewModel
             this.sender = _sender;
             this.e = _e;
 
-            int[] idWorkToSave = new int[1] { 0 };
+            int[] idWorkToSave = new int[1] { 1};
 
             if (this.model.works.Count > 0 && idWorkToSave.Length > 0)
             {
