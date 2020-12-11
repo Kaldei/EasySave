@@ -78,6 +78,18 @@ namespace EasySave.NS_View
                     errorMsg = Lang.cryptoSoftPathError;
                     break;
 
+                case "loadLogsError":
+                    errorMsg = Lang.loadLogsError;
+                    break;
+
+                case "loadSettingsError":
+                    errorMsg = Lang.loadSettingsError;
+                    break;
+
+                case "loadWorksError":
+                    errorMsg = Lang.loadWorksError;
+                    break;
+
                 default:
                     errorMsg = Lang.unknownError;
                     break;

@@ -240,4 +240,13 @@
   <data name="progressBasResult" xml:space="preserve">
     <value> finit avec un total d'erreur </value>
   </data>
+  <data name="loadLogsError" xml:space="preserve">
+    <value>Erreur lors du chargement des logs.</value>
+  </data>
+  <data name="loadSettingsError" xml:space="preserve">
+    <value>Erreur lors du chargement des paramètres.</value>
+  </data>
+  <data name="loadWorksError" xml:space="preserve">
+    <value>Erreur lors du chargement des travaux.</value>
+  </data>
 </root>
