@@ -1,4 +1,6 @@
 ﻿using EasySave.Observable;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
@@ -21,6 +23,8 @@ namespace EasySave.NS_Model
 
         public string stateFilePath { get; set; }
         public string settingsFilePath { get; set; }
+
+        private List<Log> logs { get; set; }
 
         private ObservableCollection<Work> Works { get; set;}
         public ObservableCollection<Work> works {
@@ -120,6 +124,54 @@ namespace EasySave.NS_Model
         {
             // Write Work list into JSON file (at ./BackupWorkSave.json)
             File.WriteAllText(this.settingsFilePath, JsonSerializer.Serialize(this.settings, this.jsonOptions));
+        }
+
+
+        // Load Logs (at the first backup)
+        public void LoadLogs(string _today)
+        {
+            // Check if backupWorkSave.json File exists
+            if (File.Exists(settingsFilePath))
+            {
+                try
+                {
+                    // Create File if it doesn't exists
+                    if (!Directory.Exists("./Logs"))
+                    {
+                        Directory.CreateDirectory("./Logs");
+                    }
+                }
+                catch
+                {
+                    // Return Error Code
+                    errorMsg?.Invoke("loadLogsError");
+                }
+            }
+
+            // Get Logs File Content if it Exists
+            if (File.Exists($"./Logs/{_today}.json"))
+            {
+                logs = JsonSerializer.Deserialize<List<Log>>(File.ReadAllText($"./Logs/{_today}.json"));
+            }
+        }
+
+        // Save Log 
+        public void SaveLog(Log _newLog)
+        {
+            // Prepare times log
+            string today = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // Load if necessary the Logs 
+            if (logs.Count == 0)
+            {
+                LoadLogs(today);
+            }
+
+            // Add Current Backuped File Log
+            logs.Add(_newLog);
+
+            // Write Logs File
+            File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
         }
     }
 }

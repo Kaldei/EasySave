@@ -37,36 +37,5 @@ namespace EasySave.NS_Model
             this.isCrypted = _isCrypted;
             this.state = null;
         }
-
-
-        // --- Methods ----
-        // Save Log 
-        public void SaveLog(Log _newLog)
-        {
-            // Prepare times log
-            string today = DateTime.Now.ToString("yyyy-MM-dd");
-
-            // Create File if it doesn't exists
-            if (!Directory.Exists("./Logs"))
-            {
-                Directory.CreateDirectory("./Logs");
-            }
-
-            // Var that will contains Logs File Content
-            List<Log> logs = new List<Log>();
-
-            // Get Logs File Content if it Exists
-            if (File.Exists($"./Logs/{today}.json"))
-            {
-                logs = JsonSerializer.Deserialize<List<Log>>(File.ReadAllText($"./Logs/{today}.json"));
-            }
-
-            // Add Current Backuped File Log
-            logs.Add(_newLog);
-
-            // Write Logs File
-            File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
-
-        }
     }
 }
