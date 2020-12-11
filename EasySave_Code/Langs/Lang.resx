@@ -240,4 +240,13 @@
   <data name="progressBasResult" xml:space="preserve">
     <value> finished with a total of </value>
   </data>
+  <data name="loadLogsError" xml:space="preserve">
+    <value>Error while loading logs.</value>
+  </data>
+  <data name="loadSettingsError" xml:space="preserve">
+    <value>Error while loading settings</value>
+  </data>
+  <data name="loadWorksError" xml:space="preserve">
+    <value>Error while loading works.</value>
+  </data>
 </root>

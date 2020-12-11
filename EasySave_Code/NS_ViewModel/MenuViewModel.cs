@@ -16,7 +16,15 @@ namespace EasySave.NS_ViewModel
 
 
         // ----- Methods -----
-        public void RemoveWork(int _index)
+        public void RemoveWorks(int[] _worksToRemove)
+        {
+            foreach(int workId in _worksToRemove)
+            {
+                RemoveWork(workId);
+            }
+        }
+
+        private void RemoveWork(int _index)
         {
             try
             {
