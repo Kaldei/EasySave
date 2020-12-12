@@ -69,14 +69,14 @@
             </StackPanel>
 
             <StackPanel Grid.Column="6" Background="White" Margin="0, 0, 10, 0" >
-                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="PauseBackup_Clicked">ll</Button>
+                <Border CornerRadius="90" BorderBrush="Orange" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="Orange" Foreground="White" FontSize="26" Padding="-2, -14, 1, -7" BorderBrush="Orange" Click="PauseBackup_Clicked">||</Button>
                 </Border>
             </StackPanel>
 
             <StackPanel Grid.Column="7" Background="White" Margin="0, 0, 10, 0" >
-                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="StopBackup_Clicked">X</Button>
+                <Border CornerRadius="90" BorderBrush="Red" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="Red" Foreground="White" FontSize="26" Padding="-2, -14, 1, -7" BorderBrush="Red" Click="StopBackup_Clicked">x</Button>
                 </Border>
             </StackPanel>
             
