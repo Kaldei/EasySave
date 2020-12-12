@@ -21,6 +21,7 @@ namespace EasySave.NS_Model
         public bool isCrypted { get; set; }
         public State state { get; set; }
         public string lastBackupDate { get; set; }
+        public WorkState workState { get; set; }
 
 
         // --- Constructors ---
