@@ -1,5 +1,7 @@
 ﻿using EasySave.NS_ViewModel;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,7 +39,13 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
+       
+          
+           this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
+
+            _listWorks.Items.Refresh();
+            
+
             //this.mainWindow.selectedWorksId = GetSelectedWorks();
             //this.mainWindow.ChangePage("backup");
         }
