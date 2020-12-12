@@ -15,6 +15,10 @@ namespace EasySave.NS_ViewModel
         private object _syncWorks = new object();
         private object _syncLogs = new object();
 
+        private static AutoResetEvent autoResetEventWorks = new AutoResetEvent(true);
+        private static AutoResetEvent autoResetEventLogs = new AutoResetEvent(true);
+
+
         // ----- Constructor -----
         public MenuViewModel(Model _model)
         {
@@ -125,14 +129,14 @@ namespace EasySave.NS_ViewModel
                         model.errorMsg?.Invoke("backupFinishedWithError");
                     }
                 }
+
                 // Reset the work object
+                autoResetEventWorks.WaitOne();
                 _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
-                if (Monitor.TryEnter(_syncWorks, 3000))
-                {
-                    this.model.SaveWorks();
-                    Monitor.Exit(_syncWorks);
-                }
+                this.model.SaveWorks();
+                autoResetEventWorks.Set();
+                
 
                 Trace.WriteLine(_workToSave.name + " finished " + DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss"));
             }
@@ -353,12 +357,10 @@ namespace EasySave.NS_ViewModel
 
 
                 // Update the current work status
-                if (Monitor.TryEnter(_syncWorks, 100))
-                {
-                    _work.state.UpdateState(pourcent, fileRemaining, _work.state.leftSize, curFile.FullName, dstFile);
-                    this.model.SaveWorks();
-                    Monitor.Exit(_syncWorks);
-                }
+                autoResetEventWorks.WaitOne();
+                _work.state.UpdateState(pourcent, fileRemaining, _work.state.leftSize, curFile.FullName, dstFile);
+                this.model.SaveWorks();
+                autoResetEventWorks.Set();
 
                 // Check if the file is crypted or not
                 if (!(_work.isCrypted && curFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(curFile.Name.Substring(curFile.Name.LastIndexOf(".")))))
@@ -372,13 +374,10 @@ namespace EasySave.NS_ViewModel
                     encryptionTime = EncryptFile(curFile, dstFile);
                 }
 
-                // Add Current Backuped File Log
-                if (Monitor.TryEnter(_syncLogs, 100))
-                {
-                    this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
-                    this.model.SaveLog();
-                    Monitor.Exit(_syncLogs);
-                }
+                autoResetEventLogs.WaitOne();
+                this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
+                this.model.SaveLog();
+                autoResetEventLogs.Set();
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
                 //Thread.Sleep(5000);
