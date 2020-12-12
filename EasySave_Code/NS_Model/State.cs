@@ -30,6 +30,24 @@ namespace EasySave.NS_Model
            
         }
 
+        private string ColorProgressBar;
+        public string colorProgressBar
+        {
+            get
+            {
+                return ColorProgressBar;
+            }
+            set
+            {
+                if (ColorProgressBar != value)
+                {
+                    ColorProgressBar = value;
+                    OnPropertyChanged("colorProgressBar");
+                }
+            }
+
+        }
+
         // --- Contructors ---
         // Constructor used by LoadWorks()
         public State() { }
