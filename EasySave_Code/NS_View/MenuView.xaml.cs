@@ -1,5 +1,7 @@
 ﻿using EasySave.NS_ViewModel;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,6 +17,7 @@ namespace EasySave.NS_View
         public MainWindow mainWindow { get; set; }
 
 
+
         // ----- Constructor -----
         public MenuView(MenuViewModel _menuViewModel, MainWindow _mainWindow)
         {
@@ -22,7 +25,7 @@ namespace EasySave.NS_View
             this.menuViewModel = _menuViewModel;
             this.mainWindow = _mainWindow;
             DataContext = this.menuViewModel;
-            InitializeComponent();
+            InitializeComponent();          
         }
 
 
@@ -37,9 +40,23 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
-            //this.mainWindow.selectedWorksId = GetSelectedWorks();
-            //this.mainWindow.ChangePage("backup");
+            foreach (int index in GetSelectedWorks())
+            {
+                switch (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState)
+                {              
+                    case NS_Model.WorkState.RUN:
+                        break;
+
+                    case NS_Model.WorkState.PAUSE:
+                        this.menuViewModel.model.works[index].workState = NS_Model.WorkState.RUN;
+                        break;
+                   
+                    default:
+                        this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
+                        _listWorks.Items.Refresh();
+                        break;
+                }                            
+            }
         }
 
         private int[] GetSelectedWorks()
@@ -73,5 +90,26 @@ namespace EasySave.NS_View
             var button = sender as Button;
             this.mainWindow.ChangePage(button.Tag.ToString());
         }
+
+        private void StopBackup_Clicked(object sender, RoutedEventArgs e)
+        {           
+            foreach (int index in GetSelectedWorks())
+            {
+                this.menuViewModel.model.works[index].workState = NS_Model.WorkState.CANCEL;
+            }
+        }
+
+        private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
+        {
+            foreach (int index in GetSelectedWorks())
+            {
+                // Check if backup is running
+                if (this.menuViewModel.model.works[index].workState == NS_Model.WorkState.RUN)
+                {
+                    this.menuViewModel.model.works[index].workState = NS_Model.WorkState.PAUSE;
+                }
+            }
+        }
+
     }
 }
