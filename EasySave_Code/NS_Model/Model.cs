@@ -136,18 +136,18 @@ namespace EasySave.NS_Model
             // Check if backupWorkSave.json File exists
             if (File.Exists(settingsFilePath))
             {
-                try
+                if (!Directory.Exists("./Logs"))
                 {
-                    // Create File if it doesn't exists
-                    if (!Directory.Exists("./Logs"))
+                    try
                     {
+                        // Create Folder if it doesn't exists
                         Directory.CreateDirectory("./Logs");
                     }
-                }
-                catch
-                {
-                    // Return Error Code
-                    errorMsg?.Invoke("loadLogsError");
+                    catch
+                    {
+                        // Return Error Code
+                        errorMsg?.Invoke("loadLogsError");
+                    }
                 }
             }
 
@@ -163,6 +163,11 @@ namespace EasySave.NS_Model
         {
             // Prepare times log
             string today = DateTime.Now.ToString("yyyy-MM-dd");
+
+            if (!Directory.Exists("./Logs"))
+            {
+                Directory.CreateDirectory("./Logs");
+            }
 
             // Load if necessary the Logs 
             if (logs.Count == 0)
