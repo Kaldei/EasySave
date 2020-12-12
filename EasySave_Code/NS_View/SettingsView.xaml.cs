@@ -34,6 +34,7 @@ namespace EasySave.NS_View
             updateSelectedLanguage();
             openFileDialog.Filter = "Text files (*.exe)|*.exe|All files (*.*)|*.*";
             _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
+            _maxSimultaneousFilesSize.Text = this.settingsViewModel.model.settings.maxSimultaneousFilesSize.ToString();
         }
 
 
@@ -74,44 +75,6 @@ namespace EasySave.NS_View
             // Update Crypto Soft Path
             this.settingsViewModel.model.settings.cryptoSoftPath = _cryptoSoftPath.Text;
             this.settingsViewModel.model.SaveSettings();
-
-            _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
-        }
-
-
-        // ----- Priority Extensions ------
-        private void addPrioExtensionButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Check If Extension given is Correct
-            bool isValidExtention = checkExtension(_addPrioExtension.Text, this.settingsViewModel.model.settings.prioExtensions);
-            if (isValidExtention)
-            {
-                addPrioExtensionLabel.Foreground = Brushes.Black;
-                addPrioExtensionLabel.Content = Langs.Lang.prioExtensionLabel;
-            }
-            else
-            {
-                addPrioExtensionLabel.Foreground = Brushes.Red;
-                addPrioExtensionLabel.Content = Langs.Lang.incorrectPrioExtensionLabel;
-                return;
-            }
-
-            // Add Extension
-            this.settingsViewModel.model.settings.prioExtensions.Add(_addPrioExtension.Text);
-            this.settingsViewModel.model.SaveSettings();
-
-            // reset Field
-            _addPrioExtension.Text = "";
-        }
-
-        private void removePrioExtensionButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Remove Extension
-            this.settingsViewModel.model.settings.prioExtensions.Remove((string)_removePrioExtension.SelectedItem);
-            this.settingsViewModel.model.SaveSettings();
-
-            // Reset Item
-            _removePrioExtension.SelectedIndex = 0;
         }
 
 
@@ -148,6 +111,42 @@ namespace EasySave.NS_View
 
             // Reset Item
             _removeExtension.SelectedIndex = 0;
+        }
+
+
+        // ----- Priority Extensions ------
+        private void addPrioExtensionButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Check If Extension given is Correct
+            bool isValidExtention = checkExtension(_addPrioExtension.Text, this.settingsViewModel.model.settings.prioExtensions);
+            if (isValidExtention)
+            {
+                addPrioExtensionLabel.Foreground = Brushes.Black;
+                addPrioExtensionLabel.Content = Langs.Lang.prioExtensionLabel;
+            }
+            else
+            {
+                addPrioExtensionLabel.Foreground = Brushes.Red;
+                addPrioExtensionLabel.Content = Langs.Lang.incorrectPrioExtensionLabel;
+                return;
+            }
+
+            // Add Extension
+            this.settingsViewModel.model.settings.prioExtensions.Add(_addPrioExtension.Text);
+            this.settingsViewModel.model.SaveSettings();
+
+            // reset Field
+            _addPrioExtension.Text = "";
+        }
+
+        private void removePrioExtensionButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Remove Extension
+            this.settingsViewModel.model.settings.prioExtensions.Remove((string)_removePrioExtension.SelectedItem);
+            this.settingsViewModel.model.SaveSettings();
+
+            // Reset Item
+            _removePrioExtension.SelectedIndex = 0;
         }
 
 
@@ -196,6 +195,38 @@ namespace EasySave.NS_View
 
             // Reset Item
             _removeBusinessSoftware.SelectedIndex = 0;
+        }
+
+
+        // ----- Max Simultaneous Files Size
+        private void maxSimultaneousFilesSizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if input is a number and stricly posisitve
+            int.TryParse(_maxSimultaneousFilesSize.Text, out int maxSimultaneousFilesSize);
+            if (maxSimultaneousFilesSize > 0)
+            {
+                maxSimultaneousFilesSizeLabel.Foreground = Brushes.Black;
+                maxSimultaneousFilesSizeLabel.Content = Langs.Lang.maxSimultaneousFilesSize;
+            }
+            else
+            {
+                maxSimultaneousFilesSizeLabel.Foreground = Brushes.Red;
+                maxSimultaneousFilesSizeLabel.Content = Langs.Lang.incorrectMaxSimultaneousFilesSize;
+
+                if (this.settingsViewModel.model.settings.maxSimultaneousFilesSize > 0)
+                {
+                    _maxSimultaneousFilesSize.Text = this.settingsViewModel.model.settings.maxSimultaneousFilesSize.ToString();
+                }
+                else
+                {
+                    _maxSimultaneousFilesSize.Text = "";
+                }
+                return;
+            }
+
+            // Update Max Simultaneous Files Size
+            this.settingsViewModel.model.settings.maxSimultaneousFilesSize = int.Parse(_maxSimultaneousFilesSize.Text);
+            this.settingsViewModel.model.SaveSettings();
         }
 
 
