@@ -401,6 +401,9 @@ namespace EasySave.NS_ViewModel
                 // Test if paused
                 while (_work.workState == WorkState.PAUSE) { }
 
+                // Set color of the progress bar 
+                _work.state.colorProgressBar = "Green";
+
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
                 // TODO : delete thread.sleep
                 Thread.Sleep(1000);
