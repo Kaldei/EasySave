@@ -42,7 +42,7 @@ namespace EasySave.NS_View
         {
             foreach (int index in GetSelectedWorks())
             {
-                switch (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState)
+                switch (this.menuViewModel.model.works[index].workState)
                 {              
                     case NS_Model.WorkState.RUN:
                         break;
@@ -54,8 +54,10 @@ namespace EasySave.NS_View
                     default:
                         this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
                         _listWorks.Items.Refresh();
+
                         break;
-                }                            
+                }
+
             }
         }
 
@@ -107,6 +109,8 @@ namespace EasySave.NS_View
                 if (this.menuViewModel.model.works[index].workState == NS_Model.WorkState.RUN)
                 {
                     this.menuViewModel.model.works[index].workState = NS_Model.WorkState.PAUSE;
+                    this.menuViewModel.model.works[index].state.colorProgressBar = "Orange";
+
                 }
             }
         }
