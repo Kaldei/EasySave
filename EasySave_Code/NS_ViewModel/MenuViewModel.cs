@@ -346,15 +346,21 @@ namespace EasySave.NS_ViewModel
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
             {
-                /*
-                // Pause Program if a Business Software is Running
+                // Pause Backup if a Business Software is Running
                 if (IsBusinessRunning())
                 {
+                    // Set Progress Bar Color to Error Color
+                    _work.state.colorProgressBar = "Red";
                     // Return Error Code
                     model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
-                    return;
+                    while (IsBusinessRunning()) { }
                 }
-                */
+
+                // Reset Progress Bar Color
+                if (_work.state.colorProgressBar != "Green")
+                {
+                    _work.state.colorProgressBar = "Green";
+                }
 
                 // Get the current file to save
                 FileInfo curFile = _filesToSave[i];
@@ -406,8 +412,6 @@ namespace EasySave.NS_ViewModel
 
                 // Check if paused
                 while (_work.workState == WorkState.PAUSE) { }
-
-
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
             }
