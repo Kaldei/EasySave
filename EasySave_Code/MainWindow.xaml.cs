@@ -3,6 +3,7 @@ using System.Windows;
 using EasySave.NS_View;
 using EasySave.NS_ViewModel;
 using EasySave.NS_Model;
+using System.Threading;
 
 namespace EasySave
 {
@@ -26,26 +27,40 @@ namespace EasySave
         public SettingsViewModel settingsViewModel { get; set; }
         public BackupViewModel backupViewModel { get; set; }
 
+        private bool isFirstInstance;
 
         // ----- Constructor -----
         public MainWindow()
         {
-            // Initialize Model
-            this.model = new Model();
+            isFirstInstance = false;
+            new Mutex(true, "EasySave", out isFirstInstance);
 
-            // Initialize ViewModel
-            this.errorView = new ErrorView(model);
-            this.menuViewModel = new MenuViewModel(model);
+            if (isFirstInstance)
+            {
+                // Initialize Model
+                this.model = new Model();
 
-            // Load Language
-            Langs.Lang.Culture = new CultureInfo(model.settings.language);
+                // Initialize ViewModel
+                this.errorView = new ErrorView(model);
+                this.menuViewModel = new MenuViewModel(model);
 
-            // Set Main Window Datacontent
-            menuView = new MenuView(menuViewModel, this);
-            DataContext = menuView;
+                // Load Language
+                Langs.Lang.Culture = new CultureInfo(model.settings.language);
 
-            // Initialize Main Window
-            InitializeComponent();
+                // Set Main Window Datacontent
+                menuView = new MenuView(menuViewModel, this);
+                DataContext = menuView;
+
+                // Initialize Main Window
+                InitializeComponent();
+            }
+            else
+            {
+                MessageBox.Show("EasySave is aleready Running!");
+                App.Current.Shutdown();
+            }
+
+
         }
 
 
