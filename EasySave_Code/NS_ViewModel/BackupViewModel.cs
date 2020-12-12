@@ -366,12 +366,12 @@ namespace EasySave.NS_ViewModel
                 }
 
                 // Save Log
-                model.SaveLog(new Log($"{_work.name}", $"{_currentFile.FullName}", $"{dstFile}", $"{_curSize}", $"{startTimeFile}", $"{elapsedTime}", $"{cryptedTime}"));
+                //model.SaveLog(new Log($"{_work.name}", $"{_currentFile.FullName}", $"{dstFile}", $"{_curSize}", $"{startTimeFile}", $"{elapsedTime}", $"{cryptedTime}"));
                 return true;
             }
             catch
             {
-                model.SaveLog(new Log($"{_work.name}", $"{_currentFile.FullName}", $"{dstFile}", $"{_curSize}", $"{startTimeFile}", $"{-1}", $"{0}"));
+                //model.SaveLog(new Log($"{_work.name}", $"{_currentFile.FullName}", $"{dstFile}", $"{_curSize}", $"{startTimeFile}", $"{-1}", $"{0}"));
                 return false;
             }
         }
