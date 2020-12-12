@@ -37,8 +37,9 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            this.mainWindow.selectedWorksId = GetSelectedWorks();
-            this.mainWindow.ChangePage("backup");
+            this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
+            //this.mainWindow.selectedWorksId = GetSelectedWorks();
+            //this.mainWindow.ChangePage("backup");
         }
 
         private int[] GetSelectedWorks()
@@ -51,10 +52,6 @@ namespace EasySave.NS_View
             {
                 SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
             }
-
-            // Sort and Reverse Array to be sure to Remove the Right Work
-            Array.Sort(SelectedWorks);
-            Array.Reverse(SelectedWorks);
             return SelectedWorks;
         }
 
