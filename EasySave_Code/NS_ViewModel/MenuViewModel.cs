@@ -12,7 +12,7 @@ namespace EasySave.NS_ViewModel
     {
         // ----- Attributes -----
         public Model model { get; set; }
-
+        private object _sync = new object();
 
         // ----- Constructor -----
         public MenuViewModel(Model _model)
@@ -349,7 +349,11 @@ namespace EasySave.NS_ViewModel
 
                 // Update the current work status
                 _work.state.UpdateState(pourcent, fileRemaining, _work.state.leftSize, curFile.FullName, dstFile);
-                this.model.SaveWorks();
+                if (Monitor.TryEnter(_sync, 100))
+                {
+                    this.model.SaveWorks();
+                    Monitor.Exit(_sync);
+                }
 
                 // Check if the file is crypted or not
                 if (!(_work.isCrypted && curFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(curFile.Name.Substring(curFile.Name.LastIndexOf(".")))))
@@ -363,11 +367,16 @@ namespace EasySave.NS_ViewModel
                     encryptionTime = EncryptFile(curFile, dstFile);
                 }
 
-                // Log
-                model.SaveLog(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
+                // Add Current Backuped File Log
+                this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
+                if (Monitor.TryEnter(_sync, 100))
+                {
+                    this.model.SaveLog();
+                    Monitor.Exit(_sync);
+                }
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
             }
 
             // End of the current work
