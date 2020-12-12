@@ -381,7 +381,8 @@ namespace EasySave.NS_ViewModel
                 }
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
-                //Thread.Sleep(5000);
+                // TODO : delete thread.sleep
+                Thread.Sleep(1000);
             }
 
             // End of the current work
