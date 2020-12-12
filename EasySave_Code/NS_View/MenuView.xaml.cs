@@ -40,7 +40,7 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            foreach (int item in GetSelectedWorks())
+            foreach (int index in GetSelectedWorks())
             {
                 switch (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState)
                 {              
@@ -48,19 +48,15 @@ namespace EasySave.NS_View
                         break;
 
                     case NS_Model.WorkState.PAUSE:
-                        this.menuViewModel.model.works[item].workState = NS_Model.WorkState.RUN;
+                        this.menuViewModel.model.works[index].workState = NS_Model.WorkState.RUN;
                         break;
                    
                     default:
                         this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
                         _listWorks.Items.Refresh();
                         break;
-                }                
-             
+                }                            
             }
-            
-            //this.mainWindow.selectedWorksId = GetSelectedWorks();
-            //this.mainWindow.ChangePage("backup");
         }
 
         private int[] GetSelectedWorks()
@@ -97,30 +93,20 @@ namespace EasySave.NS_View
 
         private void StopBackup_Clicked(object sender, RoutedEventArgs e)
         {           
-            foreach (int item in GetSelectedWorks())
+            foreach (int index in GetSelectedWorks())
             {
-                this.menuViewModel.model.works[item].workState = NS_Model.WorkState.CANCEL;
+                this.menuViewModel.model.works[index].workState = NS_Model.WorkState.CANCEL;
             }
         }
 
         private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
         {
-            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState == NS_Model.WorkState.RUN)
+            foreach (int index in GetSelectedWorks())
             {
-                foreach (int item in GetSelectedWorks())
+                // Check if backup is running
+                if (this.menuViewModel.model.works[index].workState == NS_Model.WorkState.RUN)
                 {
-                    this.menuViewModel.model.works[item].workState = NS_Model.WorkState.PAUSE;
-                }
-            }
-        }
-
-        private void ResumeBackup_Clicked(object sender, RoutedEventArgs e)
-        {
-            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState == NS_Model.WorkState.PAUSE)
-            {
-                foreach (int item in GetSelectedWorks())
-                {
-                    this.menuViewModel.model.works[item].workState = NS_Model.WorkState.RUN;
+                    this.menuViewModel.model.works[index].workState = NS_Model.WorkState.PAUSE;
                 }
             }
         }
