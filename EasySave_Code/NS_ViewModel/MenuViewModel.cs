@@ -385,6 +385,7 @@ namespace EasySave.NS_ViewModel
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                 this.model.SaveLog();
                 autoResetEventLogs.Set();
+
                 if (_work.workState == WorkState.CANCEL)
                 {
                     try
@@ -400,13 +401,9 @@ namespace EasySave.NS_ViewModel
 
                 // Test if paused
                 while (_work.workState == WorkState.PAUSE) { }
-
-                // Set color of the progress bar 
                 _work.state.colorProgressBar = "Green";
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
-                // TODO : delete thread.sleep
-                Thread.Sleep(1000);
             }
 
             return failedFiles;

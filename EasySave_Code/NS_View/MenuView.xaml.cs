@@ -1,4 +1,5 @@
 ﻿using EasySave.NS_ViewModel;
+using EasySave.Observable;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace EasySave.NS_View
         public MainWindow mainWindow { get; set; }
 
 
-
         // ----- Constructor -----
         public MenuView(MenuViewModel _menuViewModel, MainWindow _mainWindow)
         {
@@ -25,7 +25,8 @@ namespace EasySave.NS_View
             this.menuViewModel = _menuViewModel;
             this.mainWindow = _mainWindow;
             DataContext = this.menuViewModel;
-            InitializeComponent();          
+            InitializeComponent();
+            InitialiseBackup();
         }
 
 
@@ -40,21 +41,20 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            foreach (int index in GetSelectedWorks())
+            foreach (int indexWork in GetSelectedWorks())
             {
-                switch (this.menuViewModel.model.works[index].workState)
-                {              
+                switch (this.menuViewModel.model.works[indexWork].workState)
+                {
                     case NS_Model.WorkState.RUN:
                         break;
 
                     case NS_Model.WorkState.PAUSE:
-                        this.menuViewModel.model.works[index].workState = NS_Model.WorkState.RUN;
+                        this.menuViewModel.model.works[indexWork].workState = NS_Model.WorkState.RUN;
                         break;
-                   
+
                     default:
                         this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
                         _listWorks.Items.Refresh();
-
                         break;
                 }
 
@@ -94,25 +94,35 @@ namespace EasySave.NS_View
         }
 
         private void StopBackup_Clicked(object sender, RoutedEventArgs e)
-        {           
-            foreach (int index in GetSelectedWorks())
+        {
+            foreach (int indexWork in GetSelectedWorks())
             {
-                this.menuViewModel.model.works[index].workState = NS_Model.WorkState.CANCEL;
+                this.menuViewModel.model.works[indexWork].workState = NS_Model.WorkState.CANCEL;
             }
+            _listWorks.Items.Refresh();
         }
 
         private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
         {
-            foreach (int index in GetSelectedWorks())
+            foreach (int indexWork in GetSelectedWorks())
             {
                 // Check if backup is running
-                if (this.menuViewModel.model.works[index].workState == NS_Model.WorkState.RUN)
+                if (this.menuViewModel.model.works[indexWork].workState == NS_Model.WorkState.RUN)
                 {
-                    this.menuViewModel.model.works[index].workState = NS_Model.WorkState.PAUSE;
-                    this.menuViewModel.model.works[index].state.colorProgressBar = "Orange";
-
+                    this.menuViewModel.model.works[indexWork].workState = NS_Model.WorkState.PAUSE;
+                    this.menuViewModel.model.works[indexWork].state.colorProgressBar = "Orange";
                 }
             }
+        }
+
+        private void InitialiseBackup()
+        {
+            // Set backup state to FINISH if EasySave has been force exited
+            for (int i = 0; i < _listWorks.Items.Count; i++)
+            {
+                this.menuViewModel.model.works[i].workState = NS_Model.WorkState.FINISH;
+            }
+            _listWorks.Items.Refresh();
         }
 
     }
