@@ -338,6 +338,8 @@ namespace EasySave.NS_ViewModel
             List<string> failedFiles = new List<string>();
             int totalFile = _work.state.totalFile;
 
+            _work.isCancel = false;
+
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
             {
@@ -372,6 +374,16 @@ namespace EasySave.NS_ViewModel
                     encryptionTime = EncryptFile(curFile, dstFile);
                 }
 
+                if (_work.isCancel)
+                {
+                    break;
+                }
+
+                // Test if paused
+                while (_work.isPaused)
+                {
+
+                }
                 // Add Current Backuped File Log
                 if (Monitor.TryEnter(_syncLogs, 100))
                 {
