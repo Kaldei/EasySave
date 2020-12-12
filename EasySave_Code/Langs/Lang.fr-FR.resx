@@ -255,4 +255,10 @@
   <data name="prioExtensionLabel" xml:space="preserve">
     <value>Extensions Prioritaires :</value>
   </data>
+  <data name="incorrectMaxSimultaneousFilesSize" xml:space="preserve">
+    <value>La taille donnée n'est pas correcte !</value>
+  </data>
+  <data name="maxSimultaneousFilesSize" xml:space="preserve">
+    <value>Taille Maximale de fichiers à copier en sumultané (en ko) :</value>
+  </data>
 </root>

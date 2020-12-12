@@ -259,6 +259,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Size Given is incorrect!.
+        /// </summary>
+        public static string incorrectMaxSimultaneousFilesSize {
+            get {
+                return ResourceManager.GetString("incorrectMaxSimultaneousFilesSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid name (1 to 20 characters)..
         /// </summary>
         public static string incorrectName {
@@ -327,6 +336,15 @@ namespace EasySave.Langs {
         public static string loadWorksError {
             get {
                 return ResourceManager.GetString("loadWorksError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum Files Size that can be save simultaneously:.
+        /// </summary>
+        public static string maxSimultaneousFilesSize {
+            get {
+                return ResourceManager.GetString("maxSimultaneousFilesSize", resourceCulture);
             }
         }
         

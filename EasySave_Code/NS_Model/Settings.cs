@@ -8,6 +8,7 @@ namespace EasySave.NS_Model
         // --- Attributes ---
         public static Settings instance { get; set; }
         public string cryptoSoftPath { get; set; }
+        public int maxSimultaneousFilesSize { get; set; }
         public string language { get; set; }
 
         private ObservableCollection<string> CryptoExtensions { get; set; }
@@ -73,6 +74,7 @@ namespace EasySave.NS_Model
             this.cryptoExtensions = _cryptoExtensions;
             this.prioExtensions = _prioExtensions;
             this.businessSoftwares = _businessSoftwares;
+            this.maxSimultaneousFilesSize = 1000;
             this.language = _language;
         }
 
