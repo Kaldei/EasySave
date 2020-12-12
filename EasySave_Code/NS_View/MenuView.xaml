@@ -98,7 +98,7 @@
                     <DataGridTextColumn Header="{x:Static language:Lang.destination}" Binding="{Binding dst}"  Width="250"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.backupType}" Binding="{Binding backupType}"  Width="100"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.encrypt}" Binding="{Binding isCrypted}"  Width="64"/>
-                    <DataGridTextColumn Header="{x:Static language:Lang.encrypt}" Binding="{Binding workState}"  Width="64"/>
+                    <DataGridTextColumn Header="Progress" Binding="{Binding state.progress}"  Width="64"/>
                     <DataGridTemplateColumn Header="Percentage Downloaded" Width="250" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
