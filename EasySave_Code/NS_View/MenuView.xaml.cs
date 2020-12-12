@@ -16,6 +16,7 @@ namespace EasySave.NS_View
         private MenuViewModel menuViewModel { get; set; }
         public MainWindow mainWindow { get; set; }
 
+       
 
         // ----- Constructor -----
         public MenuView(MenuViewModel _menuViewModel, MainWindow _mainWindow)
@@ -40,12 +41,10 @@ namespace EasySave.NS_View
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
        
-          
            this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
 
             _listWorks.Items.Refresh();
             
-
             //this.mainWindow.selectedWorksId = GetSelectedWorks();
             //this.mainWindow.ChangePage("backup");
         }
@@ -81,5 +80,42 @@ namespace EasySave.NS_View
             var button = sender as Button;
             this.mainWindow.ChangePage(button.Tag.ToString());
         }
+
+        private void StopBackup_Clicked(object sender, RoutedEventArgs e)
+        {
+            
+            foreach (int item in GetSelectedWorks())
+            {
+                this.menuViewModel.model.works[item].isPaused = false;
+                this.menuViewModel.model.works[item].isCancel = true;
+            }
+            
+        }
+
+        private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
+        {
+
+            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].isPaused == false)
+            {
+                foreach (int item in GetSelectedWorks())
+                {
+                    this.menuViewModel.model.works[item].isPaused = true;
+                }
+            }
+        }
+
+        private void ResumeBackup_Clicked(object sender, RoutedEventArgs e)
+        {
+
+            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].isPaused == true)
+            {
+                foreach (int item in GetSelectedWorks())
+                {
+                    this.menuViewModel.model.works[item].isPaused = false;
+                }
+            }
+        }
+
+
     }
 }
