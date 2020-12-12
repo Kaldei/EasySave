@@ -376,14 +376,20 @@ namespace EasySave.NS_ViewModel
 
                 if (_work.workState == WorkState.CANCEL)
                 {
+                    try
+                    {
+                        Directory.Delete(_dstFolder,true);                   
+                    }
+                    catch (Exception)
+                    {
+                        this.model.errorMsg?.Invoke("cannotDelDstFolder");
+                    }
                     break;
                 }
 
                 // Test if paused
-                while (_work.workState == WorkState.PAUSE)
-                {
+                while (_work.workState == WorkState.PAUSE) { }
 
-                }
                 // Add Current Backuped File Log
                 if (Monitor.TryEnter(_syncLogs, 100))
                 {
