@@ -77,6 +77,15 @@ namespace EasySave.NS_Model
                 {
                     // Read Works from JSON File (from ./BackupWorkSave.json) (use Work() constructor)
                     this.works = JsonSerializer.Deserialize<ObservableCollection<Work>>(File.ReadAllText(this.stateFilePath));
+
+                    // Reset Work States
+                    foreach(Work work in this.works)
+                    {
+                        if (work.state != null)
+                        {
+                            work.state = null;
+                        }
+                    }
                 }
                 catch
                 {
