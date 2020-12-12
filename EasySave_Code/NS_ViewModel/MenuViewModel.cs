@@ -86,13 +86,6 @@ namespace EasySave.NS_ViewModel
             {
                 List<Work> worksToSave = getWorksById(_worksId);
 
-                if (IsBusinessRunning())
-                {
-                    // Return Error Code
-                    model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
-                    return;
-                }
-
                 // Launch Backup
                 foreach (Work workToSave in worksToSave)
                 {
@@ -117,7 +110,7 @@ namespace EasySave.NS_ViewModel
                 string dstFolder = _workToSave.dst + _workToSave.name + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
 
                 // Check if there is files to copy, enough place in dst folder and we can create destination folder
-                if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, 0) && InitDstFolder(dstFolder))
+                if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, _workToSave.state.totalSize) && InitDstFolder(dstFolder))
                 {
                     // Save every file and get back the failed files
                     _workToSave.workState = WorkState.RUN;
@@ -194,7 +187,7 @@ namespace EasySave.NS_ViewModel
             {
                 if (Process.GetProcessesByName(businessSoftware).Length > 0)
                 {
-                    return true; ;
+                    return true;
                 }
             }
             return false;
@@ -348,24 +341,41 @@ namespace EasySave.NS_ViewModel
             // Create a name list of failed files
             List<string> failedFiles = new List<string>();
             int totalFile = _work.state.totalFile;
+            long leftSize = _work.state.totalSize;
 
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
             {
+                // Pause Backup if a Business Software is Running
+                if (IsBusinessRunning())
+                {
+                    // Set Progress Bar Color to Error Color
+                    _work.state.colorProgressBar = "Red";
+                    // Return Error Code
+                    model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
+                    while (IsBusinessRunning()) { }
+                }
+
+                // Reset Progress Bar Color
+                if (_work.state.colorProgressBar != "Green")
+                {
+                    _work.state.colorProgressBar = "Green";
+                }
+
                 // Get the current file to save
                 FileInfo curFile = _filesToSave[i];
 
                 DateTime startTimeSave = DateTime.Now;
                 int copyTime = 0;
                 int encryptionTime = 0;
-                int pourcent = (i * 100 / totalFile);
+                int pourcent = Convert.ToInt32((_work.state.totalSize - leftSize) * 100 / _work.state.totalSize);
                 int fileRemaining = totalFile - i;
                 string dstFile = GetDstFilePath(curFile, _dstFolder, _work.src);
 
 
                 // Update the current work status
                 autoResetEventWorks.WaitOne();
-                _work.state.UpdateState(pourcent, fileRemaining, _work.state.leftSize, curFile.FullName, dstFile);
+                _work.state.UpdateState(pourcent, fileRemaining, leftSize, curFile.FullName, dstFile);
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
 
@@ -380,6 +390,8 @@ namespace EasySave.NS_ViewModel
                     // Crypt File
                     encryptionTime = EncryptFile(curFile, dstFile);
                 }
+
+                leftSize -= curFile.Length;
 
                 autoResetEventLogs.WaitOne();
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
@@ -399,7 +411,7 @@ namespace EasySave.NS_ViewModel
                     break;
                 }
 
-                // Test if paused
+                // Check if paused
                 while (_work.workState == WorkState.PAUSE) { }
                 _work.state.colorProgressBar = "Green";
 
