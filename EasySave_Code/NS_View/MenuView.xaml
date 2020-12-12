@@ -76,19 +76,29 @@
             <TextBox Grid.Column="1" Width="80" Height="20"></TextBox>
         </Grid>
         -->
-
+  
         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
-            <ListView Name="_listWorks" ItemsSource="{Binding model.works}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding name}" Header="{x:Static language:Lang.name}" Width="90"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding src}" Header="{x:Static language:Lang.source}" Width="250"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding dst}" Header="{x:Static language:Lang.destination}" Width="250"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding backupType}" Header="{x:Static language:Lang.backupType}" Width="100"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding isCrypted}" Header="{x:Static language:Lang.encrypt}" Width="64"></GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid x:Name="_listWorks" ItemsSource="{Binding model.works}" AutoGenerateColumns="False" IsReadOnly="True">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static language:Lang.name}" Binding="{Binding name}" Width="90"/>
+                    <DataGridTextColumn Header="{x:Static language:Lang.source}" Binding="{Binding src}"  Width="250"/>
+                    <DataGridTextColumn Header="{x:Static language:Lang.destination}" Binding="{Binding dst}"  Width="250"/>
+                    <DataGridTextColumn Header="{x:Static language:Lang.backupType}" Binding="{Binding backupType}"  Width="100"/>
+                    <DataGridTextColumn Header="{x:Static language:Lang.encrypt}" Binding="{Binding isCrypted}"  Width="64"/>
+
+                    <DataGridTextColumn Header="Progress" Binding="{Binding state.progress}"  Width="64"/>
+
+                    <DataGridTemplateColumn Header="Percentage Downloaded" Width="250" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ProgressBar Value="{Binding state.progress }" Minimum="0" Maximum="100" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                   
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Page>
