@@ -95,6 +95,7 @@ namespace EasySave.NS_ViewModel
                     Task.Run(() =>
                     {
                         SaveWork(workToSave);
+                        workToSave.workState = WorkState.FINISH;
                     });
                 }
             }
@@ -116,6 +117,7 @@ namespace EasySave.NS_ViewModel
                 if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, 0) && InitDstFolder(dstFolder))
                 {
                     // Save every file and get back the failed files
+                    _workToSave.workState = WorkState.RUN;
                     List<string> failedFiles = SaveFiles(_workToSave, filesToSave, dstFolder);
 
                     // If there is any errors
@@ -338,8 +340,6 @@ namespace EasySave.NS_ViewModel
             List<string> failedFiles = new List<string>();
             int totalFile = _work.state.totalFile;
 
-            _work.isCancel = false;
-
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
             {
@@ -374,13 +374,13 @@ namespace EasySave.NS_ViewModel
                     encryptionTime = EncryptFile(curFile, dstFile);
                 }
 
-                if (_work.isCancel)
+                if (_work.workState == WorkState.CANCEL)
                 {
                     break;
                 }
 
                 // Test if paused
-                while (_work.isPaused)
+                while (_work.workState == WorkState.PAUSE)
                 {
 
                 }

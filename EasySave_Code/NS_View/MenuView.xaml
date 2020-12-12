@@ -31,8 +31,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -50,39 +49,37 @@
                     <Button Grid.Column="0" Background="Red" Foreground="White" FontSize="26" Padding="2, -14, 2, -7" BorderBrush="Red" Click="Remove_Clicked">-</Button>
                 </Border>
             </StackPanel>
-
+            
             <StackPanel Grid.Column="2" Background="White" Margin="0, 0, 10, 0" >
-                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="Save_Clicked">></Button>
-                </Border>
-            </StackPanel>
-
-            <StackPanel Grid.Column="3" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
                     <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="SelectAll_Clicked" Content="{x:Static language:Lang.selectAll}"></Button>
                 </Border>
             </StackPanel>
 
-            <StackPanel Grid.Column="4" Background="White" Margin="0, 0, 10, 0" >
+            <StackPanel Grid.Column="3" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
                     <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="ChangePage" Tag="settings" Content="{x:Static language:Lang.settings}"></Button>
                 </Border>
             </StackPanel>
+            
+            <StackPanel Grid.Column="5" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="Save_Clicked">></Button>
+                </Border>
+            </StackPanel>
+
             <StackPanel Grid.Column="6" Background="White" Margin="0, 0, 10, 0" >
-                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Name ="pauseBtn" Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="PauseBackup_Clicked" Tag="settings" Content="Pause"></Button>
+                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="PauseBackup_Clicked">ll</Button>
                 </Border>
             </StackPanel>
+
             <StackPanel Grid.Column="7" Background="White" Margin="0, 0, 10, 0" >
-                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Name ="resumeBtn" Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="ResumeBackup_Clicked" Tag="settings" Content="Resume"></Button>
+                <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-2, -14, -4, -7" BorderBrush="#4FD31D" Click="StopBackup_Clicked">X</Button>
                 </Border>
             </StackPanel>
-            <StackPanel Grid.Column="8" Background="White" Margin="0, 0, 10, 0" >
-                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Name ="stopBtn" Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="StopBackup_Clicked" Tag="settings" Content="Stop"></Button>
-                </Border>
-            </StackPanel>
+            
         </Grid>
 
         <!--
@@ -106,6 +103,7 @@
                     <DataGridTextColumn Header="{x:Static language:Lang.destination}" Binding="{Binding dst}"  Width="250"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.backupType}" Binding="{Binding backupType}"  Width="100"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.encrypt}" Binding="{Binding isCrypted}"  Width="64"/>
+                    <DataGridTextColumn Header="{x:Static language:Lang.encrypt}" Binding="{Binding workState}"  Width="64"/>
 
                     <DataGridTextColumn Header="Progress" Binding="{Binding state.progress}"  Width="64"/>
 

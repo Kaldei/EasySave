@@ -16,7 +16,7 @@ namespace EasySave.NS_View
         private MenuViewModel menuViewModel { get; set; }
         public MainWindow mainWindow { get; set; }
 
-       
+
 
         // ----- Constructor -----
         public MenuView(MenuViewModel _menuViewModel, MainWindow _mainWindow)
@@ -25,7 +25,7 @@ namespace EasySave.NS_View
             this.menuViewModel = _menuViewModel;
             this.mainWindow = _mainWindow;
             DataContext = this.menuViewModel;
-            InitializeComponent();
+            InitializeComponent();          
         }
 
 
@@ -40,10 +40,24 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-       
-           this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
+            foreach (int item in GetSelectedWorks())
+            {
+                switch (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState)
+                {              
+                    case NS_Model.WorkState.RUN:
+                        break;
 
-            _listWorks.Items.Refresh();
+                    case NS_Model.WorkState.PAUSE:
+                        this.menuViewModel.model.works[item].workState = NS_Model.WorkState.RUN;
+                        break;
+                   
+                    default:
+                        this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
+                        _listWorks.Items.Refresh();
+                        break;
+                }                
+             
+            }
             
             //this.mainWindow.selectedWorksId = GetSelectedWorks();
             //this.mainWindow.ChangePage("backup");
@@ -82,40 +96,34 @@ namespace EasySave.NS_View
         }
 
         private void StopBackup_Clicked(object sender, RoutedEventArgs e)
-        {
-            
+        {           
             foreach (int item in GetSelectedWorks())
             {
-                this.menuViewModel.model.works[item].isPaused = false;
-                this.menuViewModel.model.works[item].isCancel = true;
+                this.menuViewModel.model.works[item].workState = NS_Model.WorkState.CANCEL;
             }
-            
         }
 
         private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
         {
-
-            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].isPaused == false)
+            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState == NS_Model.WorkState.RUN)
             {
                 foreach (int item in GetSelectedWorks())
                 {
-                    this.menuViewModel.model.works[item].isPaused = true;
+                    this.menuViewModel.model.works[item].workState = NS_Model.WorkState.PAUSE;
                 }
             }
         }
 
         private void ResumeBackup_Clicked(object sender, RoutedEventArgs e)
         {
-
-            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].isPaused == true)
+            if (this.menuViewModel.model.works[_listWorks.SelectedIndex].workState == NS_Model.WorkState.PAUSE)
             {
                 foreach (int item in GetSelectedWorks())
                 {
-                    this.menuViewModel.model.works[item].isPaused = false;
+                    this.menuViewModel.model.works[item].workState = NS_Model.WorkState.RUN;
                 }
             }
         }
-
 
     }
 }
