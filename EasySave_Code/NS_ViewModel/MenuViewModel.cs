@@ -98,8 +98,7 @@ namespace EasySave.NS_ViewModel
                 {
                     Task.Run(() =>
                     {
-                        SaveWork(workToSave);
-                        workToSave.workState = WorkState.FINISH;
+                        SaveWork(workToSave);                      
                     });
                 }
             }
@@ -134,6 +133,7 @@ namespace EasySave.NS_ViewModel
 
                 // Reset the work object
                 autoResetEventWorks.WaitOne();
+                _workToSave.workState = WorkState.FINISH;
                 _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
@@ -266,7 +266,9 @@ namespace EasySave.NS_ViewModel
                     }
 
                     // Init the state of the current work to save
+                    autoResetEventWorks.WaitOne();
                     _work.state = new State(srcFiles.Length, totalSize, "", "");
+                    autoResetEventWorks.Set();
                     return srcFiles;
 
                 case BackupType.DIFFRENTIAL:
@@ -296,7 +298,10 @@ namespace EasySave.NS_ViewModel
                     }
 
                     // Init the state of the current work to save
+                    autoResetEventWorks.WaitOne();
                     _work.state = new State(filesToSave.Count, totalSize, "", "");
+                    autoResetEventWorks.Set();
+
                     return filesToSave.ToArray();
 
                 default:
@@ -401,8 +406,6 @@ namespace EasySave.NS_ViewModel
                 Thread.Sleep(1000);
             }
 
-            // End of the current work
-            _work.state.UpdateState(100, 0, 0, "", "");
             return failedFiles;
         }
 
