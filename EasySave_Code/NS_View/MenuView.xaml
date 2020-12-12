@@ -32,6 +32,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+
             </Grid.ColumnDefinitions>
 
             <StackPanel Background="White" >
@@ -61,6 +66,21 @@
             <StackPanel Grid.Column="4" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
                     <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="ChangePage" Tag="settings" Content="{x:Static language:Lang.settings}"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Grid.Column="6" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Name ="pauseBtn" Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="PauseBackup_Clicked" Tag="settings" Content="Pause"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Grid.Column="7" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Name ="resumeBtn" Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="ResumeBackup_Clicked" Tag="settings" Content="Resume"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Grid.Column="8" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Name ="stopBtn" Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="StopBackup_Clicked" Tag="settings" Content="Stop"></Button>
                 </Border>
             </StackPanel>
         </Grid>
