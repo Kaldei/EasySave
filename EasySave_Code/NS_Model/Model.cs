@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
@@ -24,7 +25,7 @@ namespace EasySave.NS_Model
         public string stateFilePath { get; set; }
         public string settingsFilePath { get; set; }
 
-        private List<Log> logs { get; set; }
+        public List<Log> logs { get; set; }
 
         private ObservableCollection<Work> Works { get; set;}
         public ObservableCollection<Work> works {
@@ -158,7 +159,7 @@ namespace EasySave.NS_Model
         }
 
         // Save Log 
-        public void SaveLog(Log _newLog)
+        public void SaveLog()
         {
             // Prepare times log
             string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -168,9 +169,6 @@ namespace EasySave.NS_Model
             {
                 LoadLogs(today);
             }
-
-            // Add Current Backuped File Log
-            logs.Add(_newLog);
 
             // Write Logs File
             File.WriteAllText($"./Logs/{today}.json", JsonSerializer.Serialize(logs, this.jsonOptions));
