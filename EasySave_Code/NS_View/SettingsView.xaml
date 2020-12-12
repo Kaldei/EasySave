@@ -11,13 +11,14 @@
 
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="55"/>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -40,9 +41,9 @@
             </StackPanel>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.settings}"></TextBlock>
         </Grid>
-        
+
         <TextBlock Grid.Column="1" Grid.Row="1" Background="Gray"/>
-        
+
         <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
             <Label x:Name="cryptoSoftPathLabel" Content="{x:Static language:Lang.cryptosoftPath}"></Label>
             <Grid>
@@ -60,37 +61,6 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
-            <Label x:Name="addPrioExtensionLabel" Content="{x:Static language:Lang.prioExtensionLabel}"></Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="20"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBox x:Name="_addPrioExtension"/>
-                    <Button x:Name="addPrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="addPrioExtensionButton_Click">+</Button>
-                </Grid>
-
-                <Grid Grid.Column="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="20"/>
-                    </Grid.ColumnDefinitions>
-
-                    <ComboBox x:Name="_removePrioExtension" SelectedIndex="0" ItemsSource="{Binding model.settings.prioExtensions}"/>
-                    <Button x:Name="removePrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removePrioExtensionButton_Click">X</Button>
-                </Grid>
-            </Grid>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
             <Label x:Name="addExtensionLabel" Content="{x:Static language:Lang.extensionFile}"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -117,6 +87,37 @@
 
                     <ComboBox x:Name="_removeExtension" SelectedIndex="0" ItemsSource="{Binding model.settings.cryptoExtensions}"/>
                     <Button x:Name="removeExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeExtensionButton_Click">X</Button>
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center">
+            <Label x:Name="addPrioExtensionLabel" Content="{x:Static language:Lang.prioExtensionLabel}"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="_addPrioExtension"/>
+                    <Button x:Name="addPrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="addPrioExtensionButton_Click">+</Button>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox x:Name="_removePrioExtension" SelectedIndex="0" ItemsSource="{Binding model.settings.prioExtensions}"/>
+                    <Button x:Name="removePrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removePrioExtensionButton_Click">X</Button>
                 </Grid>
             </Grid>
         </StackPanel>
@@ -153,7 +154,21 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center">
+        <StackPanel Grid.Column="1" Grid.Row="6" VerticalAlignment="Center">
+            <Label x:Name="maxSimultaneousFilesSizeLabel" Content="{x:Static language:Lang.maxSimultaneousFilesSize}"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="29*"/>
+                    <ColumnDefinition Width="291*"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="_maxSimultaneousFilesSize" Grid.ColumnSpan="2"/>
+                <Button x:Name="maxSimultaneousFilesSizeButton" Grid.Column="2" Width="70" HorizontalAlignment="Left" Click="maxSimultaneousFilesSizeButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}" Height="20" VerticalAlignment="Bottom"></Button>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Center">
             <Label Content="{x:Static language:Lang.language}"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>

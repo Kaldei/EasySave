@@ -255,4 +255,10 @@
   <data name="prioExtensionLabel" xml:space="preserve">
     <value>Priority Exentions:</value>
   </data>
+  <data name="incorrectMaxSimultaneousFilesSize" xml:space="preserve">
+    <value>Size Given is incorrect!</value>
+  </data>
+  <data name="maxSimultaneousFilesSize" xml:space="preserve">
+    <value>Maximum Files Size that can be save simultaneously:</value>
+  </data>
 </root>
