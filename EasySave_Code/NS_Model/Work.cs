@@ -21,8 +21,8 @@ namespace EasySave.NS_Model
         public bool isCrypted { get; set; }
         public State state { get; set; }
         public string lastBackupDate { get; set; }
-        public bool isPaused { get; set; }
-        public bool isCancel { get; set; }
+        public WorkState workState { get; set; }
+
 
         // --- Constructors ---
         // Constructor used by LoadWorks()
