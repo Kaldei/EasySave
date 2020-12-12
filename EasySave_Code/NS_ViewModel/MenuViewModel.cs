@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EasySave.NS_ViewModel
@@ -108,12 +109,13 @@ namespace EasySave.NS_ViewModel
             {
                 // Get every files info to copy
                 FileInfo[] filesToSave = GetFilesToSave(_workToSave);
+                string dstFolder = _workToSave.dst + _workToSave.name + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
 
                 // Check if there is files to copy, enough place in dst folder and we can create destination folder
-                if(IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, 0) && CreateDstFolder(_workToSave.dst, _workToSave.name))
+                if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, 0) && InitDstFolder(dstFolder))
                 {
                     // Save every file and get back the failed files
-                    List<string> failedFiles = SaveFiles(_workToSave, filesToSave);
+                    List<string> failedFiles = SaveFiles(_workToSave, filesToSave, dstFolder);
 
                     // If there is any errors
                     if (failedFiles.Count != 0)
@@ -126,6 +128,8 @@ namespace EasySave.NS_ViewModel
                 _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
+
+                Trace.WriteLine(_workToSave.name + " finished " + DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss"));
             }
         }
 
@@ -157,16 +161,12 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-        private bool CreateDstFolder(string _dst, string _name)
+        private bool InitDstFolder(string _dstFolder)
         {
-            // Create the state file
-            DateTime startTime = DateTime.Now;
-            string dst = _dst + _name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
-
             // Create the dst folder
             try
             {
-                Directory.CreateDirectory(dst);
+                Directory.CreateDirectory(_dstFolder);
                 return true;
             }
             catch
@@ -253,6 +253,9 @@ namespace EasySave.NS_ViewModel
                     {
                         totalSize += file.Length;
                     }
+
+                    // Init the state of the current work to save
+                    _work.state = new State(srcFiles.Length, totalSize, "", "");
                     return srcFiles;
 
                 case BackupType.DIFFRENTIAL:
@@ -260,10 +263,11 @@ namespace EasySave.NS_ViewModel
                     DirectoryInfo[] dirs = new DirectoryInfo(_work.dst).GetDirectories();
                     string lastFullDirName = GetFullBackupDir(dirs, _work.name);
 
+                    // If there is no full backup as a ref, we create the first one as full backup
                     if (lastFullDirName.Length == 0) goto case BackupType.FULL;
 
                     // Get evvery files of the source directory
-                    List<FileInfo> filesToCopy = new List<FileInfo>();
+                    List<FileInfo> filesToSave = new List<FileInfo>();
 
                     // Check if there is a modification between the current file and the last full backup
                     foreach (FileInfo file in srcFiles)
@@ -276,10 +280,13 @@ namespace EasySave.NS_ViewModel
                             totalSize += file.Length;
 
                             // Add the file to the list
-                            filesToCopy.Add(file);
+                            filesToSave.Add(file);
                         }
                     }
-                    return filesToCopy.ToArray();
+
+                    // Init the state of the current work to save
+                    _work.state = new State(filesToSave.Count, totalSize, "", "");
+                    return filesToSave.ToArray();
 
                 default:
                     model.errorMsg?.Invoke("unavailableBackupType");
@@ -320,7 +327,7 @@ namespace EasySave.NS_ViewModel
             return false;
         }
 
-        private List<string> SaveFiles(Work _work, FileInfo[] _filesToSave)
+        private List<string> SaveFiles(Work _work, FileInfo[] _filesToSave, string _dstFolder)
         {
             // Create a name list of failed files
             List<string> failedFiles = new List<string>();
@@ -335,9 +342,9 @@ namespace EasySave.NS_ViewModel
                 DateTime startTimeSave = DateTime.Now;
                 int copyTime = 0;
                 int encryptionTime = 0;
-                int pourcent = ((i + 1) * 100 / totalFile);
+                int pourcent = (i * 100 / totalFile);
                 int fileRemaining = totalFile - i;
-                string dstFile = GetDstFilePath(curFile, _work.dst, _work.src);
+                string dstFile = GetDstFilePath(curFile, _dstFolder, _work.src);
 
 
                 // Update the current work status
@@ -358,7 +365,13 @@ namespace EasySave.NS_ViewModel
 
                 // Log
                 model.SaveLog(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
+
+                Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
+                Thread.Sleep(5000);
             }
+
+            // End of the current work
+            _work.state.UpdateState(100, 0, 0, "", "");
             return failedFiles;
         }
 
