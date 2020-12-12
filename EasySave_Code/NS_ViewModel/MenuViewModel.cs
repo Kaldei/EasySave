@@ -99,6 +99,7 @@ namespace EasySave.NS_ViewModel
                     Task.Run(() =>
                     {
                         SaveWork(workToSave);
+                        workToSave.workState = WorkState.FINISH;
                     });
                 }
             }
@@ -120,6 +121,7 @@ namespace EasySave.NS_ViewModel
                 if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, 0) && InitDstFolder(dstFolder))
                 {
                     // Save every file and get back the failed files
+                    _workToSave.workState = WorkState.RUN;
                     List<string> failedFiles = SaveFiles(_workToSave, filesToSave, dstFolder);
 
                     // If there is any errors
@@ -378,9 +380,25 @@ namespace EasySave.NS_ViewModel
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                 this.model.SaveLog();
                 autoResetEventLogs.Set();
+                if (_work.workState == WorkState.CANCEL)
+                {
+                    try
+                    {
+                        Directory.Delete(_dstFolder,true);                   
+                    }
+                    catch (Exception)
+                    {
+                        this.model.errorMsg?.Invoke("cannotDelDstFolder");
+                    }
+                    break;
+                }
+
+                // Test if paused
+                while (_work.workState == WorkState.PAUSE) { }
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
-                //Thread.Sleep(5000);
+                // TODO : delete thread.sleep
+                Thread.Sleep(1000);
             }
 
             // End of the current work
