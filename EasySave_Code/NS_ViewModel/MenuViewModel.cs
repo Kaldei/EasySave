@@ -12,7 +12,8 @@ namespace EasySave.NS_ViewModel
     {
         // ----- Attributes -----
         public Model model { get; set; }
-        private object _sync = new object();
+        private object _syncWorks = new object();
+        private object _syncLogs = new object();
 
         // ----- Constructor -----
         public MenuViewModel(Model _model)
@@ -127,7 +128,11 @@ namespace EasySave.NS_ViewModel
                 // Reset the work object
                 _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
-                this.model.SaveWorks();
+                if (Monitor.TryEnter(_syncWorks, 3000))
+                {
+                    this.model.SaveWorks();
+                    Monitor.Exit(_syncWorks);
+                }
 
                 Trace.WriteLine(_workToSave.name + " finished " + DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss"));
             }
@@ -348,11 +353,11 @@ namespace EasySave.NS_ViewModel
 
 
                 // Update the current work status
-                _work.state.UpdateState(pourcent, fileRemaining, _work.state.leftSize, curFile.FullName, dstFile);
-                if (Monitor.TryEnter(_sync, 100))
+                if (Monitor.TryEnter(_syncWorks, 100))
                 {
+                    _work.state.UpdateState(pourcent, fileRemaining, _work.state.leftSize, curFile.FullName, dstFile);
                     this.model.SaveWorks();
-                    Monitor.Exit(_sync);
+                    Monitor.Exit(_syncWorks);
                 }
 
                 // Check if the file is crypted or not
@@ -368,11 +373,11 @@ namespace EasySave.NS_ViewModel
                 }
 
                 // Add Current Backuped File Log
-                this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
-                if (Monitor.TryEnter(_sync, 100))
+                if (Monitor.TryEnter(_syncLogs, 100))
                 {
+                    this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                     this.model.SaveLog();
-                    Monitor.Exit(_sync);
+                    Monitor.Exit(_syncLogs);
                 }
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
