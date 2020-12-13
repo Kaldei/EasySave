@@ -278,6 +278,11 @@ namespace EasySave.NS_ViewModel
                     autoResetEventWorks.WaitOne();
                     _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
+
+                    autoResetEventLogs.WaitOne();
+                    currentNbPrioFile += totalPrioFile;
+                    autoResetEventLogs.Set();
+
                     return filesToSave.ToArray();
 
                 case BackupType.DIFFRENTIAL:
@@ -371,7 +376,7 @@ namespace EasySave.NS_ViewModel
             long leftSize = _work.state.totalSize;
 
             // Save file one by one
-            foreach (FileInfo curFile in _filesToSave)
+            for (int i = 0; i < totalFile; i++)
             {
                 // Pause Backup if a Business Software is Running
                 if (IsBusinessRunning())
@@ -387,7 +392,7 @@ namespace EasySave.NS_ViewModel
                     _work.state.colorProgressBar = "Green";
                 }
 
-                while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { }
+                FileInfo curFile = _filesToSave[i];
 
                 DateTime startTimeSave = DateTime.Now;
                 int copyTime = 0;
@@ -398,9 +403,14 @@ namespace EasySave.NS_ViewModel
 
                 // Update the current work status
                 autoResetEventWorks.WaitOne();
-                _work.state.UpdateState(pourcent, leftSize, curFile.FullName, dstFile);
+                _work.state.UpdateState(pourcent, ((_work.state.leftPrioFile - 1 > 0) ? _work.state.leftPrioFile - 1 : 0), totalFile - i, leftSize, curFile.FullName, dstFile);
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
+
+                Trace.WriteLine(_work.state.leftPrioFile);
+                Trace.WriteLine(currentNbPrioFile);
+
+                while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { _work.state.colorProgressBar = "Purple"; }
 
                 // Check if the file is crypted or not
                 if (!(_work.isCrypted && curFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(curFile.Name.Substring(curFile.Name.LastIndexOf(".")))))
@@ -417,9 +427,9 @@ namespace EasySave.NS_ViewModel
                 leftSize -= curFile.Length;
 
                 autoResetEventLogs.WaitOne();
-                if (_work.state.leftPrioFile != 0)
+                if (_work.state.leftPrioFile > 0)
                 {
-                    currentNbPrioFile -= 1;
+                    currentNbPrioFile = currentNbPrioFile - 1;
                 }
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                 this.model.SaveLog();
@@ -441,6 +451,8 @@ namespace EasySave.NS_ViewModel
                 // Check if paused
                 while (_work.workState == WorkState.PAUSE) { }
                 _work.state.colorProgressBar = "Green";
+                Thread.Sleep(1000);
+
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
             }

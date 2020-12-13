@@ -57,24 +57,25 @@ namespace EasySave.NS_Model
         public State(int _totalFile, int _totalPrioFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
         {
             this.progress = 0;
-            this.totalFile = _totalFile;
-            this.nbFileLeft = _totalFile;
-            this.totalPrioFile = _totalPrioFile;
-            this.leftPrioFile = _totalPrioFile;
+            this.totalFile = _totalFile + 1;
+            this.nbFileLeft = _totalFile + 1;
+            this.totalPrioFile = _totalPrioFile > 0 ? _totalPrioFile + 1 : 0;
+            this.leftPrioFile = _totalPrioFile > 0 ? _totalPrioFile + 1 : 0;
             this.totalSize = _totalSize;
             this.leftSize = _totalSize;
             this.currentPathSrc = _currentPathSrc;
             this.currentPathDest = _currentPathDest;
+            this.colorProgressBar = "Green";
         }
 
 
         // --- Methods ---
         // Update State during DoBacup()
-        public void UpdateState(int _progress, long _leftSize, string _currSrcPath, string _currDestPath)
+        public void UpdateState(int _progress, int _leftPrioFile, int _nbFileLeft, long _leftSize, string _currSrcPath, string _currDestPath)
         {
             this.progress = _progress;
-            this.leftPrioFile = this.leftPrioFile != 0 ? this.leftPrioFile - 1 : 0;
-            this.nbFileLeft = this.nbFileLeft != 0 ? this.nbFileLeft - 1 : 0; ;
+            this.leftPrioFile = _leftPrioFile;
+            this.nbFileLeft = _nbFileLeft;
             this.leftSize = _leftSize;
             this.currentPathSrc = _currSrcPath;
             this.currentPathDest = _currDestPath;
