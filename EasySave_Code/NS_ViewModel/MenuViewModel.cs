@@ -30,10 +30,10 @@ namespace EasySave.NS_ViewModel
 
         // ----- Methods -----
         // Update Work State
-        public void UpdateWorkColor(int _index, string _color)
+        public void UpdateWorkColor(Work _work, string _color)
         {
             autoResetEventWorks.WaitOne();
-            this.model.works[_index].colorProgressBar = _color;
+            _work.colorProgressBar = _color;
             autoResetEventWorks.Set(); 
         }
 
@@ -42,6 +42,8 @@ namespace EasySave.NS_ViewModel
         {
             autoResetEventWorks.WaitOne();
             _work.state = null;
+            _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
+            this.model.SaveWorks();
             autoResetEventWorks.Set();
         }
 
@@ -137,13 +139,9 @@ namespace EasySave.NS_ViewModel
                 }
 
                 // Reset the work object
-                autoResetEventWorks.WaitOne();
-                _workToSave.colorProgressBar = "White";
-                _workToSave.state = null;
-                _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
-                this.model.SaveWorks();
-                autoResetEventWorks.Set();
-                
+                UpdateWorkColor(_workToSave, "White");
+                ResetWorkState(_workToSave);
+
                 Trace.WriteLine(_workToSave.name + " finished " + DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss"));
             }
         }
@@ -409,9 +407,7 @@ namespace EasySave.NS_ViewModel
                 if (IsBusinessRunning())
                 {
                     // Set Progress Bar Color to Error Color
-                    autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "Red";
-                    autoResetEventWorks.Set();
+                    UpdateWorkColor(_work, "Red");
 
                     // Return Error Code
                     model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
@@ -420,9 +416,7 @@ namespace EasySave.NS_ViewModel
                     while (IsBusinessRunning()) { }
 
                     // Reset Progress Bar Color
-                    autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "Green";
-                    autoResetEventWorks.Set();
+                    UpdateWorkColor(_work, "Green");
                 }
 
                 FileInfo curFile = _filesToSave[i];
@@ -447,9 +441,7 @@ namespace EasySave.NS_ViewModel
                 if (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
                 {
                     // Set Progress Bar Color to Error Color
-                    autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "Purple";
-                    autoResetEventWorks.Set();
+                    UpdateWorkColor(_work, "Purple");
 
                     // Pause Program
                     while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) 
@@ -459,13 +451,12 @@ namespace EasySave.NS_ViewModel
                             break;
                         }
                     }
+
                     // Reset Progress Bar Color
-                    autoResetEventWorks.WaitOne();
                     if (_work.colorProgressBar != "Orange")
                     {
-                        _work.colorProgressBar = "Green";
+                        UpdateWorkColor(_work, "Green");
                     }
-                    autoResetEventWorks.Set();
                 }
 
                 // Check User ask to pause
@@ -478,21 +469,17 @@ namespace EasySave.NS_ViewModel
                 // Lock if there are more than one oversized File
                 if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
                 {
-                    autoResetEventWorks.WaitOne();
-                    if (_work.colorProgressBar != "Orange")
+                    if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
                     {
-                        _work.colorProgressBar = "DodgerBlue";
+                        UpdateWorkColor(_work, "DodgerBlue");
                     }
-                    autoResetEventWorks.Set();
 
                     autoResetEventOverSized.WaitOne();
 
-                    autoResetEventWorks.WaitOne();
-                    if (_work.colorProgressBar != "Orange")
+                    if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
                     {
-                        _work.colorProgressBar = "Green";
+                        UpdateWorkColor(_work, "Green");
                     }
-                    autoResetEventWorks.Set();
                 }
 
                 // Check if the file is crypted or not

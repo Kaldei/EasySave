@@ -49,13 +49,13 @@ namespace EasySave.NS_View
                     switch (this.menuViewModel.model.works[indexWork].colorProgressBar)
                     {
                         case "White":
-                            this.menuViewModel.UpdateWorkColor(indexWork, "Green");
+                            this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "Green");
                             this.menuViewModel.LaunchBackupWork(indexWork);
                             _listWorks.Items.Refresh();
                             break;
 
                         case "Orange":
-                            this.menuViewModel.UpdateWorkColor(indexWork, "Green");
+                            this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "Green");
                             break;
 
                         default:
@@ -107,7 +107,7 @@ namespace EasySave.NS_View
             foreach (int indexWork in GetSelectedWorks())
             {
                 // Change Work State to Cancel
-                this.menuViewModel.UpdateWorkColor(indexWork, "White");
+                this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "White");
                 // Wait the reset of the work's state
                 Mouse.OverrideCursor = Cursors.Wait;
                 while (this.menuViewModel.model.works[indexWork].state != null) { }
@@ -125,7 +125,7 @@ namespace EasySave.NS_View
                 // Check if backup is running
                 if (this.menuViewModel.model.works[indexWork].colorProgressBar != "Red" && this.menuViewModel.model.works[indexWork].colorProgressBar != "Orange" && this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
                 {
-                    this.menuViewModel.UpdateWorkColor(indexWork, "Orange");
+                    this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "Orange");
                 }
             }
         }
