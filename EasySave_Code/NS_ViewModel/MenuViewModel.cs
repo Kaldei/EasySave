@@ -13,11 +13,10 @@ namespace EasySave.NS_ViewModel
         // ----- Attributes -----
         public Model model { get; set; }
         private int currentNbPrioFile { get; set; }
-        private object _syncWorks = new object();
-        private object _syncLogs = new object();
 
         private static AutoResetEvent autoResetEventWorks = new AutoResetEvent(true);
         private static AutoResetEvent autoResetEventLogs = new AutoResetEvent(true);
+
 
 
         // ----- Constructor -----
@@ -29,6 +28,23 @@ namespace EasySave.NS_ViewModel
 
 
         // ----- Methods -----
+        // Update Work State
+        public void UpdateWorkColor(int _index, string _color)
+        {
+            autoResetEventWorks.WaitOne();
+            this.model.works[_index].colorProgressBar = _color;
+            autoResetEventWorks.Set();
+
+            if (_color == "White")
+            {
+                autoResetEventWorks.WaitOne();
+                this.model.works[_index].state = null;
+                autoResetEventWorks.Set();
+            }
+            
+        }
+
+
         private List<Work> getWorksById(int[] _worksId)
         {
             List<Work> works = new List<Work>();
@@ -82,22 +98,16 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-        public void LaunchBackupWork(int[] _worksId)
+        // Launch Backup Work with a New Thread
+        public void LaunchBackupWork(int _worksId)
         {
-            if (IsWorkSelected(_worksId))
+            Task.Run(() =>
             {
-                List<Work> worksToSave = getWorksById(_worksId);
+                SaveWork(this.model.works[_worksId]);
+            });
 
-                // Launch Backup
-                foreach (Work workToSave in worksToSave)
-                {
-                    Task.Run(() =>
-                    {
-                        SaveWork(workToSave);                      
-                    });
-                }
-            }
         }
+
 
         private void SaveWork(Work _workToSave)
         {
@@ -115,7 +125,9 @@ namespace EasySave.NS_ViewModel
                 if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, _workToSave.state.totalSize) && InitDstFolder(dstFolder))
                 {
                     // Save every file and get back the failed files
-                    _workToSave.workState = WorkState.RUN;
+                    autoResetEventWorks.WaitOne();
+                    _workToSave.colorProgressBar = "Green";
+                    autoResetEventWorks.Set();
                     List<string> failedFiles = SaveFiles(_workToSave, filesToSave, dstFolder);
 
                     // If there is any errors
@@ -128,13 +140,12 @@ namespace EasySave.NS_ViewModel
 
                 // Reset the work object
                 autoResetEventWorks.WaitOne();
-                _workToSave.workState = WorkState.FINISH;
+                _workToSave.colorProgressBar = "White";
                 _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
                 
-
                 Trace.WriteLine(_workToSave.name + " finished " + DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss"));
             }
         }
@@ -281,9 +292,9 @@ namespace EasySave.NS_ViewModel
                     _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
 
-                    autoResetEventLogs.WaitOne();
+                    autoResetEventWorks.WaitOne();
                     currentNbPrioFile += totalPrioFile;
-                    autoResetEventLogs.Set();
+                    autoResetEventWorks.Set();
 
                     return filesToSave.ToArray();
 
@@ -325,9 +336,9 @@ namespace EasySave.NS_ViewModel
                     _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
 
-                    autoResetEventLogs.WaitOne();
+                    autoResetEventWorks.WaitOne();
                     currentNbPrioFile += totalPrioFile;
-                    autoResetEventLogs.Set();
+                    autoResetEventWorks.Set();
 
                     return filesToSave.ToArray();
 
@@ -385,14 +396,20 @@ namespace EasySave.NS_ViewModel
                 if (IsBusinessRunning())
                 {
                     // Set Progress Bar Color to Error Color
-                    _work.state.colorProgressBar = "Red";
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "Red";
+                    autoResetEventWorks.Set();
 
                     // Return Error Code
                     model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
+
+                    // Pause Program
                     while (IsBusinessRunning()) { }
 
                     // Reset Progress Bar Color
-                    _work.state.colorProgressBar = "Green";
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "Green";
+                    autoResetEventWorks.Set();
                 }
 
                 FileInfo curFile = _filesToSave[i];
@@ -400,7 +417,11 @@ namespace EasySave.NS_ViewModel
                 DateTime startTimeSave = DateTime.Now;
                 int copyTime = 0;
                 int encryptionTime = 0;
+
+                autoResetEventWorks.WaitOne();
                 int pourcent = Convert.ToInt32((_work.state.totalSize - leftSize) * 100 / _work.state.totalSize);
+                autoResetEventWorks.Set();
+
                 string dstFile = GetDstFilePath(curFile, _dstFolder, _work.src);
 
 
@@ -410,7 +431,22 @@ namespace EasySave.NS_ViewModel
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
 
-                while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { _work.state.colorProgressBar = "Purple"; }
+                // Lock if there are priority Files
+                if (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
+                {
+                    // Set Progress Bar Color to Error Color
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "Purple";
+                    autoResetEventWorks.Set();
+
+                    // Pause Program
+                    while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { }
+
+                    // Reset Progress Bar Color
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "Green";
+                    autoResetEventWorks.Set();
+                }
 
                 // Check if the file is crypted or not
                 if (!(_work.isCrypted && curFile.Name.Contains(".") && this.model.settings.cryptoExtensions.Contains(curFile.Name.Substring(curFile.Name.LastIndexOf(".")))))
@@ -426,16 +462,22 @@ namespace EasySave.NS_ViewModel
 
                 leftSize -= curFile.Length;
 
-                autoResetEventLogs.WaitOne();
+                // Decrase Priority file if it was one
+                autoResetEventWorks.WaitOne();
                 if (_work.state.leftPrioFile > 0)
                 {
                     currentNbPrioFile = currentNbPrioFile - 1;
                 }
+                autoResetEventWorks.Set();
+
+                // Save Logs
+                autoResetEventLogs.WaitOne();
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                 this.model.SaveLog();
                 autoResetEventLogs.Set();
 
-                if (_work.workState == WorkState.CANCEL)
+                // If User Ask to Cancel a Backup
+                if (_work.colorProgressBar == "White")
                 {
                     try
                     {
@@ -445,18 +487,23 @@ namespace EasySave.NS_ViewModel
                     {
                         this.model.errorMsg?.Invoke("cannotDelDstFolder");
                     }
-                    break;
+                    return failedFiles;
                 }
 
-                // Check if paused
-                while (_work.workState == WorkState.PAUSE) { }
-                _work.state.colorProgressBar = "Green";
-                Thread.Sleep(1000);
+                // Check User ask to pause
+                if (_work.colorProgressBar == "Orange")
+                {
+                    // Pause Program
+                    while (_work.colorProgressBar == "Orange") { }
 
+                    // Reset Progress Bar Color
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "Green";
+                    autoResetEventWorks.Set();
+                }
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
             }
-
             return failedFiles;
         }
 

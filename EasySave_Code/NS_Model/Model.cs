@@ -81,6 +81,11 @@ namespace EasySave.NS_Model
                     // Reset Work States
                     foreach(Work work in this.works)
                     {
+                        if (work.colorProgressBar != "White")
+                        {
+                            work.colorProgressBar = "White";
+                        }
+
                         if (work.state != null)
                         {
                             work.state = null;

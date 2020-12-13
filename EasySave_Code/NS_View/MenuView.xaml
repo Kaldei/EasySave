@@ -73,7 +73,7 @@
 
             <StackPanel Grid.Column="8" Background="White" Margin="0" >
                 <Border CornerRadius="90" BorderBrush="Red" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="0" Background="Red" Foreground="White" FontSize="26" Padding="1, -13, 2, -7" BorderBrush="Red" Click="StopBackup_Clicked">x</Button>
+                    <Button Grid.Column="0" Background="Red" Foreground="White" FontSize="26" Padding="1, -13, 2, -7" BorderBrush="Red" Click="CancelBackup_Clicked">x</Button>
                 </Border>
             </StackPanel>
         </Grid>
@@ -102,7 +102,7 @@
                     <DataGridTemplateColumn Header="Percentage Downloaded" Width="250" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ProgressBar Value="{Binding state.progress }" Minimum="0" Maximum="100" Background="White" Foreground="{Binding state.colorProgressBar}"/>
+                                <ProgressBar Value="{Binding state.progress }" Minimum="0" Maximum="100" Background="White" Foreground="{Binding colorProgressBar}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
