@@ -12,6 +12,7 @@ namespace EasySave.NS_ViewModel
     {
         // ----- Attributes -----
         public Model model { get; set; }
+        private int currentNbPrioFile { get; set; }
         private object _syncWorks = new object();
         private object _syncLogs = new object();
 
@@ -22,6 +23,7 @@ namespace EasySave.NS_ViewModel
         // ----- Constructor -----
         public MenuViewModel(Model _model)
         {
+            this.currentNbPrioFile = 0;
             this.model = _model;
         }
 
@@ -244,10 +246,12 @@ namespace EasySave.NS_ViewModel
         private FileInfo[] GetFilesToSave(Work _work) // TODO - Total Size
         {
             long totalSize = 0;
+            int totalPrioFile = 0;
 
             // Get evvery files of the source directory
             DirectoryInfo srcDir = new DirectoryInfo(_work.src);
             FileInfo[] srcFiles = srcDir.GetFiles("*.*", SearchOption.AllDirectories);
+            List<FileInfo> filesToSave = new List<FileInfo>();
 
             switch (_work.backupType)
             {
@@ -255,14 +259,26 @@ namespace EasySave.NS_ViewModel
                     // Calcul the size of every files
                     foreach (FileInfo file in srcFiles)
                     {
+                        // Calcul the size of every files
                         totalSize += file.Length;
+
+                        // Check if its a prio file or note
+                        if (file.Name.Contains(".") && this.model.settings.prioExtensions.Contains(file.Name.Substring(file.Name.LastIndexOf("."))))
+                        {
+                            filesToSave.Insert(0, file);
+                            totalPrioFile++;
+                        }
+                        else
+                        {
+                            filesToSave.Add(file);
+                        }
                     }
 
                     // Init the state of the current work to save
                     autoResetEventWorks.WaitOne();
-                    _work.state = new State(srcFiles.Length, totalSize, "", "");
+                    _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
-                    return srcFiles;
+                    return filesToSave.ToArray();
 
                 case BackupType.DIFFRENTIAL:
                     // Get all directories name of the dest folder
@@ -273,7 +289,6 @@ namespace EasySave.NS_ViewModel
                     if (lastFullDirName.Length == 0) goto case BackupType.FULL;
 
                     // Get evvery files of the source directory
-                    List<FileInfo> filesToSave = new List<FileInfo>();
 
                     // Check if there is a modification between the current file and the last full backup
                     foreach (FileInfo file in srcFiles)
@@ -285,15 +300,27 @@ namespace EasySave.NS_ViewModel
                             // Calcul the size of every files
                             totalSize += file.Length;
 
-                            // Add the file to the list
-                            filesToSave.Add(file);
+                            // Check if its a prio file or note
+                            if (file.Name.Contains(".") && this.model.settings.prioExtensions.Contains(file.Name.Substring(file.Name.LastIndexOf("."))))
+                            {
+                                filesToSave.Insert(0, file);
+                                totalPrioFile++;
+                            }
+                            else
+                            {
+                                filesToSave.Add(file);
+                            }
                         }
                     }
 
                     // Init the state of the current work to save
                     autoResetEventWorks.WaitOne();
-                    _work.state = new State(filesToSave.Count, totalSize, "", "");
+                    _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
+
+                    autoResetEventLogs.WaitOne();
+                    currentNbPrioFile += totalPrioFile;
+                    autoResetEventLogs.Set();
 
                     return filesToSave.ToArray();
 
@@ -344,38 +371,34 @@ namespace EasySave.NS_ViewModel
             long leftSize = _work.state.totalSize;
 
             // Save file one by one
-            for (int i = 0; i < totalFile; i++)
+            foreach (FileInfo curFile in _filesToSave)
             {
                 // Pause Backup if a Business Software is Running
                 if (IsBusinessRunning())
                 {
                     // Set Progress Bar Color to Error Color
                     _work.state.colorProgressBar = "Red";
+
                     // Return Error Code
                     model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
                     while (IsBusinessRunning()) { }
-                }
 
-                // Reset Progress Bar Color
-                if (_work.state.colorProgressBar != "Green")
-                {
+                    // Reset Progress Bar Color
                     _work.state.colorProgressBar = "Green";
                 }
 
-                // Get the current file to save
-                FileInfo curFile = _filesToSave[i];
+                while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { }
 
                 DateTime startTimeSave = DateTime.Now;
                 int copyTime = 0;
                 int encryptionTime = 0;
                 int pourcent = Convert.ToInt32((_work.state.totalSize - leftSize) * 100 / _work.state.totalSize);
-                int fileRemaining = totalFile - i;
                 string dstFile = GetDstFilePath(curFile, _dstFolder, _work.src);
 
 
                 // Update the current work status
                 autoResetEventWorks.WaitOne();
-                _work.state.UpdateState(pourcent, fileRemaining, leftSize, curFile.FullName, dstFile);
+                _work.state.UpdateState(pourcent, leftSize, curFile.FullName, dstFile);
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
 
@@ -394,6 +417,10 @@ namespace EasySave.NS_ViewModel
                 leftSize -= curFile.Length;
 
                 autoResetEventLogs.WaitOne();
+                if (_work.state.leftPrioFile != 0)
+                {
+                    currentNbPrioFile -= 1;
+                }
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                 this.model.SaveLog();
                 autoResetEventLogs.Set();
