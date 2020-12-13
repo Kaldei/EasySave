@@ -2,10 +2,11 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Text.Json;
+using EasySave.Observable;
 
 namespace EasySave.NS_Model
 {
-    public class Work
+    public class Work : ObservableObject
     {
         // --- Attributes ---
         // Prepare options to indent JSON Files
@@ -21,8 +22,23 @@ namespace EasySave.NS_Model
         public bool isCrypted { get; set; }
         public State state { get; set; }
         public string lastBackupDate { get; set; }
-        public WorkState workState { get; set; }
 
+        private string ColorProgressBar;
+        public string colorProgressBar
+        {
+            get
+            {
+                return ColorProgressBar;
+            }
+            set
+            {
+                if (ColorProgressBar != value)
+                {
+                    ColorProgressBar = value;
+                    OnPropertyChanged("colorProgressBar");
+                }
+            }
+        }
 
         // --- Constructors ---
         // Constructor used by LoadWorks()
@@ -37,6 +53,7 @@ namespace EasySave.NS_Model
             this.backupType = _backupType;
             this.isCrypted = _isCrypted;
             this.state = null;
+            this.colorProgressBar = "White";
         }
     }
 }

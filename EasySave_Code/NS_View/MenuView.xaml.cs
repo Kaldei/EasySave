@@ -26,7 +26,6 @@ namespace EasySave.NS_View
             this.mainWindow = _mainWindow;
             DataContext = this.menuViewModel;
             InitializeComponent();
-            InitialiseBackup();
         }
 
 
@@ -41,23 +40,31 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            foreach (int indexWork in GetSelectedWorks())
+            if (GetSelectedWorks().Length > 0)
             {
-                switch (this.menuViewModel.model.works[indexWork].workState)
+                foreach (int indexWork in GetSelectedWorks())
                 {
-                    case NS_Model.WorkState.RUN:
-                        break;
+                    switch (this.menuViewModel.model.works[indexWork].colorProgressBar)
+                    {
+                        case "White":
+                            this.menuViewModel.UpdateWorkColor(indexWork, "Green");
+                            this.menuViewModel.LaunchBackupWork(indexWork);
+                            _listWorks.Items.Refresh();
+                            break;
 
-                    case NS_Model.WorkState.PAUSE:
-                        this.menuViewModel.model.works[indexWork].workState = NS_Model.WorkState.RUN;
-                        break;
+                        case "Orange":
+                            this.menuViewModel.UpdateWorkColor(indexWork, "Green");
+                            break;
 
-                    default:
-                        this.menuViewModel.LaunchBackupWork(GetSelectedWorks());
-                        _listWorks.Items.Refresh();
-                        break;
+                        default:
+                            break;
+                    }
                 }
-
+            }
+            else
+            {
+                // Call Error Message if no Works Selected
+                this.menuViewModel.model.errorMsg?.Invoke("noSelectedWork");
             }
         }
 
@@ -93,13 +100,14 @@ namespace EasySave.NS_View
             this.mainWindow.ChangePage(button.Tag.ToString());
         }
 
-        private void StopBackup_Clicked(object sender, RoutedEventArgs e)
+        private void CancelBackup_Clicked(object sender, RoutedEventArgs e)
         {
             foreach (int indexWork in GetSelectedWorks())
             {
-                this.menuViewModel.model.works[indexWork].workState = NS_Model.WorkState.CANCEL;
+                this.menuViewModel.UpdateWorkColor(indexWork, "White");
+                _listWorks.Items.Refresh();
             }
-            _listWorks.Items.Refresh();
+            
         }
 
         private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
@@ -107,23 +115,11 @@ namespace EasySave.NS_View
             foreach (int indexWork in GetSelectedWorks())
             {
                 // Check if backup is running
-                if (this.menuViewModel.model.works[indexWork].workState == NS_Model.WorkState.RUN)
+                if (this.menuViewModel.model.works[indexWork].colorProgressBar == "Green")
                 {
-                    this.menuViewModel.model.works[indexWork].workState = NS_Model.WorkState.PAUSE;
-                    this.menuViewModel.model.works[indexWork].state.colorProgressBar = "Orange";
+                    this.menuViewModel.UpdateWorkColor(indexWork, "Orange");
                 }
             }
         }
-
-        private void InitialiseBackup()
-        {
-            // Set backup state to FINISH if EasySave has been force exited
-            for (int i = 0; i < _listWorks.Items.Count; i++)
-            {
-                this.menuViewModel.model.works[i].workState = NS_Model.WorkState.FINISH;
-            }
-            _listWorks.Items.Refresh();
-        }
-
     }
 }
