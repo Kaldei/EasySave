@@ -213,7 +213,7 @@ namespace EasySave.NS_ViewModel
                     string dst = _work.dst + _work.name + "_" + startTime.ToString("yyyy-MM-dd_HH-mm-ss") + "\\";
 
                     // Update the current work status
-                    _work.state = new State(_files.Length, _totalSize, _work.src, dst);
+                    //_work.state = new State(_files.Length, _totalSize, _work.src, dst);
                     _work.lastBackupDate = startTime.ToString("yyyy/MM/dd_HH:mm:ss");
 
                     // Create the dst folder
@@ -335,7 +335,7 @@ namespace EasySave.NS_ViewModel
             try
             {
                 // Update the current work status
-                _work.state.UpdateState(_pourcent, (_totalFile - fileIndex), _leftSize, _currentFile.FullName, dstFile);
+                //_work.state.UpdateState(_pourcent, (_totalFile - fileIndex), _leftSize, _currentFile.FullName, dstFile);
                 this.model.SaveWorks();
                 int elapsedTime = -1;
                 int cryptedTime = 0;

@@ -6,6 +6,8 @@ namespace EasySave.NS_Model
     {
         // --- Attributes ---
         public int totalFile { get; set; }
+        public int totalPrioFile { get; set; }
+        public int leftPrioFile { get; set; }
         public long totalSize { get; set; }
         public int Progress { get; set; }
         public int nbFileLeft { get; set; }
@@ -45,7 +47,6 @@ namespace EasySave.NS_Model
                     OnPropertyChanged("colorProgressBar");
                 }
             }
-
         }
 
         // --- Contructors ---
@@ -53,11 +54,15 @@ namespace EasySave.NS_Model
         public State() { }
 
         // Constructor used by DoBackup()
-        public State(int _totalFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
+        public State(int _totalFile, int _totalPrioFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
         {
             this.progress = 0;
             this.totalFile = _totalFile;
+            this.nbFileLeft = _totalFile;
+            this.totalPrioFile = _totalPrioFile;
+            this.leftPrioFile = _totalPrioFile;
             this.totalSize = _totalSize;
+            this.leftSize = _totalSize;
             this.currentPathSrc = _currentPathSrc;
             this.currentPathDest = _currentPathDest;
         }
@@ -65,10 +70,11 @@ namespace EasySave.NS_Model
 
         // --- Methods ---
         // Update State during DoBacup()
-        public void UpdateState(int _progress, int _nbFileLeft, long _leftSize, string _currSrcPath, string _currDestPath)
+        public void UpdateState(int _progress, long _leftSize, string _currSrcPath, string _currDestPath)
         {
             this.progress = _progress;
-            this.nbFileLeft = _nbFileLeft;
+            this.leftPrioFile = this.leftPrioFile != 0 ? this.leftPrioFile - 1 : 0;
+            this.nbFileLeft = this.nbFileLeft != 0 ? this.nbFileLeft - 1 : 0; ;
             this.leftSize = _leftSize;
             this.currentPathSrc = _currSrcPath;
             this.currentPathDest = _currDestPath;
