@@ -57,10 +57,10 @@ namespace EasySave.NS_Model
         public State(int _totalFile, int _totalPrioFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
         {
             this.progress = 0;
-            this.totalFile = _totalFile + 1;
-            this.nbFileLeft = _totalFile + 1;
-            this.totalPrioFile = _totalPrioFile > 0 ? _totalPrioFile + 1 : 0;
-            this.leftPrioFile = _totalPrioFile > 0 ? _totalPrioFile + 1 : 0;
+            this.totalFile = _totalFile;
+            this.nbFileLeft = _totalFile;
+            this.totalPrioFile = _totalPrioFile;
+            this.leftPrioFile = _totalPrioFile;
             this.totalSize = _totalSize;
             this.leftSize = _totalSize;
             this.currentPathSrc = _currentPathSrc;
