@@ -34,15 +34,15 @@ namespace EasySave.NS_ViewModel
         {
             autoResetEventWorks.WaitOne();
             this.model.works[_index].colorProgressBar = _color;
-            autoResetEventWorks.Set();
+            autoResetEventWorks.Set(); 
+        }
 
-            if (_color == "White")
-            {
-                autoResetEventWorks.WaitOne();
-                this.model.works[_index].state = null;
-                autoResetEventWorks.Set();
-            }
-            
+        // Reset Work Sate
+        public void ResetWorkState(Work _work)
+        {
+            autoResetEventWorks.WaitOne();
+            _work.state = null;
+            autoResetEventWorks.Set();
         }
 
 
@@ -126,9 +126,6 @@ namespace EasySave.NS_ViewModel
                 if (IsFilesToSave(filesToSave.Length) && IsSpaceInDstDir(dstDisk, _workToSave.state.totalSize) && InitDstFolder(dstFolder))
                 {
                     // Save every file and get back the failed files
-                    autoResetEventWorks.WaitOne();
-                    _workToSave.colorProgressBar = "Green";
-                    autoResetEventWorks.Set();
                     List<string> failedFiles = SaveFiles(_workToSave, filesToSave, dstFolder);
 
                     // If there is any errors
@@ -142,6 +139,7 @@ namespace EasySave.NS_ViewModel
                 // Reset the work object
                 autoResetEventWorks.WaitOne();
                 _workToSave.colorProgressBar = "White";
+                _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
@@ -392,6 +390,21 @@ namespace EasySave.NS_ViewModel
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
             {
+                // If User Ask to Cancel a Backup
+                if (_work.colorProgressBar == "White")
+                {
+                    try
+                    {
+                        Directory.Delete(_dstFolder, true);
+                    }
+                    catch (Exception)
+                    {
+                        this.model.errorMsg?.Invoke("cannotDelDstFolder");
+                    }
+                    ResetWorkState(_work);
+                    return failedFiles;
+                }
+
                 // Pause Backup if a Business Software is Running
                 if (IsBusinessRunning())
                 {
@@ -430,22 +443,6 @@ namespace EasySave.NS_ViewModel
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
 
-
-                // Lock if there are more than one oversized File
-                if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
-                {
-                    autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "DodgerBlue";
-                    autoResetEventWorks.Set();
-
-                    autoResetEventOverSized.WaitOne();
-
-                    autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "Green";
-                    autoResetEventWorks.Set();
-                }
-
-
                 // Lock if there are priority Files
                 if (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
                 {
@@ -455,11 +452,46 @@ namespace EasySave.NS_ViewModel
                     autoResetEventWorks.Set();
 
                     // Pause Program
-                    while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { }
-
+                    while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) 
+                    {
+                        if (_work.colorProgressBar == "Orange")
+                        {
+                            break;
+                        }
+                    }
                     // Reset Progress Bar Color
                     autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "Green";
+                    if (_work.colorProgressBar != "Orange")
+                    {
+                        _work.colorProgressBar = "Green";
+                    }
+                    autoResetEventWorks.Set();
+                }
+
+                // Check User ask to pause
+                if (_work.colorProgressBar == "Orange")
+                {
+                    // Pause Program
+                    while (_work.colorProgressBar == "Orange") { }
+                }
+
+                // Lock if there are more than one oversized File
+                if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
+                {
+                    autoResetEventWorks.WaitOne();
+                    if (_work.colorProgressBar != "Orange")
+                    {
+                        _work.colorProgressBar = "DodgerBlue";
+                    }
+                    autoResetEventWorks.Set();
+
+                    autoResetEventOverSized.WaitOne();
+
+                    autoResetEventWorks.WaitOne();
+                    if (_work.colorProgressBar != "Orange")
+                    {
+                        _work.colorProgressBar = "Green";
+                    }
                     autoResetEventWorks.Set();
                 }
 
@@ -497,32 +529,6 @@ namespace EasySave.NS_ViewModel
                 this.model.logs.Add(new Log($"{_work.name}", $"{curFile.FullName}", $"{dstFile}", $"{curFile.Length}", $"{startTimeSave}", $"{copyTime}", $"{encryptionTime}"));
                 this.model.SaveLog();
                 autoResetEventLogs.Set();
-
-                // If User Ask to Cancel a Backup
-                if (_work.colorProgressBar == "White")
-                {
-                    try
-                    {
-                        Directory.Delete(_dstFolder,true);                   
-                    }
-                    catch (Exception)
-                    {
-                        this.model.errorMsg?.Invoke("cannotDelDstFolder");
-                    }
-                    return failedFiles;
-                }
-
-                // Check User ask to pause
-                if (_work.colorProgressBar == "Orange")
-                {
-                    // Pause Program
-                    while (_work.colorProgressBar == "Orange") { }
-
-                    // Reset Progress Bar Color
-                    autoResetEventWorks.WaitOne();
-                    _work.colorProgressBar = "Green";
-                    autoResetEventWorks.Set();
-                }
 
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
             }
