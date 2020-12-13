@@ -16,6 +16,7 @@ namespace EasySave.NS_ViewModel
 
         private static AutoResetEvent autoResetEventWorks = new AutoResetEvent(true);
         private static AutoResetEvent autoResetEventLogs = new AutoResetEvent(true);
+        private static AutoResetEvent autoResetEventOverSized = new AutoResetEvent(true);
 
 
 
@@ -141,7 +142,6 @@ namespace EasySave.NS_ViewModel
                 // Reset the work object
                 autoResetEventWorks.WaitOne();
                 _workToSave.colorProgressBar = "White";
-                _workToSave.state = null;
                 _workToSave.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
@@ -424,12 +424,27 @@ namespace EasySave.NS_ViewModel
 
                 string dstFile = GetDstFilePath(curFile, _dstFolder, _work.src);
 
-
                 // Update the current work status
                 autoResetEventWorks.WaitOne();
                 _work.state.UpdateState(pourcent, ((totalPrioFile - i > 0) ? totalPrioFile - i : 0), totalFile - i, leftSize, curFile.FullName, dstFile);
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
+
+
+                // Lock if there are more than one oversized File
+                if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
+                {
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "DodgerBlue";
+                    autoResetEventWorks.Set();
+
+                    autoResetEventOverSized.WaitOne();
+
+                    autoResetEventWorks.WaitOne();
+                    _work.colorProgressBar = "Green";
+                    autoResetEventWorks.Set();
+                }
+
 
                 // Lock if there are priority Files
                 if (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
@@ -469,6 +484,13 @@ namespace EasySave.NS_ViewModel
                     currentNbPrioFile = currentNbPrioFile - 1;
                 }
                 autoResetEventWorks.Set();
+
+
+                // Free the Overzied File Lock
+                if(curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
+                {
+                    autoResetEventOverSized.Set();
+                }
 
                 // Save Logs
                 autoResetEventLogs.WaitOne();
