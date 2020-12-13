@@ -2,9 +2,11 @@
 using EasySave.Observable;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace EasySave.NS_View
 {
@@ -104,10 +106,16 @@ namespace EasySave.NS_View
         {
             foreach (int indexWork in GetSelectedWorks())
             {
+                // Change Work State to Cancel
                 this.menuViewModel.UpdateWorkColor(indexWork, "White");
-                _listWorks.Items.Refresh();
+                // Wait the reset of the work's state
+                Mouse.OverrideCursor = Cursors.Wait;
+                while (this.menuViewModel.model.works[indexWork].state != null) { }
             }
-            
+            // Refresh View
+            _listWorks.Items.Refresh();
+            Mouse.OverrideCursor = Cursors.Arrow;
+
         }
 
         private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
@@ -115,7 +123,7 @@ namespace EasySave.NS_View
             foreach (int indexWork in GetSelectedWorks())
             {
                 // Check if backup is running
-                if (this.menuViewModel.model.works[indexWork].colorProgressBar == "Green")
+                if (this.menuViewModel.model.works[indexWork].colorProgressBar != "Red" && this.menuViewModel.model.works[indexWork].colorProgressBar != "Orange" && this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
                 {
                     this.menuViewModel.UpdateWorkColor(indexWork, "Orange");
                 }
