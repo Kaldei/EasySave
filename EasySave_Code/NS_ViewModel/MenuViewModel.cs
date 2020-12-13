@@ -274,6 +274,8 @@ namespace EasySave.NS_ViewModel
                         }
                     }
 
+                    Trace.WriteLine(filesToSave.Count);
+                    Trace.WriteLine(totalPrioFile);
                     // Init the state of the current work to save
                     autoResetEventWorks.WaitOne();
                     _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
@@ -373,6 +375,7 @@ namespace EasySave.NS_ViewModel
             // Create a name list of failed files
             List<string> failedFiles = new List<string>();
             int totalFile = _work.state.totalFile;
+            int totalPrioFile = _work.state.totalPrioFile;
             long leftSize = _work.state.totalSize;
 
             // Save file one by one
@@ -403,12 +406,9 @@ namespace EasySave.NS_ViewModel
 
                 // Update the current work status
                 autoResetEventWorks.WaitOne();
-                _work.state.UpdateState(pourcent, ((_work.state.leftPrioFile - 1 > 0) ? _work.state.leftPrioFile - 1 : 0), totalFile - i, leftSize, curFile.FullName, dstFile);
+                _work.state.UpdateState(pourcent, ((totalPrioFile - i > 0) ? totalPrioFile - i : 0), totalFile - i, leftSize, curFile.FullName, dstFile);
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
-
-                Trace.WriteLine(_work.state.leftPrioFile);
-                Trace.WriteLine(currentNbPrioFile);
 
                 while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) { _work.state.colorProgressBar = "Purple"; }
 
