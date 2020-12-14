@@ -135,7 +135,8 @@ namespace EasySave.NS_View
                         }
                         else
                         {
-                            dstLabel.Foreground = Brushes.Red; // TODO - Manage this error
+                            dstLabel.Foreground = Brushes.Red;
+                            dstLabel.Content = Langs.Lang.errorDstInSrc;
                             return false;
                         }
                     }
