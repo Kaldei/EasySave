@@ -91,7 +91,7 @@
         -->
   
         <Grid Grid.Row="3" Grid.Column="1">
-            <DataGrid x:Name="_listWorks" ItemsSource="{Binding model.works}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid x:Name="_listWorks" ItemsSource="{Binding model.works}" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static language:Lang.name}" Binding="{Binding name}" Width="90"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.source}" Binding="{Binding src}"  Width="250"/>
