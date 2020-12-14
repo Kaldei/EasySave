@@ -91,8 +91,10 @@ namespace EasySave.NS_ViewModel
             try
             {
                 // Remove Work from the program (at index)
+                autoResetEventWorks.WaitOne();
                 this.model.works.Remove(_workToRemove);
                 this.model.SaveWorks();
+                autoResetEventWorks.Set();
             }
             catch
             {
@@ -381,9 +383,11 @@ namespace EasySave.NS_ViewModel
         {
             // Create a name list of failed files
             List<string> failedFiles = new List<string>();
+            autoResetEventWorks.WaitOne();
             int totalFile = _work.state.totalFile;
             int totalPrioFile = _work.state.totalPrioFile;
             long leftSize = _work.state.totalSize;
+            autoResetEventWorks.Set();
 
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
@@ -432,7 +436,7 @@ namespace EasySave.NS_ViewModel
                 }
 
                 // Block Backup (If there are more than one File that exceeds Max Simultaneous File Size)
-                if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
+                if (this.model.settings.maxSimultaneousFilesSize > 0 && curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
                 {
                     BlockSaveBandWidth(_work);
                 }

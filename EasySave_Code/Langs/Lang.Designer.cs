@@ -340,7 +340,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Files Size that can be save simultaneously:.
+        ///   Looks up a localized string similar to Maximum Files Size that can be save simultaneously in ko (0 to none):.
         /// </summary>
         public static string maxSimultaneousFilesSize {
             get {
