@@ -88,9 +88,11 @@ namespace EasySave.NS_Model
 
                         if (work.state.progress != 0)
                         {
-                            work.state.UpdateState(0, 0, 0, 0, "", "");
+                            work.state.InitState(0, 0, 0, "", "");
                         }
                     }
+                    // Save Work File
+                    SaveWorks();
                 }
                 catch
                 {
@@ -100,7 +102,7 @@ namespace EasySave.NS_Model
             }
             else
             {
-                // Create Settings File
+                // Create Work File
                 SaveWorks();
             }
         }

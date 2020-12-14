@@ -20,7 +20,6 @@ namespace EasySave.NS_Model
         public string dst { get; set; }
         public BackupType backupType { get; set; }
         public bool isCrypted { get; set; }
-        public State state { get; set; }
         public string lastBackupDate { get; set; }
 
         private string ColorProgressBar;
@@ -39,6 +38,8 @@ namespace EasySave.NS_Model
                 }
             }
         }
+
+        public State state { get; set; }
 
         // --- Constructors ---
         // Constructor used by LoadWorks()
