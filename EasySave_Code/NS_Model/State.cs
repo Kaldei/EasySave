@@ -47,6 +47,7 @@ namespace EasySave.NS_Model
         // Initialize State at the Begenning of a Backup
         public void InitState(int _totalFile, int _totalPrioFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
         {
+            this.progress = 0;
             this.totalFile = _totalFile;
             this.nbFileLeft = _totalFile;
             this.totalPrioFile = _totalPrioFile;
