@@ -107,10 +107,13 @@ namespace EasySave.NS_View
             foreach (int indexWork in GetSelectedWorks())
             {
                 // Change Work State to Cancel
-                this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "White");
+                if (this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
+                {
+                    this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "White");
+                }
                 // Wait the reset of the work's state
                 Mouse.OverrideCursor = Cursors.Wait;
-                while (this.menuViewModel.model.works[indexWork].state != null) { }
+                while (this.menuViewModel.model.works[indexWork].state.progress != 0) { }
             }
             // Refresh View
             _listWorks.Items.Refresh();

@@ -36,10 +36,17 @@ namespace EasySave.NS_Model
         // Constructor used by LoadWorks()
         public State() { }
 
-        // Constructor used by DoBackup()
-        public State(int _totalFile, int _totalPrioFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
+        // Constructor used by Work Clas
+        public State(int _progress)
         {
             this.progress = 0;
+        }
+
+
+        // --- Methods ---
+        // Initialize State at the Begenning of a Backup
+        public void InitState(int _totalFile, int _totalPrioFile, long _totalSize, string _currentPathSrc, string _currentPathDest)
+        {
             this.totalFile = _totalFile;
             this.nbFileLeft = _totalFile;
             this.totalPrioFile = _totalPrioFile;
@@ -50,9 +57,7 @@ namespace EasySave.NS_Model
             this.currentPathDest = _currentPathDest;
         }
 
-
-        // --- Methods ---
-        // Update State during DoBacup()
+        // Update State during SaveFiles()
         public void UpdateState(int _progress, int _leftPrioFile, int _nbFileLeft, long _leftSize, string _currSrcPath, string _currDestPath)
         {
             this.progress = _progress;

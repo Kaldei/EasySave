@@ -52,7 +52,7 @@ namespace EasySave.NS_Model
             this.dst = _dst;
             this.backupType = _backupType;
             this.isCrypted = _isCrypted;
-            this.state = null;
+            this.state = new State(0);
             this.colorProgressBar = "White";
         }
     }
