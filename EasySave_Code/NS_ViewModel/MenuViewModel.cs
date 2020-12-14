@@ -41,7 +41,7 @@ namespace EasySave.NS_ViewModel
         public void ResetWorkState(Work _work)
         {
             autoResetEventWorks.WaitOne();
-            _work.state = null;
+            _work.state.UpdateState(0, 0, 0, 0, "","");
             _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
             this.model.SaveWorks();
             autoResetEventWorks.Set();
@@ -285,7 +285,7 @@ namespace EasySave.NS_ViewModel
                     Trace.WriteLine(totalPrioFile);
                     // Init the state of the current work to save
                     autoResetEventWorks.WaitOne();
-                    _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
+                    _work.state.InitState(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
 
                     autoResetEventLogs.WaitOne();
@@ -329,7 +329,7 @@ namespace EasySave.NS_ViewModel
 
                     // Init the state of the current work to save
                     autoResetEventWorks.WaitOne();
-                    _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
+                    _work.state.InitState(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
 
                     autoResetEventLogs.WaitOne();
