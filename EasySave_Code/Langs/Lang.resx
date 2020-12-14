@@ -259,6 +259,6 @@
     <value>Size Given is incorrect!</value>
   </data>
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
-    <value>Maximum Files Size that can be save simultaneously:</value>
+    <value>Maximum Files Size that can be save simultaneously in ko (0 to none):</value>
   </data>
 </root>

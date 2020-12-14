@@ -259,6 +259,6 @@
     <value>La taille donnée n'est pas correcte !</value>
   </data>
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
-    <value>Taille Maximale de fichiers à copier en sumultané (en ko) :</value>
+    <value>Taille Maximale de fichiers à copier en sumultané en ko (0 pour pas de limite) :</value>
   </data>
 </root>
