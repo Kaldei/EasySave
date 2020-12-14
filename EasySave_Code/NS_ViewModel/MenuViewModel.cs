@@ -288,9 +288,9 @@ namespace EasySave.NS_ViewModel
                     _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
 
-                    autoResetEventWorks.WaitOne();
+                    autoResetEventLogs.WaitOne();
                     currentNbPrioFile += totalPrioFile;
-                    autoResetEventWorks.Set();
+                    autoResetEventLogs.Set();
 
                     return filesToSave.ToArray();
 
@@ -332,9 +332,9 @@ namespace EasySave.NS_ViewModel
                     _work.state = new State(filesToSave.Count, totalPrioFile, totalSize, "", "");
                     autoResetEventWorks.Set();
 
-                    autoResetEventWorks.WaitOne();
+                    autoResetEventLogs.WaitOne();
                     currentNbPrioFile += totalPrioFile;
-                    autoResetEventWorks.Set();
+                    autoResetEventLogs.Set();
 
                     return filesToSave.ToArray();
 
@@ -388,37 +388,6 @@ namespace EasySave.NS_ViewModel
             // Save file one by one
             for (int i = 0; i < totalFile; i++)
             {
-                // If User Ask to Cancel a Backup
-                if (_work.colorProgressBar == "White")
-                {
-                    try
-                    {
-                        Directory.Delete(_dstFolder, true);
-                    }
-                    catch (Exception)
-                    {
-                        this.model.errorMsg?.Invoke("cannotDelDstFolder");
-                    }
-                    ResetWorkState(_work);
-                    return failedFiles;
-                }
-
-                // Pause Backup if a Business Software is Running
-                if (IsBusinessRunning())
-                {
-                    // Set Progress Bar Color to Error Color
-                    UpdateWorkColor(_work, "Red");
-
-                    // Return Error Code
-                    model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
-
-                    // Pause Program
-                    while (IsBusinessRunning()) { }
-
-                    // Reset Progress Bar Color
-                    UpdateWorkColor(_work, "Green");
-                }
-
                 FileInfo curFile = _filesToSave[i];
 
                 DateTime startTimeSave = DateTime.Now;
@@ -437,49 +406,35 @@ namespace EasySave.NS_ViewModel
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
 
-                // Lock if there are priority Files
-                if (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
+                // Cancel Backup (If User Click on Red Button)
+                if (_work.colorProgressBar == "White")
                 {
-                    // Set Progress Bar Color to Error Color
-                    UpdateWorkColor(_work, "Purple");
-
-                    // Pause Program
-                    while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0) 
-                    {
-                        if (_work.colorProgressBar == "Orange")
-                        {
-                            break;
-                        }
-                    }
-
-                    // Reset Progress Bar Color
-                    if (_work.colorProgressBar != "Orange")
-                    {
-                        UpdateWorkColor(_work, "Green");
-                    }
+                    CancelBackup(_work, _dstFolder);
+                    return failedFiles;
                 }
 
-                // Check User ask to pause
+                // Pause Backup (If Click on Orange Button)
                 if (_work.colorProgressBar == "Orange")
                 {
-                    // Pause Program
-                    while (_work.colorProgressBar == "Orange") { }
+                    PauseBackup(_work);
                 }
 
-                // Lock if there are more than one oversized File
+                // Block Backup (If a Business Software is Running)
+                if (IsBusinessRunning())
+                {
+                    BlockBusinessRunning(_work);
+                }
+
+                // Block Backup (If there are no Priority Files in this Backup but there are on others)
+                if (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
+                {
+                    BlockNoPriority(_work);
+                }
+
+                // Block Backup (If there are more than one File that exceeds Max Simultaneous File Size)
                 if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
                 {
-                    if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
-                    {
-                        UpdateWorkColor(_work, "DodgerBlue");
-                    }
-
-                    autoResetEventOverSized.WaitOne();
-
-                    if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
-                    {
-                        UpdateWorkColor(_work, "Green");
-                    }
+                    BlockSaveBandWidth(_work);
                 }
 
                 // Check if the file is crypted or not
@@ -494,19 +449,19 @@ namespace EasySave.NS_ViewModel
                     encryptionTime = EncryptFile(curFile, dstFile);
                 }
 
+                // Decrease Left Files Size
                 leftSize -= curFile.Length;
 
-                // Decrase Priority file if it was one
-                autoResetEventWorks.WaitOne();
+                // Decrease Priority File Counter (if it was one)
+                autoResetEventLogs.WaitOne();
                 if (_work.state.leftPrioFile > 0)
                 {
                     currentNbPrioFile = currentNbPrioFile - 1;
                 }
-                autoResetEventWorks.Set();
+                autoResetEventLogs.Set();
 
-
-                // Free the Overzied File Lock
-                if(curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
+                // Set the Lock of BlockSaveBandWidth (and allow a File that exceeds Max Simultaneous File Size to be copied  
+                if (curFile.Length >= this.model.settings.maxSimultaneousFilesSize)
                 {
                     autoResetEventOverSized.Set();
                 }
@@ -520,6 +475,114 @@ namespace EasySave.NS_ViewModel
                 Trace.WriteLine($"{_work.name} {curFile.FullName} {dstFile} {curFile.Length} {startTimeSave} {copyTime} {encryptionTime}");
             }
             return failedFiles;
+        }
+
+
+        // Cancel a Backup
+        private void CancelBackup(Work _work, string _dstFolder)
+        {
+            // Try Delete Current Backup Folder
+            try
+            {
+                Directory.Delete(_dstFolder, true);
+            }
+            catch (Exception)
+            {
+                this.model.errorMsg?.Invoke("cannotDelDstFolder");
+            }
+
+            // Decrease Priority File Counter 
+            autoResetEventLogs.WaitOne();
+            currentNbPrioFile -= _work.state.leftPrioFile;
+            autoResetEventLogs.Set();
+
+            // Reset Work State to null
+            ResetWorkState(_work);
+        }
+
+
+        // Pause Backup (While User do not Change Backup State)
+        private void PauseBackup(Work _work)
+        {
+            // Pause Program
+            while (_work.colorProgressBar == "Orange") { }
+        }
+
+
+        // Block Backup (While a Business Software is Running)
+        private void BlockBusinessRunning(Work _work)
+        {
+            // Set Progress Bar Color to Business Software Running Color
+            if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
+            {
+                UpdateWorkColor(_work, "Red");
+            }
+
+            // Return Error Code
+            model.errorMsg?.Invoke("businessSoftwareOn"); // TODO - "Cannot launch any backups bc business software ON"
+
+            // Pause Program While a Business Software is Running
+            while (IsBusinessRunning())
+            {
+                // Break to loop to Cancel
+                if (_work.colorProgressBar == "White")
+                {
+                    break;
+                }
+            }
+
+            // Reset Progress Bar Color
+            if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
+            {
+                UpdateWorkColor(_work, "Green");
+            }
+        }
+
+
+        // Block Backup (While there are no Priority Files in this Backup but there are on others)
+        private void BlockNoPriority (Work _work)
+        {
+            // Set Progress Bar Color to No Priority Color
+            if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
+            {
+                UpdateWorkColor(_work, "Purple");
+            }
+
+            // Pause Program
+            while (_work.state.leftPrioFile == 0 && currentNbPrioFile != 0)
+            {
+                if (_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White")
+                {
+                    break;
+                }
+            }
+
+            // Reset Progress Bar Color
+            if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
+            {
+                UpdateWorkColor(_work, "Green");
+            }
+        }
+
+
+        // Block Backup (If one File that exceeds Max Simultaneous File Size is being copied)
+        private void BlockSaveBandWidth(Work _work)
+        {
+            // Set Progress Bar Color to Save Band Width Color
+            if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
+            {
+                UpdateWorkColor(_work, "DodgerBlue");
+            }
+
+            // When the First passes here, it reset lock. Then when an other arrive, it's locked
+            // The Lock is Set After a File that exceeds Max Simultaneous File Size is done being copied
+            autoResetEventOverSized.WaitOne();
+
+            // Reset Progress Bar Color
+            if (!(_work.colorProgressBar == "Orange" || _work.colorProgressBar == "White"))
+            {
+                UpdateWorkColor(_work, "Green");
+            }
         }
 
 
