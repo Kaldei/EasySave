@@ -203,7 +203,7 @@ namespace EasySave.NS_View
         {
             // Check if input is a number and stricly posisitve
             int.TryParse(_maxSimultaneousFilesSize.Text, out int maxSimultaneousFilesSize);
-            if (maxSimultaneousFilesSize > 0)
+            if (maxSimultaneousFilesSize >= 0)
             {
                 maxSimultaneousFilesSizeLabel.Foreground = Brushes.Black;
                 maxSimultaneousFilesSizeLabel.Content = Langs.Lang.maxSimultaneousFilesSize;
