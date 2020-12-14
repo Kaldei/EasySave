@@ -86,9 +86,9 @@ namespace EasySave.NS_Model
                             work.colorProgressBar = "White";
                         }
 
-                        if (work.state != null)
+                        if (work.state.progress != 0)
                         {
-                            work.state = null;
+                            work.state.UpdateState(0, 0, 0, 0, "", "");
                         }
                     }
                 }
