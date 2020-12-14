@@ -261,4 +261,7 @@
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
     <value>Maximum Files Size that can be save simultaneously in ko (0 to none):</value>
   </data>
+  <data name="errorDstInSrc" xml:space="preserve">
+    <value>Please select a destination file out of the source folder.</value>
+  </data>
 </root>
