@@ -184,10 +184,10 @@
     <value>Le dossier source n'existe pas.</value>
   </data>
   <data name="errorAddWork" xml:space="preserve">
-    <value>Failed to add work.</value>
+    <value>Echec dans l'ajout d'un travail.</value>
   </data>
   <data name="errorRemoveWork" xml:space="preserve">
-    <value>Failed to remove work.</value>
+    <value>Echec dans la suppression d'un travail.</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Langue :</value>
@@ -260,5 +260,8 @@
   </data>
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
     <value>Taille Maximale de fichiers à copier en sumultané en ko (0 pour pas de limite) :</value>
+  </data>
+  <data name="errorDstInSrc" xml:space="preserve">
+    <value>Veuillez sélection un dossier destination hors du dossier source.</value>
   </data>
 </root>
