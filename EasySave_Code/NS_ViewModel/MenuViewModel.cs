@@ -508,8 +508,18 @@ namespace EasySave.NS_ViewModel
         // Pause Backup (While User do not Change Backup State)
         private void PauseBackup(Work _work)
         {
+            // Decrease Priority File Counter
+            autoResetEventLogs.WaitOne();
+            currentNbPrioFile -= _work.state.leftPrioFile;
+            autoResetEventLogs.Set();
+
             // Pause Program
             while (_work.colorProgressBar == "Orange") { }
+
+            // Increase Priority File Counter
+            autoResetEventLogs.WaitOne();
+            currentNbPrioFile += _work.state.leftPrioFile;
+            autoResetEventLogs.Set();
         }
 
 
