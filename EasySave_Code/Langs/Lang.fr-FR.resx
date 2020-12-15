@@ -286,10 +286,10 @@
     <value>En Cours</value>
   </data>
   <data name="cantDeleteWork" xml:space="preserve">
-    <value>Impossible de Supprimer, des travaux en cours de sauegarde !</value>
+    <value>Impossible de Supprimer, des travaux sont en cours de sauvegarde !</value>
   </data>
   <data name="cantGoToSettings" xml:space="preserve">
-    <value>Impossible d'acceder au Paramètres, des travaux en cours de sauegarde !</value>
+    <value>Impossible d'acceder au Paramètres, des travaux sont en cours de sauvegarde !</value>
   </data>
   <data name="alreadyRunning" xml:space="preserve">
     <value>EasySave est déjà demarré !</value>
