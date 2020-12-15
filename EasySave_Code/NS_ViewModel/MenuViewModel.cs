@@ -19,7 +19,6 @@ namespace EasySave.NS_ViewModel
         private static AutoResetEvent autoResetEventOverSized = new AutoResetEvent(true);
 
 
-
         // ----- Constructor -----
         public MenuViewModel(Model _model)
         {
@@ -37,6 +36,7 @@ namespace EasySave.NS_ViewModel
             autoResetEventWorks.Set(); 
         }
 
+
         // Reset Work Sate
         public void ResetWorkState(Work _work)
         {
@@ -47,8 +47,7 @@ namespace EasySave.NS_ViewModel
             autoResetEventWorks.Set();
         }
 
-
-        private List<Work> getWorksById(int[] _worksId)
+        private List<Work> GetWorksById(int[] _worksId)
         {
             List<Work> works = new List<Work>();
 
@@ -77,7 +76,7 @@ namespace EasySave.NS_ViewModel
         {
             if (IsWorkSelected(_worksId))
             {
-                List<Work> worksToRemove = getWorksById(_worksId);
+                List<Work> worksToRemove = GetWorksById(_worksId);
 
                 foreach (Work workToRemove in worksToRemove)
                 {
@@ -103,6 +102,7 @@ namespace EasySave.NS_ViewModel
             }
         }
 
+
         // Launch Backup Work with a New Thread
         public void LaunchBackupWork(int _worksId)
         {
@@ -112,7 +112,6 @@ namespace EasySave.NS_ViewModel
             });
 
         }
-
 
         private void SaveWork(Work _workToSave)
         {
@@ -162,7 +161,7 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-    private bool IsFilesToSave(int _nbFilesToSave)
+        private bool IsFilesToSave(int _nbFilesToSave)
         {
             if (_nbFilesToSave > 0)
             {
@@ -346,6 +345,7 @@ namespace EasySave.NS_ViewModel
             }
         }
 
+
         // Get the directory name of the first full backup of a differential backup
         private string GetFullBackupDir(DirectoryInfo[] _dstDirs, string _name)
         {
@@ -358,6 +358,7 @@ namespace EasySave.NS_ViewModel
             }
             return "";
         }
+
 
         // Check if the file or the src is the same as the full backup one to know if the files need to be copied or not
         private bool IsSameFile(string path1, string path2)
@@ -588,7 +589,6 @@ namespace EasySave.NS_ViewModel
                 UpdateWorkColor(_work, "Green");
             }
         }
-
 
         private string GetDstFilePath(FileInfo _srcFile, string _dst, string _src)
         {

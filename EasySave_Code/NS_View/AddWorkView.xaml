@@ -50,7 +50,7 @@
                     </Style>
                 </StackPanel.Style>
                 <Border CornerRadius="90" BorderThickness="6" HorizontalAlignment="Center" BorderBrush="LightGray">
-                    <Button x:Name="returnMenuButton" Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray" Click="returnMenuButton_Click">←</Button>
+                    <Button x:Name="returnMenuButton" Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray" Click="ReturnMenuButton_Click">←</Button>
                 </Border>
             </StackPanel>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.addWork}"></TextBlock>
@@ -71,7 +71,7 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="_src" Grid.ColumnSpan="2"></TextBox>
-                <Button x:Name="srcOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="srcOpenFolderButton_Click">. . .</Button>
+                <Button x:Name="srcOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="SrcOpenFolderButton_Click">. . .</Button>
             </Grid>
         </StackPanel>
 
@@ -84,7 +84,7 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="_dst" Grid.ColumnSpan="2"></TextBox>
-                <Button x:Name="dstOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="dstOpenFolderButton_Click">. . .</Button>
+                <Button x:Name="dstOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="DstOpenFolderButton_Click">. . .</Button>
             </Grid>
         </StackPanel>
 
