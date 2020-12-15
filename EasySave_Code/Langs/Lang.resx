@@ -284,6 +284,7 @@
   </data>
   <data name="stateRunning" xml:space="preserve">
     <value>Running</value>
+  </data>
   <data name="cantDeleteWork" xml:space="preserve">
     <value>Can't Delete Works while they are Running!</value>
   </data>
