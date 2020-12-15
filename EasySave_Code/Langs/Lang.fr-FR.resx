@@ -259,9 +259,30 @@
     <value>La taille donnée n'est pas correcte !</value>
   </data>
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
-    <value>Taille Maximale de fichiers à copier en sumultané en ko (0 pour pas de limite) :</value>
+    <value>Taille Maximale de fichiers à copier en simultané en ko (0 pour pas de limite) :</value>
   </data>
   <data name="errorDstInSrc" xml:space="preserve">
     <value>Veuillez sélection un dossier destination hors du dossier source.</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>Etat des Travaux :</value>
+  </data>
+  <data name="stateBandWidthSaving" xml:space="preserve">
+    <value>En Attente (Economie de Bande Passante)</value>
+  </data>
+  <data name="stateBusinessSofOn" xml:space="preserve">
+    <value>En Attente (Logiciel Metier Detecté)</value>
+  </data>
+  <data name="stateNonPrioFiles" xml:space="preserve">
+    <value>En Attente (Fichiers Non Prioritaires)</value>
+  </data>
+  <data name="statePause" xml:space="preserve">
+    <value>En Pause</value>
+  </data>
+  <data name="stateReady" xml:space="preserve">
+    <value>Prêt</value>
+  </data>
+  <data name="stateRunning" xml:space="preserve">
+    <value>En Cours</value>
   </data>
 </root>
