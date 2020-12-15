@@ -14,7 +14,7 @@ namespace PanelAdmin.model
     public class Model : ObservableObject
     {
         // --- Attributes ---
-                // Prepare options to indent JSON Files
+        // Prepare options to indent JSON Files
         private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
         {
             WriteIndented = true
@@ -22,8 +22,6 @@ namespace PanelAdmin.model
 
         public Settings settings { get; set; }
         private string settingsFilePath { get; set; }
-
-
         private ObservableCollection<Work> Works { get; set;}
         public ObservableCollection<Work> works {
             get {

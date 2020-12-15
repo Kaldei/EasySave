@@ -1,5 +1,6 @@
 ﻿using PanelAdmin.viewModel;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,15 +15,12 @@ namespace PanelAdmin.view
     /// </summary>
     public partial class PanelAdminView : Window
     {
-        private bool isFirstInstance;
         ViewModel vm = new ViewModel();
 
         public PanelAdminView()
         {
-            isFirstInstance = false;
-            new Mutex(true, "PanelAdmin", out isFirstInstance);
-            if (isFirstInstance)
-            {
+            if (Process.GetProcessesByName("PanelAdmin").Length == 1)
+            { 
                 Langs.Lang.Culture = new CultureInfo(this.vm.model.settings.language);
                 DataContext = vm;
                 InitializeComponent();

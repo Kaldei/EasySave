@@ -88,6 +88,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Backup Progress.
+        /// </summary>
+        public static string backupProgress {
+            get {
+                return ResourceManager.GetString("backupProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Backup Type.
         /// </summary>
         public static string backupType {
@@ -403,6 +412,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Copy Pourcentage.
+        /// </summary>
+        public static string percentageCopy {
+            get {
+                return ResourceManager.GetString("percentageCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Priority Exentions:.
         /// </summary>
         public static string prioExtensionLabel {
@@ -462,6 +480,15 @@ namespace EasySave.Langs {
         public static string settings {
             get {
                 return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Connection.
+        /// </summary>
+        public static string socket {
+            get {
+                return ResourceManager.GetString("socket", resourceCulture);
             }
         }
         
