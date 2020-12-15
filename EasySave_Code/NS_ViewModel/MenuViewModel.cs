@@ -142,8 +142,6 @@ namespace EasySave.NS_ViewModel
                 // Reset the work object
                 UpdateWorkColor(_workToSave, "White");
                 ResetWorkState(_workToSave);
-
-                Trace.WriteLine(_workToSave.name + " finished " + DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss"));
             }
         }
 
