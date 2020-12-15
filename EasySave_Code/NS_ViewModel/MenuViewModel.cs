@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +17,7 @@ namespace EasySave.NS_ViewModel
         // ----- Attributes -----
         public Model model { get; set; }
         private int currentNbPrioFile { get; set; }
+        public Socket client { get; set; }
 
         private static AutoResetEvent autoResetEventWorks = new AutoResetEvent(true);
         private static AutoResetEvent autoResetEventLogs = new AutoResetEvent(true);
@@ -24,6 +29,15 @@ namespace EasySave.NS_ViewModel
         {
             this.currentNbPrioFile = 0;
             this.model = _model;
+            this.client = null;
+
+            Task.Run(() =>
+            {
+                Socket listener = Connect();
+                client = AcceptConnection(listener);
+                SendList(client);
+                ListenAction(client);
+            });
         }
 
 
@@ -33,6 +47,10 @@ namespace EasySave.NS_ViewModel
         {
             autoResetEventWorks.WaitOne();
             _work.colorProgressBar = _color;
+            if(client != null)
+            {
+                SendList(client);
+            }
             autoResetEventWorks.Set(); 
         }
 
@@ -648,5 +666,120 @@ namespace EasySave.NS_ViewModel
                 return -1;
             }
         }
+
+        // ###################################################################### SOCKETS ###################################################################### 
+        private Socket Connect()
+        {
+            // A bouger
+            string localIP = "127.0.0.1";
+            int port = 8080;
+
+            // Create a listener socket
+            Socket listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            IPAddress address = IPAddress.Parse(localIP);
+            IPEndPoint endPoint = new IPEndPoint(address, 8080);
+
+            // Bind the socket
+            listenSocket.Bind(endPoint);
+            listenSocket.Listen(10);
+
+            Console.WriteLine($"Server ON and listening {address}:{port}");
+
+            return listenSocket;
+        }
+
+        private Socket AcceptConnection(Socket _listen)
+        {
+            // Accept client
+            Socket client = _listen.Accept();
+
+            Console.WriteLine($"Connection established with : {client.LocalEndPoint}");
+
+            return client;
+        }
+
+        private void SendList(Socket client)
+        {
+            var workList = new List<workToSend>();
+
+            foreach (Work work in this.model.works)
+            {
+                workList.Add(new workToSend(work.name, work.state.progress, work.colorProgressBar));
+            }
+
+            string jsonWork = JsonSerializer.Serialize(workList);
+            byte[] state = Encoding.Default.GetBytes(jsonWork);
+            client.Send(state);
+        }
+
+        private void ListenAction(Socket client)
+        {
+            while (true)
+            {
+                byte[] buffer = new byte[512];
+                int receivedBytes = client.Receive(buffer);
+
+                string messageClient = Encoding.Default.GetString(buffer, 0, receivedBytes);
+                var action = JsonSerializer.Deserialize<ReceiveObject>(messageClient);
+
+                autoResetEventWorks.WaitOne();
+                foreach (int id in action.selectedId)
+                {
+                    if (action.action == "Green")
+                    {
+                        switch (this.model.works[id].colorProgressBar)
+                        {
+                            case "White":
+                                this.model.works[id].colorProgressBar = action.action;
+                                this.LaunchBackupWork(id);
+                                break;
+
+                            case "Orange":
+                                this.model.works[id].colorProgressBar = action.action;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        this.model.works[id].colorProgressBar = action.action;
+                    }
+
+                }
+                autoResetEventWorks.Set();
+                Trace.WriteLine($"Test : {action.action}");
+            }
+        }
+
+        private static void Deconnecter(Socket socket)
+        {
+            Console.WriteLine("Deco");
+            socket.Close();
+        }
+    }
+
+    // Classe workToSend
+    public class workToSend
+    {
+        public string name { get; set; }
+        public int progress { get; set; }
+        public string colorProgressBar { get; set; }
+
+        public workToSend(string _name, int _progress, string _colorProgressBar)
+        {
+            this.name = _name;
+            this.progress = _progress;
+            this.colorProgressBar = _colorProgressBar;
+        }
+    }
+    // Receive Object
+    public class ReceiveObject
+    {
+        public string action { get; set; }
+        public int[] selectedId { get; set; }
     }
 }
+
