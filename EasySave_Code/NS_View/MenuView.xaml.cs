@@ -42,9 +42,10 @@ namespace EasySave.NS_View
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
-            if (GetSelectedWorks().Length > 0)
+            int[] indexWorks = GetSelectedWorks();
+            if (indexWorks.Length > 0)
             {
-                foreach (int indexWork in GetSelectedWorks())
+                foreach (int indexWork in indexWorks)
                 {
                     switch (this.menuViewModel.model.works[indexWork].colorProgressBar)
                     {
@@ -62,6 +63,7 @@ namespace EasySave.NS_View
                             break;
                     }
                 }
+                _listWorks.UnselectAll();
             }
             else
             {
@@ -104,32 +106,51 @@ namespace EasySave.NS_View
 
         private void CancelBackup_Clicked(object sender, RoutedEventArgs e)
         {
-            foreach (int indexWork in GetSelectedWorks())
+            int[] indexWorks = GetSelectedWorks();
+            if (indexWorks.Length > 0)
             {
-                // Change Work State to Cancel
-                if (this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
+                foreach (int indexWork in indexWorks)
                 {
-                    this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "White");
+                    // Change Work State to Cancel
+                    if (this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
+                    {
+                        this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "White");
+                    }
+                    // Wait the reset of the work's state
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    while (this.menuViewModel.model.works[indexWork].state.progress != 0) { }
                 }
-                // Wait the reset of the work's state
-                Mouse.OverrideCursor = Cursors.Wait;
-                while (this.menuViewModel.model.works[indexWork].state.progress != 0) { }
+                // Refresh View
+                _listWorks.UnselectAll();
+                _listWorks.Items.Refresh();
+                Mouse.OverrideCursor = Cursors.Arrow;
             }
-            // Refresh View
-            _listWorks.Items.Refresh();
-            Mouse.OverrideCursor = Cursors.Arrow;
-
+            else
+            {
+                // Call Error Message if no Works Selected
+                this.menuViewModel.model.errorMsg?.Invoke("noSelectedWork");
+            }
         }
 
         private void PauseBackup_Clicked(object sender, RoutedEventArgs e)
         {
-            foreach (int indexWork in GetSelectedWorks())
+            int[] indexWorks = GetSelectedWorks();
+            if (indexWorks.Length > 0)
             {
-                // Check if backup is running
-                if (this.menuViewModel.model.works[indexWork].colorProgressBar != "Red" && this.menuViewModel.model.works[indexWork].colorProgressBar != "Orange" && this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
+                foreach (int indexWork in GetSelectedWorks())
                 {
-                    this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "Orange");
+                    // Check if backup is running
+                    if (this.menuViewModel.model.works[indexWork].colorProgressBar != "Red" && this.menuViewModel.model.works[indexWork].colorProgressBar != "Orange" && this.menuViewModel.model.works[indexWork].colorProgressBar != "White")
+                    {
+                        this.menuViewModel.UpdateWorkColor(this.menuViewModel.model.works[indexWork], "Orange");
+                    }
                 }
+                _listWorks.UnselectAll();
+            }
+            else
+            {
+                // Call Error Message if no Works Selected
+                this.menuViewModel.model.errorMsg?.Invoke("noSelectedWork");
             }
         }
     }
