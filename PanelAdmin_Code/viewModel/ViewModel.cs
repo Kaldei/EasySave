@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -17,8 +18,9 @@ namespace PanelAdmin.viewModel
     {
         // --- Attributes ---
         public Model model { get; set; }
-        public bool isDeconnected {get; set; }
+        public bool isDeconnected { get; set; }
         public Socket server { get; set; }
+
 
         // --- Constructor ---
         public ViewModel()
@@ -63,7 +65,7 @@ namespace PanelAdmin.viewModel
                     {
                         int msgLength = MsgReceived.IndexOf("]") + 1;
                         ObservableCollection<Work> jsonList = JsonSerializer.Deserialize<ObservableCollection<Work>>(MsgReceived.Substring(0, msgLength));
-                        if(jsonList.Count >= this.model.works.Count)
+                        if (jsonList.Count >= this.model.works.Count)
                         {
                             for (int i = 0; i < jsonList.Count; i++)
                             {
@@ -85,7 +87,7 @@ namespace PanelAdmin.viewModel
 
                             for (int i = 0; i < this.model.works.Count; i++)
                             {
-                                if(this.model.works[j].name == jsonList[i].name)
+                                if (this.model.works[j].name == jsonList[i].name)
                                 {
                                     this.model.works[j].colorProgressBar = jsonList[i].colorProgressBar;
                                     this.model.works[j].progress = jsonList[i].progress;
@@ -102,11 +104,12 @@ namespace PanelAdmin.viewModel
                         MsgReceived = MsgReceived.Length > msgLength + 1 ? MsgReceived.Substring(msgLength) : "";
                     }
                 }
-            } catch (SocketException)
+            }
+            catch (SocketException)
             {
                 MessageBox.Show("Server Close the connection");
             }
-            
+
         }
 
         public void SendAction(string _action, int[] id)

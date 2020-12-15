@@ -1,8 +1,11 @@
 ﻿using PanelAdmin.viewModel;
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PanelAdmin.view
 {
@@ -13,14 +16,17 @@ namespace PanelAdmin.view
     {
         private bool isFirstInstance;
         ViewModel vm = new ViewModel();
+
         public PanelAdminView()
         {
             isFirstInstance = false;
             new Mutex(true, "PanelAdmin", out isFirstInstance);
             if (isFirstInstance)
             {
+                Langs.Lang.Culture = new CultureInfo(this.vm.model.settings.language);
                 DataContext = vm;
                 InitializeComponent();
+                UpdateSelectedLanguage();
             } else
             {
                 MessageBox.Show("Admin Panel is already running !");
@@ -52,6 +58,7 @@ namespace PanelAdmin.view
         {
             Make_Action("White");
         }
+
         private int[] GetSelectedWorks()
         {
             int nbrTotalWorks = _listWorks.SelectedItems.Count;
@@ -78,5 +85,42 @@ namespace PanelAdmin.view
                 }
             }
         }
+
+        // Click on flags
+        private void ChangeLanguage(object sender, RoutedEventArgs e)
+        {
+            // Check 
+            var button = sender as Button;
+            if (this.vm.model.settings.language != button.Tag.ToString())
+            {
+                // Change Language Setting
+                this.vm.model.settings.language = button.Tag.ToString();
+                this.vm.model.SaveSettings();
+
+                // Change Program Language
+                Langs.Lang.Culture = new CultureInfo(this.vm.model.settings.language);
+
+                // Update Selected Language in View
+                UpdateSelectedLanguage();
+
+                MessageBox.Show(Langs.Lang.languageMessage);
+            }
+        }
+
+        // Select Language in Settings View
+        public void UpdateSelectedLanguage()
+        {
+            if (this.vm.model.settings.language == "en-US")
+            {
+                enButton.BorderBrush = Brushes.DodgerBlue;
+                frButton.BorderBrush = null;
+            }
+            else if (this.vm.model.settings.language == "fr-FR")
+            {
+                enButton.BorderBrush = null;
+                frButton.BorderBrush = Brushes.DodgerBlue;
+            }
+        }
+
     }
 }
