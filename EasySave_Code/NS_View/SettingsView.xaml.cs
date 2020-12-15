@@ -31,7 +31,7 @@ namespace EasySave.NS_View
             InitializeComponent();
 
             
-            updateSelectedLanguage();
+            UpdateSelectedLanguage();
             openFileDialog.Filter = "Text files (*.exe)|*.exe|All files (*.*)|*.*";
             _cryptoSoftPath.Text = this.settingsViewModel.model.settings.cryptoSoftPath;
             _maxSimultaneousFilesSize.Text = this.settingsViewModel.model.settings.maxSimultaneousFilesSize.ToString();
@@ -39,14 +39,14 @@ namespace EasySave.NS_View
 
 
         // ----- Retrun to Menu -----
-        private void returnMenuButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnMenuButton_Click(object sender, RoutedEventArgs e)
         {
             this.mainWindow.ChangePage("menu");
         }
 
 
         // ----- CryptoSoft Path -----
-        private void cryptoSoftPathButton_Click(object sender, RoutedEventArgs e)
+        private void CryptoSoftPathButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Crypto Soft Path given is Correct
             bool isValidCryptoSoftPath = File.Exists(_cryptoSoftPath.Text) && _cryptoSoftPath.Text.EndsWith(".exe");
@@ -79,10 +79,10 @@ namespace EasySave.NS_View
 
 
         // ----- Extensions to Encrypt -----
-        private void addExtensionButton_Click(object sender, RoutedEventArgs e)
+        private void AddExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Extension given is Correct
-            bool isValidExtention = checkExtension(_addExtension.Text, this.settingsViewModel.model.settings.cryptoExtensions);
+            bool isValidExtention = CheckExtension(_addExtension.Text, this.settingsViewModel.model.settings.cryptoExtensions);
             if (isValidExtention)
             {
                 addExtensionLabel.Foreground = Brushes.Black;
@@ -103,7 +103,7 @@ namespace EasySave.NS_View
             _addExtension.Text = "";
         }
 
-        private void removeExtensionButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove Extension
             this.settingsViewModel.model.settings.cryptoExtensions.Remove((string)_removeExtension.SelectedItem);
@@ -115,10 +115,10 @@ namespace EasySave.NS_View
 
 
         // ----- Priority Extensions ------
-        private void addPrioExtensionButton_Click(object sender, RoutedEventArgs e)
+        private void AddPrioExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Extension given is Correct
-            bool isValidExtention = checkExtension(_addPrioExtension.Text, this.settingsViewModel.model.settings.prioExtensions);
+            bool isValidExtention = CheckExtension(_addPrioExtension.Text, this.settingsViewModel.model.settings.prioExtensions);
             if (isValidExtention)
             {
                 addPrioExtensionLabel.Foreground = Brushes.Black;
@@ -139,7 +139,7 @@ namespace EasySave.NS_View
             _addPrioExtension.Text = "";
         }
 
-        private void removePrioExtensionButton_Click(object sender, RoutedEventArgs e)
+        private void RemovePrioExtensionButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove Extension
             this.settingsViewModel.model.settings.prioExtensions.Remove((string)_removePrioExtension.SelectedItem);
@@ -151,10 +151,10 @@ namespace EasySave.NS_View
 
 
         // ----- Business Software -----
-        private void addBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
+        private void AddBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
         {
             // Check If Business Software isn't alerady in list
-            bool isValidExtention = checkBusinessSoftware(_addBusinessSoftware.Text);
+            bool isValidExtention = CheckBusinessSoftware(_addBusinessSoftware.Text);
             if (isValidExtention)
             {
                 addBusinessSoftwareLabel.Foreground = Brushes.Black;
@@ -175,7 +175,7 @@ namespace EasySave.NS_View
             _addBusinessSoftware.Text = "";
         }
 
-        private bool checkBusinessSoftware(string _addBusinessSoftware)
+        private bool CheckBusinessSoftware(string _addBusinessSoftware)
         {
             foreach (string businessSoftware in this.settingsViewModel.model.settings.businessSoftwares)
             {
@@ -187,7 +187,7 @@ namespace EasySave.NS_View
             return true;
         }
 
-        private void removeBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveBusinessSoftwareButton_Click(object sender, RoutedEventArgs e)
         {
             // Remove Business Sofware
             this.settingsViewModel.model.settings.businessSoftwares.Remove((string)_removeBusinessSoftware.SelectedItem);
@@ -199,7 +199,7 @@ namespace EasySave.NS_View
 
 
         // ----- Max Simultaneous Files Size
-        private void maxSimultaneousFilesSizeButton_Click(object sender, RoutedEventArgs e)
+        private void MaxSimultaneousFilesSizeButton_Click(object sender, RoutedEventArgs e)
         {
             // Check if input is a number and stricly posisitve
             int.TryParse(_maxSimultaneousFilesSize.Text, out int maxSimultaneousFilesSize);
@@ -232,7 +232,7 @@ namespace EasySave.NS_View
 
         // ----- Language -----
         // Select Language in Settings View
-        public void updateSelectedLanguage()
+        public void UpdateSelectedLanguage()
         {
             if (this.settingsViewModel.model.settings.language == "en-US")
             {
@@ -245,6 +245,7 @@ namespace EasySave.NS_View
                 frButton.BorderBrush = Brushes.DodgerBlue;
             }
         }
+
 
         // Click on flags
         private void ChangeLanguage(object sender, RoutedEventArgs e)
@@ -261,7 +262,7 @@ namespace EasySave.NS_View
                 Langs.Lang.Culture = new CultureInfo(this.settingsViewModel.model.settings.language);
 
                 // Update Selected Language in View
-                updateSelectedLanguage();
+                UpdateSelectedLanguage();
 
                 // Reload App
                 mainWindow.RefreshLanguage();
@@ -272,7 +273,7 @@ namespace EasySave.NS_View
 
         // ----- Shared Methods ------
         // Extension Checker
-        private bool checkExtension(string _extension, ObservableCollection<string> extensionList)
+        private bool CheckExtension(string _extension, ObservableCollection<string> extensionList)
         {
             if (_extension.StartsWith("."))
             {
@@ -289,7 +290,7 @@ namespace EasySave.NS_View
         }
 
         // File Browser
-        private void cryptoSoftPathOpenFolderButtonButton_Click(object sender, RoutedEventArgs e)
+        private void CryptoSoftPathOpenFolderButtonButton_Click(object sender, RoutedEventArgs e)
         {
             // Open File Browser
             this.openFileDialog.ShowDialog();
