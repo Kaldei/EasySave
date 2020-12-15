@@ -284,6 +284,7 @@
   </data>
   <data name="stateRunning" xml:space="preserve">
     <value>En Cours</value>
+  </data>
   <data name="cantDeleteWork" xml:space="preserve">
     <value>Impossible de Supprimer, des travaux en cours de sauegarde !</value>
   </data>
