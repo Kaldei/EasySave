@@ -79,6 +79,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EasySave is already running!.
+        /// </summary>
+        public static string alreadyRunning {
+            get {
+                return ResourceManager.GetString("alreadyRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup is finish with error..
         /// </summary>
         public static string backupFinishedWithError {
@@ -336,6 +345,15 @@ namespace EasySave.Langs {
         public static string language {
             get {
                 return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please restart EasySave to make this change effective..
+        /// </summary>
+        public static string languageMessage {
+            get {
+                return ResourceManager.GetString("languageMessage", resourceCulture);
             }
         }
         

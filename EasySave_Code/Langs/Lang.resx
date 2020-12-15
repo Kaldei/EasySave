@@ -291,4 +291,10 @@
   <data name="cantGoToSettings" xml:space="preserve">
     <value>Can't Go to Settings while a Backup is Running!</value>
   </data>
+  <data name="alreadyRunning" xml:space="preserve">
+    <value>EasySave is already running!</value>
+  </data>
+  <data name="languageMessage" xml:space="preserve">
+    <value>Please restart EasySave to make this change effective.</value>
+  </data>
 </root>
