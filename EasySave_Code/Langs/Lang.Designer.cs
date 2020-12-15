@@ -124,6 +124,24 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t Delete Works while they are Running!.
+        /// </summary>
+        public static string cantDeleteWork {
+            get {
+                return ResourceManager.GetString("cantDeleteWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t Go to Settings while a Backup is Running!.
+        /// </summary>
+        public static string cantGoToSettings {
+            get {
+                return ResourceManager.GetString("cantGoToSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check to encrypt files.
         /// </summary>
         public static string checkEncrypt {

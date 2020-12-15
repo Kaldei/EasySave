@@ -89,6 +89,14 @@ namespace EasySave.NS_View
                 case "loadWorksError":
                     errorMsg = Lang.loadWorksError;
                     break;
+                    
+                case "cantDeleteWork":
+                    errorMsg = Lang.cantDeleteWork;
+                    break;
+
+                case "cantGoToSettings":
+                    errorMsg = Lang.cantGoToSettings;
+                    break;
 
                 default:
                     errorMsg = Lang.unknownError;
