@@ -19,6 +19,7 @@ namespace EasySave.NS_ViewModel
         public Model model { get; set; }
         private int currentNbPrioFile { get; set; }
         public Socket client { get; set; }
+        public Socket listener { get; set; }
 
         private static AutoResetEvent autoResetEventWorks = new AutoResetEvent(true);
         private static AutoResetEvent autoResetEventLogs = new AutoResetEvent(true);
@@ -31,14 +32,7 @@ namespace EasySave.NS_ViewModel
             this.currentNbPrioFile = 0;
             this.model = _model;
             this.client = null;
-
-            Task.Run(() =>
-            {
-                Socket listener = Connect();
-                client = AcceptConnection(listener);
-                SendList(client);
-                ListenAction(client);
-            });
+            this.listener = null;
         }
 
 
@@ -668,10 +662,26 @@ namespace EasySave.NS_ViewModel
             }
         }
 
-        // ###################################################################### SOCKETS ###################################################################### 
+        // Sockets
+        public void SocketOn()
+        {
+            // Launch Socket
+            Task.Run(() =>
+            {
+                // Listen connection
+                listener = Connect();
+                // Accept connection with the client
+                client = AcceptConnection(listener);
+                // Send a first list of works and start listen for actions
+                SendList(client);
+                ListenAction(client);
+            });
+        }
+
+        // Connect a new socket
         private Socket Connect()
         {
-            // A bouger
+            // IP Address and server Port
             string localIP = "127.0.0.1";
             int port = 8080;
 
@@ -685,11 +695,12 @@ namespace EasySave.NS_ViewModel
             listenSocket.Bind(endPoint);
             listenSocket.Listen(10);
 
-            Console.WriteLine($"Server ON and listening {address}:{port}");
+            Trace.WriteLine($"Server ON and listening {address}:{port}");
 
             return listenSocket;
         }
 
+        // Accept connection with a client
         private Socket AcceptConnection(Socket _listen)
         {
             // Accept client
@@ -700,20 +711,34 @@ namespace EasySave.NS_ViewModel
             return client;
         }
 
+        // Send a list of works
         private void SendList(Socket client)
         {
-            var workList = new List<workToSend>();
+                // Create a list
+                var workList = new List<WorkToSend>();
 
-            foreach (Work work in this.model.works)
+                // Add every works in the list
+                foreach (Work work in this.model.works)
+                {
+                    workList.Add(new WorkToSend(work.name, work.state.progress, work.colorProgressBar));
+                }
+
+                // Convert the json list to string
+                string jsonWork = JsonSerializer.Serialize(workList);
+                byte[] state = Encoding.Default.GetBytes(jsonWork);
+            try
             {
-                workList.Add(new workToSend(work.name, work.state.progress, work.colorProgressBar));
+                // Send the liste
+                client.Send(state);
+            } catch (SocketException)
+            {
+                // Client quit
+                Trace.WriteLine("CLient quit !");
             }
 
-            string jsonWork = JsonSerializer.Serialize(workList);
-            byte[] state = Encoding.Default.GetBytes(jsonWork);
-            client.Send(state);
         }
 
+        // Listen for actions
         private void ListenAction(Socket client)
         {
             while (true)
@@ -723,10 +748,13 @@ namespace EasySave.NS_ViewModel
                     byte[] buffer = new byte[512];
                     int receivedBytes = client.Receive(buffer);
 
+                    // Encode to string the message
                     string messageClient = Encoding.Default.GetString(buffer, 0, receivedBytes);
+                    // Deserialize the string into an ReceiveObject
                     var action = JsonSerializer.Deserialize<ReceiveObject>(messageClient);
 
                     autoResetEventWorks.WaitOne();
+                    // Process different progress state for every works on the list
                     foreach (int id in action.selectedId)
                     {
                         if (action.action == "Green")
@@ -753,42 +781,17 @@ namespace EasySave.NS_ViewModel
 
                     }
                     autoResetEventWorks.Set();
-                    Trace.WriteLine($"Test : {action.action}");
                 } catch (SocketException)
                 {
+                    // Socket deconnected
+                    this.client = null;
+                    this.listener = null;
                     MessageBox.Show("Le client c'est déconnecté");
                     break;
                 }
                 
             }
         }
-
-        private static void Deconnecter(Socket socket)
-        {
-            Console.WriteLine("Deco");
-            socket.Close();
-        }
-    }
-
-    // Classe workToSend
-    public class workToSend
-    {
-        public string name { get; set; }
-        public int progress { get; set; }
-        public string colorProgressBar { get; set; }
-
-        public workToSend(string _name, int _progress, string _colorProgressBar)
-        {
-            this.name = _name;
-            this.progress = _progress;
-            this.colorProgressBar = _colorProgressBar;
-        }
-    }
-    // Receive Object
-    public class ReceiveObject
-    {
-        public string action { get; set; }
-        public int[] selectedId { get; set; }
     }
 }
 

@@ -29,6 +29,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -55,23 +56,29 @@
 
             <StackPanel Grid.Column="4" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="ChangePage" Tag="settings" Content="{x:Static language:Lang.settings}"></Button>
+                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Tag="settings" Content="{x:Static language:Lang.settings}"></Button>
                 </Border>
             </StackPanel>
-            
-            <StackPanel Grid.Column="6" Background="White" Margin="0, 0, 10, 0" >
+
+            <StackPanel Grid.Column="5" Background="White" Margin="0, 0, 10, 0" >
+                <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
+                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Click="InitSocket" Content="{x:Static language:Lang.socket}"></Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Column="7" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="90" BorderBrush="#4FD31D" BorderThickness="6" HorizontalAlignment="Center" >
                     <Button Grid.Column="0" Background="#4FD31D" Foreground="White" FontSize="26" Padding="-1, -13, -3, -7" BorderBrush="#4FD31D" Click="Save_Clicked">></Button>
                 </Border>
             </StackPanel>
 
-            <StackPanel Grid.Column="7" Background="White" Margin="0, 0, 10, 0" >
+            <StackPanel Grid.Column="8" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="90" BorderBrush="Orange" BorderThickness="6" HorizontalAlignment="Center" >
                     <Button Grid.Column="0" Background="Orange" Foreground="White" FontSize="14" FontWeight="Bold" Padding="0, -4, 0, 0" BorderBrush="Orange" Click="PauseBackup_Clicked">| |</Button>
                 </Border>
             </StackPanel>
 
-            <StackPanel Grid.Column="8" Background="White" Margin="0" >
+            <StackPanel Grid.Column="9" Background="White" Margin="0" >
                 <Border CornerRadius="90" BorderBrush="Red" BorderThickness="6" HorizontalAlignment="Center" >
                     <Button Grid.Column="0" Background="Red" Foreground="White" FontSize="26" Padding="1, -13, 2, -7" BorderBrush="Red" Click="CancelBackup_Clicked">x</Button>
                 </Border>
@@ -98,8 +105,8 @@
                     <DataGridTextColumn Header="{x:Static language:Lang.destination}" Binding="{Binding dst}"  Width="250"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.backupType}" Binding="{Binding backupType}"  Width="100"/>
                     <DataGridTextColumn Header="{x:Static language:Lang.encrypt}" Binding="{Binding isCrypted}"  Width="64"/>
-                    <DataGridTextColumn Header="Progress" Binding="{Binding state.progress}"  Width="64"/>
-                    <DataGridTemplateColumn Header="Percentage Downloaded" Width="250" >
+                    <DataGridTextColumn Header="{x:Static language:Lang.percentageCopy}" Binding="{Binding state.progress}"  Width="64"/>
+                    <DataGridTemplateColumn Header="{x:Static language:Lang.backupProgress}" Width="250" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ProgressBar Value="{Binding state.progress }" Minimum="0" Maximum="100" Background="White" Foreground="{Binding colorProgressBar}"/>
