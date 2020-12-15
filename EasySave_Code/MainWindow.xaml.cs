@@ -4,6 +4,7 @@ using EasySave.NS_View;
 using EasySave.NS_ViewModel;
 using EasySave.NS_Model;
 using System.Threading;
+using System.Diagnostics;
 
 namespace EasySave
 {
@@ -25,15 +26,10 @@ namespace EasySave
         public AddWorkViewModel addWorkViewModel { get; set; }
         public SettingsViewModel settingsViewModel { get; set; }
 
-        private bool isFirstInstance;
-
         // ----- Constructor -----
         public MainWindow()
         {
-            isFirstInstance = false;
-            new Mutex(false, "EasySave", out isFirstInstance);
-
-            if (isFirstInstance)
+            if (Process.GetProcessesByName("EasySave").Length == 1)
             {
                 // Initialize Model
                 this.model = new Model();
