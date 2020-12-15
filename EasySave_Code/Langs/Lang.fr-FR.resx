@@ -291,4 +291,10 @@
   <data name="cantGoToSettings" xml:space="preserve">
     <value>Impossible d'acceder au Paramètres, des travaux en cours de sauegarde !</value>
   </data>
+  <data name="alreadyRunning" xml:space="preserve">
+    <value>EasySave est déjà demarré !</value>
+  </data>
+  <data name="languageMessage" xml:space="preserve">
+    <value>Redemarrez EasySave pour que le changement soit pris en compte.</value>
+  </data>
 </root>

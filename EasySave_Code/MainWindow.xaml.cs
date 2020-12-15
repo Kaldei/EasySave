@@ -31,7 +31,7 @@ namespace EasySave
         public MainWindow()
         {
             isFirstInstance = false;
-            new Mutex(true, "EasySave", out isFirstInstance);
+            new Mutex(false, "EasySave", out isFirstInstance);
 
             if (isFirstInstance)
             {
@@ -54,7 +54,7 @@ namespace EasySave
             }
             else
             {
-                MessageBox.Show("EasySave is already Running!");
+                MessageBox.Show(Langs.Lang.alreadyRunning);
                 App.Current.Shutdown();
             }
 
@@ -89,23 +89,6 @@ namespace EasySave
                     }
                     DataContext = settingsView;
                     return;
-            }
-        }
-
-        public void RefreshLanguage()
-        {
-            if (menuView != null)
-            {
-                menuView = new MenuView(menuViewModel, this);
-            }
-            if (addWorkView != null)
-            {
-                addWorkView = new AddWorkView(addWorkViewModel, this);
-            }
-            if (settingsView != null)
-            {
-                settingsView = new SettingsView(settingsViewModel, this);
-                DataContext = settingsView;
             }
         }
     }
