@@ -124,6 +124,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can not delete the destination folder.
+        /// </summary>
+        public static string cannotDelDstFolder {
+            get {
+                return ResourceManager.GetString("cannotDelDstFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Check to encrypt files.
         /// </summary>
         public static string checkEncrypt {

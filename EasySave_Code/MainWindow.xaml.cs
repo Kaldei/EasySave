@@ -59,8 +59,6 @@ namespace EasySave
                 MessageBox.Show("EasySave is already Running!");
                 App.Current.Shutdown();
             }
-
-
         }
 
 
