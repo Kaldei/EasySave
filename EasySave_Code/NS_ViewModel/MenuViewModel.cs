@@ -46,7 +46,7 @@ namespace EasySave.NS_ViewModel
             this.model.SaveWorks();
             autoResetEventWorks.Set();
         }
-
+        /*
         private List<Work> GetWorksById(int[] _worksId)
         {
             List<Work> works = new List<Work>();
@@ -71,7 +71,7 @@ namespace EasySave.NS_ViewModel
                 return false;
             }
         }
-
+        
         public void RemoveWorks(int[] _worksId)
         {
             if (IsWorkSelected(_worksId))
@@ -84,14 +84,14 @@ namespace EasySave.NS_ViewModel
                 }
             }
         }
-
-        private void RemoveWork(Work _workToRemove)
+        */
+        public void RemoveWork(int _worksId)
         {
             try
             {
                 // Remove Work from the program (at index)
                 autoResetEventWorks.WaitOne();
-                this.model.works.Remove(_workToRemove);
+                this.model.works.Remove(this.model.works[_worksId]);
                 this.model.SaveWorks();
                 autoResetEventWorks.Set();
             }

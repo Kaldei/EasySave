@@ -35,14 +35,16 @@ namespace EasySave.NS_View
         private void Remove_Clicked(object sender, RoutedEventArgs e)
         {
             int[] indexWorks = GetSelectedWorks();
+
+            // Check if at least one Work is Selected
             if (indexWorks.Length > 0)
             {
                 foreach (int indexWork in indexWorks)
                 {
                     if (this.menuViewModel.model.works[indexWork].colorProgressBar == "White")
                     {
-                        // Remove Selected Works
-                        menuViewModel.RemoveWorks(indexWorks);
+                        // Remove Work if it isn't Running
+                        this.menuViewModel.RemoveWork(indexWork);
                     }
                     else
                     {
@@ -61,6 +63,8 @@ namespace EasySave.NS_View
         private void Save_Clicked(object sender, RoutedEventArgs e)
         {
             int[] indexWorks = GetSelectedWorks();
+
+            // Check if at least one Work is Selected
             if (indexWorks.Length > 0)
             {
                 foreach (int indexWork in indexWorks)
@@ -100,7 +104,12 @@ namespace EasySave.NS_View
             {
                 SelectedWorks[i] = _listWorks.Items.IndexOf(_listWorks.SelectedItems[i]);
             }
-            return SelectedWorks;
+
+            // Sort and Reverse Array to be sure to Remove the Right Work
+            Array.Sort(SelectedWorks);
+            Array.Reverse(SelectedWorks);
+
+            return SelectedWorks; 
         }
 
         private void SelectAll_Clicked(object sender, RoutedEventArgs e)
