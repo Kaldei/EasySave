@@ -59,7 +59,7 @@ namespace EasySave.NS_View
                     break;
 
                 case "cannotDelDstFolder":
-                    errorMsg = "BUG";
+                    errorMsg = Lang.cannotDelDstFolder;
                     break;
 
                 case "backupFinishedWithError":
