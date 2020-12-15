@@ -264,4 +264,7 @@
   <data name="errorDstInSrc" xml:space="preserve">
     <value>Veuillez sélection un dossier destination hors du dossier source.</value>
   </data>
+  <data name="cannotDelDstFolder" xml:space="preserve">
+    <value>Impossible de supprimer le dossier de destination.</value>
+  </data>
 </root>
