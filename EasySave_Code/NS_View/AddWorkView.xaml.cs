@@ -33,7 +33,7 @@ namespace EasySave.NS_View
 
 
         // ----- Methods -----
-        private void srcOpenFolderButton_Click(object sender, RoutedEventArgs e)
+        private void SrcOpenFolderButton_Click(object sender, RoutedEventArgs e)
         {
             // Open Folder Browser
             this.folderBrowserDialog.ShowDialog();
@@ -41,7 +41,7 @@ namespace EasySave.NS_View
             _src.Text = this.folderBrowserDialog.SelectedPath;
         }
 
-        private void dstOpenFolderButton_Click(object sender, RoutedEventArgs e)
+        private void DstOpenFolderButton_Click(object sender, RoutedEventArgs e)
         {
             // Open Folder Browser
             this.folderBrowserDialog.ShowDialog();
@@ -88,7 +88,7 @@ namespace EasySave.NS_View
             }
         }
 
-       private bool IsNameValid(string _name)
+        private bool IsNameValid(string _name)
         {
             int length = _name.Length;
 
@@ -153,7 +153,7 @@ namespace EasySave.NS_View
             return false;
         }
 
-        private void returnMenuButton_Click(object sender, RoutedEventArgs e)
+        private void ReturnMenuButton_Click(object sender, RoutedEventArgs e)
         {
             this.mainWindow.ChangePage("menu");
         }

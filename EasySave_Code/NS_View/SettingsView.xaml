@@ -36,7 +36,7 @@
 
             <StackPanel Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border CornerRadius="90" BorderThickness="6" HorizontalAlignment="Center" BorderBrush="LightGray">
-                    <Button x:Name="returnMenuButton" Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray" Click="returnMenuButton_Click">←</Button>
+                    <Button x:Name="returnMenuButton" Grid.Column="0" Background="LightGray" Foreground="Black" FontSize="26" Padding="-4, -14, -4, -7" BorderBrush="LightGray" Click="ReturnMenuButton_Click">←</Button>
                 </Border>
             </StackPanel>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{x:Static language:Lang.settings}"></TextBlock>
@@ -55,8 +55,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="_cryptoSoftPath" Grid.ColumnSpan="2"/>
-                <Button x:Name="cryptoSoftPathOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="cryptoSoftPathOpenFolderButtonButton_Click">. . .</Button>
-                <Button x:Name="cryptoSoftPathButton" Grid.Column="3" Width="70" HorizontalAlignment="Left" Click="cryptoSoftPathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
+                <Button x:Name="cryptoSoftPathOpenFolderButton" Grid.Column="2" Width="40" HorizontalAlignment="Right" Click="CryptoSoftPathOpenFolderButtonButton_Click">. . .</Button>
+                <Button x:Name="cryptoSoftPathButton" Grid.Column="3" Width="70" HorizontalAlignment="Left" Click="CryptoSoftPathButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}"></Button>
             </Grid>
         </StackPanel>
 
@@ -76,7 +76,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox x:Name="_addExtension"/>
-                    <Button x:Name="addExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="addExtensionButton_Click">+</Button>
+                    <Button x:Name="addExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="AddExtensionButton_Click">+</Button>
                 </Grid>
 
                 <Grid Grid.Column="2">
@@ -86,7 +86,7 @@
                     </Grid.ColumnDefinitions>
 
                     <ComboBox x:Name="_removeExtension" SelectedIndex="0" ItemsSource="{Binding model.settings.cryptoExtensions}"/>
-                    <Button x:Name="removeExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeExtensionButton_Click">X</Button>
+                    <Button x:Name="removeExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="RemoveExtensionButton_Click">X</Button>
                 </Grid>
             </Grid>
         </StackPanel>
@@ -107,7 +107,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox x:Name="_addPrioExtension"/>
-                    <Button x:Name="addPrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="addPrioExtensionButton_Click">+</Button>
+                    <Button x:Name="addPrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Click="AddPrioExtensionButton_Click">+</Button>
                 </Grid>
 
                 <Grid Grid.Column="2">
@@ -117,7 +117,7 @@
                     </Grid.ColumnDefinitions>
 
                     <ComboBox x:Name="_removePrioExtension" SelectedIndex="0" ItemsSource="{Binding model.settings.prioExtensions}"/>
-                    <Button x:Name="removePrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removePrioExtensionButton_Click">X</Button>
+                    <Button x:Name="removePrioExtensionButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="RemovePrioExtensionButton_Click">X</Button>
                 </Grid>
             </Grid>
         </StackPanel>
@@ -139,7 +139,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox x:Name="_addBusinessSoftware" Grid.ColumnSpan="2"/>
-                    <Button x:Name="addBusinessSoftwareButton" Grid.Column="2" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Margin="2,3,2,4" Click="addBusinessSoftwareButton_Click">+</Button>
+                    <Button x:Name="addBusinessSoftwareButton" Grid.Column="2" Height="15" Width="15" Padding="0, -3, 0, 0" Background="Green" Foreground="White" Margin="2,3,2,4" Click="AddBusinessSoftwareButton_Click">+</Button>
                 </Grid>
 
                 <Grid Grid.Column="2">
@@ -149,7 +149,7 @@
                     </Grid.ColumnDefinitions>
 
                     <ComboBox x:Name="_removeBusinessSoftware" SelectedIndex="0" ItemsSource="{Binding model.settings.businessSoftwares}"/>
-                    <Button x:Name="removeBusinessSoftwareButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="removeBusinessSoftwareButton_Click">X</Button>
+                    <Button x:Name="removeBusinessSoftwareButton" Grid.Column="1" Height="15" Width="15" Padding="0, -2, 0, 0" Background="Red" Foreground="White" Click="RemoveBusinessSoftwareButton_Click">X</Button>
                 </Grid>
             </Grid>
         </StackPanel>
@@ -164,7 +164,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="_maxSimultaneousFilesSize" Grid.ColumnSpan="2"/>
-                <Button x:Name="maxSimultaneousFilesSizeButton" Grid.Column="2" Width="70" HorizontalAlignment="Left" Click="maxSimultaneousFilesSizeButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}" Height="20" VerticalAlignment="Bottom"></Button>
+                <Button x:Name="maxSimultaneousFilesSizeButton" Grid.Column="2" Width="70" HorizontalAlignment="Left" Click="MaxSimultaneousFilesSizeButton_Click" Margin="10,0,0,0" Content="{x:Static language:Lang.save}" Height="20" VerticalAlignment="Bottom"></Button>
             </Grid>
         </StackPanel>
 
