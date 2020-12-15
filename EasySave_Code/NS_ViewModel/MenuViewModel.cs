@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EasySave.NS_ViewModel
 {
@@ -717,40 +718,48 @@ namespace EasySave.NS_ViewModel
         {
             while (true)
             {
-                byte[] buffer = new byte[512];
-                int receivedBytes = client.Receive(buffer);
-
-                string messageClient = Encoding.Default.GetString(buffer, 0, receivedBytes);
-                var action = JsonSerializer.Deserialize<ReceiveObject>(messageClient);
-
-                autoResetEventWorks.WaitOne();
-                foreach (int id in action.selectedId)
+                try
                 {
-                    if (action.action == "Green")
+                    byte[] buffer = new byte[512];
+                    int receivedBytes = client.Receive(buffer);
+
+                    string messageClient = Encoding.Default.GetString(buffer, 0, receivedBytes);
+                    var action = JsonSerializer.Deserialize<ReceiveObject>(messageClient);
+
+                    autoResetEventWorks.WaitOne();
+                    foreach (int id in action.selectedId)
                     {
-                        switch (this.model.works[id].colorProgressBar)
+                        if (action.action == "Green")
                         {
-                            case "White":
-                                this.model.works[id].colorProgressBar = action.action;
-                                this.LaunchBackupWork(id);
-                                break;
+                            switch (this.model.works[id].colorProgressBar)
+                            {
+                                case "White":
+                                    this.model.works[id].colorProgressBar = action.action;
+                                    this.LaunchBackupWork(id);
+                                    break;
 
-                            case "Orange":
-                                this.model.works[id].colorProgressBar = action.action;
-                                break;
+                                case "Orange":
+                                    this.model.works[id].colorProgressBar = action.action;
+                                    break;
 
-                            default:
-                                break;
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                    else
-                    {
-                        this.model.works[id].colorProgressBar = action.action;
-                    }
+                        else
+                        {
+                            this.model.works[id].colorProgressBar = action.action;
+                        }
 
+                    }
+                    autoResetEventWorks.Set();
+                    Trace.WriteLine($"Test : {action.action}");
+                } catch (SocketException)
+                {
+                    MessageBox.Show("Le client c'est déconnecté");
+                    break;
                 }
-                autoResetEventWorks.Set();
-                Trace.WriteLine($"Test : {action.action}");
+                
             }
         }
 
