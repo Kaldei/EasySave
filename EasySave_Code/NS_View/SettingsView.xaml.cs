@@ -258,9 +258,11 @@ namespace EasySave.NS_View
                 this.settingsViewModel.model.settings.language = button.Tag.ToString();
                 this.settingsViewModel.model.SaveSettings();
 
+                // Surround Right Flag
+                UpdateSelectedLanguage();
+
                 MessageBox.Show(Langs.Lang.languageMessage);
             }
-
         }
 
 
