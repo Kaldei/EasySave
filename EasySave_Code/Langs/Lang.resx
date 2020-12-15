@@ -264,4 +264,25 @@
   <data name="errorDstInSrc" xml:space="preserve">
     <value>Please select a destination file out of the source folder.</value>
   </data>
+  <data name="state" xml:space="preserve">
+    <value>Works States:</value>
+  </data>
+  <data name="stateBandWidthSaving" xml:space="preserve">
+    <value>Wait (Band Width Saving)</value>
+  </data>
+  <data name="stateBusinessSofOn" xml:space="preserve">
+    <value>Wait (Business Software On)</value>
+  </data>
+  <data name="stateNonPrioFiles" xml:space="preserve">
+    <value>Wait (Non-Priority Files)</value>
+  </data>
+  <data name="statePause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="stateReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="stateRunning" xml:space="preserve">
+    <value>Running</value>
+  </data>
 </root>
