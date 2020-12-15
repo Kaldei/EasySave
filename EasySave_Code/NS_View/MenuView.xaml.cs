@@ -34,10 +34,28 @@ namespace EasySave.NS_View
         // ----- Methods
         private void Remove_Clicked(object sender, RoutedEventArgs e)
         {
-            int[] SelectedWorks = GetSelectedWorks();
-
-            // Remove Selected Works
-            menuViewModel.RemoveWorks(SelectedWorks);
+            int[] indexWorks = GetSelectedWorks();
+            if (indexWorks.Length > 0)
+            {
+                foreach (int indexWork in indexWorks)
+                {
+                    if (this.menuViewModel.model.works[indexWork].colorProgressBar == "White")
+                    {
+                        // Remove Selected Works
+                        menuViewModel.RemoveWorks(indexWorks);
+                    }
+                    else
+                    {
+                        // Call Error Message if the Backup is Running
+                        this.menuViewModel.model.errorMsg?.Invoke("cantDeleteWork");
+                    }
+                }
+            }
+            else
+            {
+                // Call Error Message if no Works Selected
+                this.menuViewModel.model.errorMsg?.Invoke("noSelectedWork");
+            }
         }
 
         private void Save_Clicked(object sender, RoutedEventArgs e)
@@ -101,7 +119,29 @@ namespace EasySave.NS_View
         private void ChangePage(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            this.mainWindow.ChangePage(button.Tag.ToString());
+            bool isBackupRunning = false;
+
+            // Check if a Backup is Running
+            foreach (var work in this.menuViewModel.model.works)
+            {
+                if(work.colorProgressBar != "White")
+                {
+                    isBackupRunning = true;
+                    break;
+                }
+            } 
+
+            // Prevent from Swhitching to Settings if a Backup is Running
+            if (button.Tag.ToString() == "settings" && isBackupRunning)
+            {
+                // Call Error Message if a Works is Running
+                this.menuViewModel.model.errorMsg?.Invoke("cantGoToSettings");
+            }
+            else
+            {
+                // Change Page
+                this.mainWindow.ChangePage(button.Tag.ToString());
+            }
         }
 
         private void CancelBackup_Clicked(object sender, RoutedEventArgs e)

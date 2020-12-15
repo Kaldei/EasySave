@@ -264,4 +264,10 @@
   <data name="errorDstInSrc" xml:space="preserve">
     <value>Veuillez sélection un dossier destination hors du dossier source.</value>
   </data>
+  <data name="cantDeleteWork" xml:space="preserve">
+    <value>Impossible de Supprimer, des travaux en cours de sauegarde !</value>
+  </data>
+  <data name="cantGoToSettings" xml:space="preserve">
+    <value>Impossible d'acceder au Paramètres, des travaux en cours de sauegarde !</value>
+  </data>
 </root>

@@ -264,4 +264,10 @@
   <data name="errorDstInSrc" xml:space="preserve">
     <value>Please select a destination file out of the source folder.</value>
   </data>
+  <data name="cantDeleteWork" xml:space="preserve">
+    <value>Can't Delete Works while they are Running!</value>
+  </data>
+  <data name="cantGoToSettings" xml:space="preserve">
+    <value>Can't Go to Settings while a Backup is Running!</value>
+  </data>
 </root>
