@@ -19,7 +19,7 @@ namespace PanelAdmin.viewModel
         // --- Attributes ---
         public Model model { get; set; }
         public bool isDeconnected { get; set; }
-        public Socket server { get; set; }
+        private Socket server { get; set; }
 
 
         // --- Constructor ---

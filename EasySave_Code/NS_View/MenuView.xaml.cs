@@ -132,5 +132,17 @@ namespace EasySave.NS_View
                 }
             }
         }
+
+        private void InitSocket(object sender, RoutedEventArgs e)
+        {
+            if(this.menuViewModel.listener == null)
+            {
+                this.menuViewModel.SocketOn();
+            } else
+            {
+                MessageBox.Show("Socket running");
+            }
+
+        }
     }
 }

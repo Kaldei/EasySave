@@ -267,4 +267,13 @@
   <data name="cannotDelDstFolder" xml:space="preserve">
     <value>Can not delete the destination folder</value>
   </data>
+  <data name="socket" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="backupProgress" xml:space="preserve">
+    <value>Backup Progress</value>
+  </data>
+  <data name="percentageCopy" xml:space="preserve">
+    <value>Copy Pourcentage</value>
+  </data>
 </root>
