@@ -284,5 +284,10 @@
   </data>
   <data name="stateRunning" xml:space="preserve">
     <value>En Cours</value>
+  <data name="cantDeleteWork" xml:space="preserve">
+    <value>Impossible de Supprimer, des travaux en cours de sauegarde !</value>
+  </data>
+  <data name="cantGoToSettings" xml:space="preserve">
+    <value>Impossible d'acceder au Paramètres, des travaux en cours de sauegarde !</value>
   </data>
 </root>

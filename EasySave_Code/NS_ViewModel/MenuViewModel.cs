@@ -41,7 +41,7 @@ namespace EasySave.NS_ViewModel
         public void ResetWorkState(Work _work)
         {
             autoResetEventWorks.WaitOne();
-            _work.state.UpdateState(0, 0, 0, 0, "","");
+            _work.state.InitState(0, 0, 0, "", "");
             _work.lastBackupDate = DateTime.Now.ToString("yyyy/MM/dd_HH:mm:ss");
             this.model.SaveWorks();
             autoResetEventWorks.Set();
@@ -282,8 +282,6 @@ namespace EasySave.NS_ViewModel
                         }
                     }
 
-                    Trace.WriteLine(filesToSave.Count);
-                    Trace.WriteLine(totalPrioFile);
                     // Init the state of the current work to save
                     autoResetEventWorks.WaitOne();
                     _work.state.InitState(filesToSave.Count, totalPrioFile, totalSize, "", "");
@@ -303,7 +301,7 @@ namespace EasySave.NS_ViewModel
                     // If there is no full backup as a ref, we create the first one as full backup
                     if (lastFullDirName.Length == 0) goto case BackupType.FULL;
 
-                    // Get evvery files of the source directory
+                    // Get every files of the source directory
 
                     // Check if there is a modification between the current file and the last full backup
                     foreach (FileInfo file in srcFiles)
@@ -509,8 +507,18 @@ namespace EasySave.NS_ViewModel
         // Pause Backup (While User do not Change Backup State)
         private void PauseBackup(Work _work)
         {
+            // Decrease Priority File Counter
+            autoResetEventLogs.WaitOne();
+            currentNbPrioFile -= _work.state.leftPrioFile;
+            autoResetEventLogs.Set();
+
             // Pause Program
             while (_work.colorProgressBar == "Orange") { }
+
+            // Increase Priority File Counter
+            autoResetEventLogs.WaitOne();
+            currentNbPrioFile += _work.state.leftPrioFile;
+            autoResetEventLogs.Set();
         }
 
 

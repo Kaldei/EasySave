@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -284,5 +284,10 @@
   </data>
   <data name="stateRunning" xml:space="preserve">
     <value>Running</value>
+  <data name="cantDeleteWork" xml:space="preserve">
+    <value>Can't Delete Works while they are Running!</value>
+  </data>
+  <data name="cantGoToSettings" xml:space="preserve">
+    <value>Can't Go to Settings while a Backup is Running!</value>
   </data>
 </root>

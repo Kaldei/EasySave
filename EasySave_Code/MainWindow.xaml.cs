@@ -19,13 +19,11 @@ namespace EasySave
         private MenuView menuView { get; set; }
         private AddWorkView addWorkView { get; set; }
         private SettingsView settingsView { get; set; }
-        private BackupView backupView { get; set; }
         private ErrorView errorView { get; set; }
 
         public MenuViewModel menuViewModel { get; set; }
         public AddWorkViewModel addWorkViewModel { get; set; }
         public SettingsViewModel settingsViewModel { get; set; }
-        public BackupViewModel backupViewModel { get; set; }
 
         private bool isFirstInstance;
 
@@ -90,16 +88,6 @@ namespace EasySave
                         settingsView = new SettingsView(settingsViewModel, this);
                     }
                     DataContext = settingsView;
-                    return;
-
-                case "backup":
-                    if (backupView == null)
-                    {
-                        this.backupViewModel = new BackupViewModel(model);
-                        backupView = new BackupView(backupViewModel, this);
-                    }
-                    DataContext = backupView;
-                    backupView.RunSave();
                     return;
             }
         }
