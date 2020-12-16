@@ -56,7 +56,7 @@
 
             <StackPanel Grid.Column="4" Background="White" Margin="0, 0, 10, 0" >
                 <Border CornerRadius="9" BorderBrush="LightGray" BorderThickness="6" HorizontalAlignment="Center" >
-                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2" Tag="settings" Content="{x:Static language:Lang.settings}"></Button>
+                    <Button Grid.Column="0" Background="LightGray" BorderBrush="LightGray" FontSize="14" Padding="0, -2"  Click="ChangePage" Tag="settings" Content="{x:Static language:Lang.settings}"></Button>
                 </Border>
             </StackPanel>
 

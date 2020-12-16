@@ -61,6 +61,15 @@ namespace PanelAdmin.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à The Panel is always running.
+        /// </summary>
+        public static string alwaysRunning {
+            get {
+                return ResourceManager.GetString("alwaysRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Backup Progress.
         /// </summary>
         public static string backupProgress {
@@ -129,6 +138,15 @@ namespace PanelAdmin.Langs {
         public static string progress {
             get {
                 return ResourceManager.GetString("progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The server close the connection.
+        /// </summary>
+        public static string socketDeconnection {
+            get {
+                return ResourceManager.GetString("socketDeconnection", resourceCulture);
             }
         }
     }
