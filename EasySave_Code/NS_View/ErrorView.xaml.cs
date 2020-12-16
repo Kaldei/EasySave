@@ -58,6 +58,10 @@ namespace EasySave.NS_View
                     errorMsg = Lang.cannotCreateDstFolder;                  
                     break;
 
+                case "cannotDelDstFolder":
+                    errorMsg = Lang.cannotDelDstFolder;
+                    break;
+
                 case "backupFinishedWithError":
                     errorMsg = Lang.backupFinishedWithError;
                     break;

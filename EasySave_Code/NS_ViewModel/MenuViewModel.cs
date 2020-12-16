@@ -3,8 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EasySave.NS_ViewModel
 {
@@ -13,6 +18,8 @@ namespace EasySave.NS_ViewModel
         // ----- Attributes -----
         public Model model { get; set; }
         private int currentNbPrioFile { get; set; }
+        public Socket client { get; set; }
+        public Socket listener { get; set; }
 
         private static AutoResetEvent autoResetEventWorks = new AutoResetEvent(true);
         private static AutoResetEvent autoResetEventLogs = new AutoResetEvent(true);
@@ -24,6 +31,8 @@ namespace EasySave.NS_ViewModel
         {
             this.currentNbPrioFile = 0;
             this.model = _model;
+            this.client = null;
+            this.listener = null;
         }
 
 
@@ -33,6 +42,10 @@ namespace EasySave.NS_ViewModel
         {
             autoResetEventWorks.WaitOne();
             _work.colorProgressBar = _color;
+            if(client != null)
+            {
+                SendList(client);
+            }
             autoResetEventWorks.Set(); 
         }
 
@@ -654,5 +667,137 @@ namespace EasySave.NS_ViewModel
                 return -1;
             }
         }
+
+        // Sockets
+        public void SocketOn()
+        {
+            // Launch Socket
+            Task.Run(() =>
+            {
+                // Listen connection
+                listener = Connect();
+                // Accept connection with the client
+                client = AcceptConnection(listener);
+                // Send a first list of works and start listen for actions
+                SendList(client);
+                ListenAction(client);
+            });
+        }
+
+        // Connect a new socket
+        private Socket Connect()
+        {
+            // IP Address and server Port
+            string localIP = "127.0.0.1";
+            int port = 8080;
+
+            // Create a listener socket
+            Socket listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            IPAddress address = IPAddress.Parse(localIP);
+            IPEndPoint endPoint = new IPEndPoint(address, 8080);
+
+            // Bind the socket
+            listenSocket.Bind(endPoint);
+            listenSocket.Listen(10);
+
+            Trace.WriteLine($"Server ON and listening {address}:{port}");
+
+            return listenSocket;
+        }
+
+        // Accept connection with a client
+        private Socket AcceptConnection(Socket _listen)
+        {
+            // Accept client
+            Socket client = _listen.Accept();
+
+            Trace.WriteLine($"Connection established with : {client.LocalEndPoint}");
+
+            return client;
+        }
+
+        // Send a list of works
+        private void SendList(Socket client)
+        {
+                // Create a list
+                var workList = new List<WorkToSend>();
+
+                // Add every works in the list
+                foreach (Work work in this.model.works)
+                {
+                    workList.Add(new WorkToSend(work.name, work.state.progress, work.colorProgressBar));
+                }
+
+                // Convert the json list to string
+                string jsonWork = JsonSerializer.Serialize(workList);
+                byte[] state = Encoding.Default.GetBytes(jsonWork);
+            try
+            {
+                // Send the liste
+                client.Send(state);
+            } catch (SocketException)
+            {
+                // Client quit
+                Trace.WriteLine(Langs.Lang.socketDeconnection);
+            }
+
+        }
+
+        // Listen for actions
+        private void ListenAction(Socket client)
+        {
+            while (true)
+            {
+                try
+                {
+                    byte[] buffer = new byte[512];
+                    int receivedBytes = client.Receive(buffer);
+
+                    // Encode to string the message
+                    string messageClient = Encoding.Default.GetString(buffer, 0, receivedBytes);
+                    // Deserialize the string into an ReceiveObject
+                    var action = JsonSerializer.Deserialize<ReceiveObject>(messageClient);
+
+                    autoResetEventWorks.WaitOne();
+                    // Process different progress state for every works on the list
+                    foreach (int id in action.selectedId)
+                    {
+                        if (action.action == "Green")
+                        {
+                            switch (this.model.works[id].colorProgressBar)
+                            {
+                                case "White":
+                                    this.model.works[id].colorProgressBar = action.action;
+                                    this.LaunchBackupWork(id);
+                                    break;
+
+                                case "Orange":
+                                    this.model.works[id].colorProgressBar = action.action;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            this.model.works[id].colorProgressBar = action.action;
+                        }
+
+                    }
+                    autoResetEventWorks.Set();
+                } catch (SocketException)
+                {
+                    // Socket deconnected
+                    this.client = null;
+                    this.listener = null;
+                    MessageBox.Show(Langs.Lang.socketDeconnection);
+                    break;
+                }
+                
+            }
+        }
     }
 }
+
