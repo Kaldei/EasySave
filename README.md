@@ -4,7 +4,7 @@
     <img src="https://www.flaticon.com/svg/static/icons/svg/3790/3790894.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h2 align="center">EasySave v2.0 (Graphical Version)</h2>
+  <h2 align="center">EasySave v3.0 (Graphical Version)</h2>
 
   <p align="center">
     A little backup software by ProSoft
@@ -37,35 +37,37 @@ This is the list of the major technologies that we used in this project.
 
 ---
 
-## EasySave v2.0 - Visual:
+## EasySave v3.0 - Visual:
 
-<a href="https://ibb.co/FDkvDjJ"><img src="https://i.ibb.co/x7Kv7RG/4.png" alt="4" border="0"></a>
-
+<a href="https://ibb.co/pjBVSXV"><img src="https://i.ibb.co/Xxr0qJ0/MainMenu.png" alt="MainMenu" border="0"></a>
 ---
 
-## EasySave v2.0 - Release Notes:
+## EasySave v3.0 - Release Notes:
 
 ### New Software:
-* CryptoSoft : Encrypt Files with XOR and a Key.
+* PanelAdmin: Remote Panel for EasySave.
 
 ### New Features: 
-* EasySave Graphical Version!
-* Change Backup Works Limit from 5 to Unlimited.
-* Files can be Encrypted with CryptoSoft.
-* If a Business Software is Running, it prevents Backup Works to be Launched.
-* Settings Part (CryptoSoft Path, Extensions to Encrypt List, Business Software List, Language Selection).
-* French Language support.
+* Works can now Backup simultaneously (Multithreading).
+* User can now Pause and Cancel Backups.
+* Add some Automatic Backup Management:
+  * When a Backup has Priority Files, others Backups stop.
+  * When Two or Files are larger than a certain Size (chosen in parameters), only one will continue and the others will Wait.
+* Add some Settings: 
+  * Priority Extensions.
+  * Maximum File Size that can be saved at the same time (in ko).
+* EasySave can now connect to a Remote Panel using Sockets.
+* EasySave is now a Single Instance Software.
 
 ### Enhancements:
-* Enhance MVVM (sharing View and ViewModel in multiple Views and ViewModels).
-* Change Logs format from txt to json.
+* Menu design: Backups Progress Bars with colors depending on the state. 
+* Add Files and Folders Browsers to Select Paths.
+* Enhance Language Switching Management.
 
-### Comming Soon :
-* Add Language Support for BackupView
-* Change Language without Reloading Pages.
-* Dynamic Loading Bar when doing Backup.
-* Pause/Play when doing Backup.
+### May Come Next :
+* Add a Search Bar to sort Works.
 * Edit a Backup Work.
+* Change Language without Restarting EasySave.
 
 ---
 
@@ -97,7 +99,8 @@ In this project you will found different folders :
 * UML_Diagrams: Contains EasySave's UML Diagrams and [UML Documentation](https://dev.azure.com/ACALCGLK/_git/EasySave?path=%2FUML%20Diagrams%2FUMLDOC.md).
 * CryptoSoft_Code: Contains CryptoSoft's Code.
 * CryptoSoft_Exe: Contains CryptoSoft Executable.
-
+* PanelAdmin_Code: Contains PanelAdmin's Code.
+* PanelAdmin_Exe: Contains PanelAdmin Executable.
 
 ---
 
