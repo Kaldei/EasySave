@@ -35,11 +35,14 @@ namespace PanelAdmin.view
         private void Connection_Click(object sender, RoutedEventArgs e)
         {
             string serverAddress = this.Address.Text;
-            int serverPort = Int32.Parse(this.Port.Text);
-            Task.Run(() =>
+            string serverPort = this.Port.Text;
+            if(serverAddress.Length > 1 && serverPort.Length > 1)
             {
-                this.vm.Connection(serverAddress, serverPort);
-            });
+                Task.Run(() =>
+                {
+                    this.vm.Connection(serverAddress, Int32.Parse(serverPort));
+                });
+            }
         }
 
         private void Launch_Click(object sender, RoutedEventArgs e)
