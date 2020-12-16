@@ -706,7 +706,7 @@ namespace EasySave.NS_ViewModel
             // Accept client
             Socket client = _listen.Accept();
 
-            Console.WriteLine($"Connection established with : {client.LocalEndPoint}");
+            Trace.WriteLine($"Connection established with : {client.LocalEndPoint}");
 
             return client;
         }
@@ -733,7 +733,7 @@ namespace EasySave.NS_ViewModel
             } catch (SocketException)
             {
                 // Client quit
-                Trace.WriteLine("CLient quit !");
+                Trace.WriteLine(Langs.Lang.socketDeconnection);
             }
 
         }
@@ -786,7 +786,7 @@ namespace EasySave.NS_ViewModel
                     // Socket deconnected
                     this.client = null;
                     this.listener = null;
-                    MessageBox.Show("Le client c'est déconnecté");
+                    MessageBox.Show(Langs.Lang.socketDeconnection);
                     break;
                 }
                 

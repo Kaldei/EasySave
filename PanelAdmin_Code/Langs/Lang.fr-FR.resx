@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="alwaysRunning" xml:space="preserve">
+    <value>Le Panneau d'aministration est déjà en cours d'exécution.</value>
+  </data>
   <data name="backupProgress" xml:space="preserve">
     <value>Progression de la Sauvegarde</value>
   </data>
@@ -140,5 +143,8 @@
   </data>
   <data name="progress" xml:space="preserve">
     <value>Progression</value>
+  </data>
+  <data name="socketDeconnection" xml:space="preserve">
+    <value>Le serveur a fermé la connexion.</value>
   </data>
 </root>

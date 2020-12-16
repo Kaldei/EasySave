@@ -493,6 +493,15 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à The client disconnected..
+        /// </summary>
+        public static string socketDeconnection {
+            get {
+                return ResourceManager.GetString("socketDeconnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Source.
         /// </summary>
         public static string source {

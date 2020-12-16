@@ -27,7 +27,7 @@ namespace PanelAdmin.view
                 UpdateSelectedLanguage();
             } else
             {
-                MessageBox.Show("Admin Panel is already running !");
+                MessageBox.Show(Langs.Lang.alwaysRunning);
                 App.Current.Shutdown();
             }
         }

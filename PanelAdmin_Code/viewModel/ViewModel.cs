@@ -107,7 +107,7 @@ namespace PanelAdmin.viewModel
             }
             catch (SocketException)
             {
-                MessageBox.Show("Server Close the connection");
+                MessageBox.Show(Langs.Lang.socketDeconnection);
             }
 
         }
