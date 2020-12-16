@@ -97,7 +97,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Backup Progress.
+        ///   Looks up a localized string similar to Backup Progress.
         /// </summary>
         public static string backupProgress {
             get {
@@ -106,7 +106,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Backup Type.
+        ///   Looks up a localized string similar to Backup Type.
         /// </summary>
         public static string backupType {
             get {
@@ -142,20 +142,20 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can not delete the destination folder.
+        /// </summary>
+        public static string cannotDelDstFolder {
+            get {
+                return ResourceManager.GetString("cannotDelDstFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can&apos;t Delete Works while they are Running!.
         /// </summary>
         public static string cantDeleteWork {
             get {
                 return ResourceManager.GetString("cantDeleteWork", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can not delete the destination folder.
-        /// </summary>
-        public static string cannotDelDstFolder {
-            get {
-                return ResourceManager.GetString("cannotDelDstFolder", resourceCulture);
             }
         }
         
@@ -169,7 +169,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Check to encrypt files.
+        ///   Looks up a localized string similar to Check to encrypt files.
         /// </summary>
         public static string checkEncrypt {
             get {
@@ -448,7 +448,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Copy Pourcentage.
+        ///   Looks up a localized string similar to Copy Pourcentage.
         /// </summary>
         public static string percentageCopy {
             get {
@@ -457,7 +457,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Priority Exentions:.
+        ///   Looks up a localized string similar to Priority Exentions:.
         /// </summary>
         public static string prioExtensionLabel {
             get {
@@ -520,7 +520,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Connection.
+        ///   Looks up a localized string similar to Connection.
         /// </summary>
         public static string socket {
             get {
@@ -529,7 +529,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à The client disconnected..
+        ///   Looks up a localized string similar to The client disconnected..
         /// </summary>
         public static string socketDeconnection {
             get {
@@ -538,7 +538,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Source.
+        ///   Looks up a localized string similar to Source.
         /// </summary>
         public static string source {
             get {
