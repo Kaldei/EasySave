@@ -38,13 +38,19 @@ namespace PanelAdmin.viewModel
 
             IPAddress address = IPAddress.Parse(_serverIP);
             IPEndPoint endPoint = new IPEndPoint(address, _serverPort);
+            try
+            {
+                // Connect to the server
+                ConnectionSocket.Connect(endPoint);
 
-            // Connect to the server
-            ConnectionSocket.Connect(endPoint);
+                Trace.WriteLine($"Client connected to {_serverIP}");
 
-            Trace.WriteLine($"Client connected to {_serverIP}");
-
-            return ConnectionSocket;
+                return ConnectionSocket;
+            } catch (SocketException)
+            {
+                MessageBox.Show(Langs.Lang.secretTunnel);
+                return null;
+            }
         }
 
         private void Listen(Socket server)
@@ -132,7 +138,10 @@ namespace PanelAdmin.viewModel
         public void Connection(string _serverIP, int _serverPort)
         {
             this.server = Connect(_serverIP, _serverPort);
-            Listen(this.server);
+            if(server != null)
+            {
+                Listen(this.server);
+            }
         }
     }
 }

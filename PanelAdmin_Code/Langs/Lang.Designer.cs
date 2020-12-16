@@ -142,6 +142,15 @@ namespace PanelAdmin.Langs {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à The socket in EasySave isn&apos;t start.
+        /// </summary>
+        public static string secretTunnel {
+            get {
+                return ResourceManager.GetString("secretTunnel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à The server close the connection.
         /// </summary>
         public static string socketDeconnection {
