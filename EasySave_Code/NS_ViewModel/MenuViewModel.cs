@@ -59,45 +59,7 @@ namespace EasySave.NS_ViewModel
             this.model.SaveWorks();
             autoResetEventWorks.Set();
         }
-        /*
-        private List<Work> GetWorksById(int[] _worksId)
-        {
-            List<Work> works = new List<Work>();
 
-            foreach (int workId in _worksId)
-            {
-                works.Add(model.works[workId]);
-            }
-            return works;
-        }
-
-        private bool IsWorkSelected(int[] _worksId) // TODO - Look if we can do better or did we let this here
-        {
-            if (_worksId.Length > 0)
-            {
-                return true;
-            }
-            else
-            {
-                // Return Error Code
-                model.errorMsg?.Invoke("noSelectedWork");
-                return false;
-            }
-        }
-        
-        public void RemoveWorks(int[] _worksId)
-        {
-            if (IsWorkSelected(_worksId))
-            {
-                List<Work> worksToRemove = GetWorksById(_worksId);
-
-                foreach (Work workToRemove in worksToRemove)
-                {
-                    RemoveWork(workToRemove);
-                }
-            }
-        }
-        */
         public void RemoveWork(int _worksId)
         {
             try
