@@ -4,7 +4,7 @@
     <img src="https://www.flaticon.com/svg/static/icons/svg/3790/3790894.svg" alt="Logo" width="80" height="80">
   </a>
 
-  <h2 align="center">EasySave v2.0 (Graphical Version)</h2>
+  <h2 align="center">EasySave v3.0 (Graphical Version)</h2>
   <h3 align="center">User Documentation</h3>
 </p>
 
@@ -15,33 +15,44 @@ When you launched EasySave, the Main Menu is displayed.
 
 Here are the different options you have in the Main Menu :
 
-<a href="https://ibb.co/FDkvDjJ"><img src="https://i.ibb.co/x7Kv7RG/4.png" alt="4" border="0"></a>
+<a href="https://ibb.co/pjBVSXV"><img src="https://i.ibb.co/Xxr0qJ0/MainMenu.png" alt="MainMenu" border="0"></a>
 
 ### Backup Works Table
 On the Main Menu you will find a Table that contains the Backup Works you've created.
-* You can sort them by Name, Source, Destination, Backup Type, if they need to be encrypted or not.
 * You can select one or more Backup Works (and even Select all Backup Works with the `Select` All Button).
 
 ### Launch a Backup
-From the Menu, you can click on the light green `>` button to launch Backup Works:
-* This button will launch the Backup Works you've selected (one or several).
-* The program will pause until the backup has finished.
+From the Menu, you can click on the light green `>` button to launch Backups:
+* This button will launch Backup Works you've selected.
 * In the same time the `State.json` file is updated with information on progression of the Backup.
 * Every time a File is saved, the today's Log file is updated.
-* When all the Backup Works are completed, a recap of the backups that have just been made will be displayed.
 
 Notes : 
 * If you launch a Differential Backup for the first time, it will automatically launch a Full Backup.
 * If you launch a Differential Backup on a Encrypted Work, the encrypted files will be saved anyway because we are able to know if the file changed or not (because they are encrypted). 
 
+### Progress Bar Color
+When a Backup is running, you can see it's progression with the progress bar.
+* This progress bar can take several colors depending on the state of the backup.
+ Theses states can be found in the caption part at the bottom of the of the Main Menu.
+
+### Pause a Backup
+From the Menu, you can click on the orange `||` button to pause Backups.
+You can resume a paused Backup by clicking on the light green `>`.
+
+### Cancel a Backup
+From the Menu, you can click on the orange `X` button to cancel Backups.
+* It will stop Backups and remove theirs destination folders. 
+
 ### Remove a Work
 From the Menu, you can click on the red `-` button to display the REmove Backup Works:
 * This button will Delete the Backup Works you've selected (one or several).
+* It's impossible to Remove a Backup if it's running.
 
 ### Add a Work
 From the Menu, you can click on the green `+` button to display the Add Backup Work View:
 
-<a href="https://ibb.co/f9yjdVK"><img src="https://i.ibb.co/pQMYj6s/5.png" alt="5" border="0"></a>
+<a href="https://ibb.co/2hHXcSg"><img src="https://i.ibb.co/4t3B42P/AddWork.png" alt="AddWork" border="0"></a>
 
 * You need to enter a Name between 1 to 20 characters. It has to be a unique.
 * Then you need to enter a valid Source directory like this : `C:\Users\Desktop\File`.
@@ -52,12 +63,27 @@ From the Menu, you can click on the green `+` button to display the Add Backup W
 ### Settings
 From the Menu, you can click on the `Settings` button to display the Settings View:
 
-<a href="https://ibb.co/NrjXnp8"><img src="https://i.ibb.co/pQzgrZt/6.png" alt="6" border="0"></a>
+<a href="https://ibb.co/Jj2MhS5"><img src="https://i.ibb.co/k20WdPQ/Settings.png" alt="Settings" border="0"></a>
 
 * You can set the CryptoSoft Path (it has to be an Existing `.exe`). Please don't put another software thant CryptoSoft here.
-* You can add or remove File Extensions you want to Encrypt for you Encrypted Backup Works (it has to start with a `.`).
+* You can add or remove File Extensions that you want to Encrypt (for you Encrypted Backup Works). They have to start with a '`.`' .
+* You can add or remove File Extensions you want to be a priority. They have to start with a '`.`').
 * You can add or remove Business Softwares that will prevent Backup Works from launching if they are running.
+* You can set a Maximum Files Size (in ko) that can be save simultaneously (0 to none).
 * You can set you language (English or French).
+
+### Connection to the Panel
+EasySave come now with a Remote Panel (Panel Admin):
+<a href="https://ibb.co/f9NRZPg"><img src="https://i.ibb.co/Mf1TK3v/Panel.png" alt="Panel" border="0"></a>
+
+To connect the Panel to EasySave, you have click to the `Connection` button on EasySave. Then you have to enter the IP and the Port you want to connect (for now EasySave is listening on port `8080`).
+
+With this Panel you can:
+* Follow Backups Progress (progress and state).
+* Launch Backups.
+* Pause Backups.
+* Cancel Backups.
+* Change language.
 
 ---
 ## Files & Storage
