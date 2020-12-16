@@ -53,8 +53,6 @@ namespace EasySave
                 MessageBox.Show(Langs.Lang.alreadyRunning);
                 App.Current.Shutdown();
             }
-
-
         }
 
 
