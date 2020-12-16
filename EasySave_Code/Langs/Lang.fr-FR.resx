@@ -276,4 +276,7 @@
   <data name="percentageCopy" xml:space="preserve">
     <value>Pourcentage de la copie</value>
   </data>
+  <data name="socketDeconnection" xml:space="preserve">
+    <value>Le client s'est déconnecté</value>
+  </data>
 </root>
