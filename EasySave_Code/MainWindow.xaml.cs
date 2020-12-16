@@ -5,6 +5,8 @@ using EasySave.NS_ViewModel;
 using EasySave.NS_Model;
 using System.Threading;
 using System.Diagnostics;
+using System;
+using System.Windows.Media.Imaging;
 
 namespace EasySave
 {
@@ -31,6 +33,7 @@ namespace EasySave
         {
             if (Process.GetProcessesByName("EasySave").Length == 1)
             {
+
                 // Initialize Model
                 this.model = new Model();
 
