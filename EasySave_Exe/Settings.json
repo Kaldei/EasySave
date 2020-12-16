@@ -1,6 +1,8 @@
 {
   "cryptoSoftPath": "",
+  "maxSimultaneousFilesSize": 1000,
+  "language": "en-US",
   "cryptoExtensions": [],
-  "businessSoftwares": [],
-  "language": "en-US"
+  "prioExtensions": [],
+  "businessSoftwares": []
 }
