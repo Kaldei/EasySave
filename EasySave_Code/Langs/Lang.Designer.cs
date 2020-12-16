@@ -295,7 +295,7 @@ namespace EasySave.Langs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Size Given is incorrect!.
+        ///   Looks up a localized string similar to You have chosen a Size of 0ko (or you have entered an incorrect Size). No Size limit will be taken into account..
         /// </summary>
         public static string incorrectMaxSimultaneousFilesSize {
             get {

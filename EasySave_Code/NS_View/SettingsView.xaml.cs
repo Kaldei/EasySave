@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -203,7 +202,7 @@ namespace EasySave.NS_View
         {
             // Check if input is a number and stricly posisitve
             int.TryParse(_maxSimultaneousFilesSize.Text, out int maxSimultaneousFilesSize);
-            if (maxSimultaneousFilesSize >= 0)
+            if (maxSimultaneousFilesSize > 0)
             {
                 maxSimultaneousFilesSizeLabel.Foreground = Brushes.Black;
                 maxSimultaneousFilesSizeLabel.Content = Langs.Lang.maxSimultaneousFilesSize;
@@ -212,21 +211,13 @@ namespace EasySave.NS_View
             {
                 maxSimultaneousFilesSizeLabel.Foreground = Brushes.Red;
                 maxSimultaneousFilesSizeLabel.Content = Langs.Lang.incorrectMaxSimultaneousFilesSize;
-
-                if (this.settingsViewModel.model.settings.maxSimultaneousFilesSize > 0)
-                {
-                    _maxSimultaneousFilesSize.Text = this.settingsViewModel.model.settings.maxSimultaneousFilesSize.ToString();
-                }
-                else
-                {
-                    _maxSimultaneousFilesSize.Text = "";
-                }
-                return;
+                maxSimultaneousFilesSize = 0;
             }
 
             // Update Max Simultaneous Files Size
-            this.settingsViewModel.model.settings.maxSimultaneousFilesSize = int.Parse(_maxSimultaneousFilesSize.Text);
+            this.settingsViewModel.model.settings.maxSimultaneousFilesSize = maxSimultaneousFilesSize;
             this.settingsViewModel.model.SaveSettings();
+            _maxSimultaneousFilesSize.Text = this.settingsViewModel.model.settings.maxSimultaneousFilesSize.ToString();
         }
 
 
