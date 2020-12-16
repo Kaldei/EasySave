@@ -24,6 +24,8 @@ namespace EasySave.NS_Model
 
         public string stateFilePath { get; set; }
         public string settingsFilePath { get; set; }
+        public WorkToSend workToSend { get; set; }
+        public ReceiveObject receiveObject { get; set; }
 
         public List<Log> logs { get; set; }
 

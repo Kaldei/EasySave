@@ -202,5 +202,17 @@ namespace EasySave.NS_View
                 this.menuViewModel.model.errorMsg?.Invoke("noSelectedWork");
             }
         }
+
+        private void InitSocket(object sender, RoutedEventArgs e)
+        {
+            if(this.menuViewModel.listener == null)
+            {
+                this.menuViewModel.SocketOn();
+            } else
+            {
+                MessageBox.Show("Socket running");
+            }
+
+        }
     }
 }
