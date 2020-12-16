@@ -144,6 +144,9 @@
   <data name="progress" xml:space="preserve">
     <value>Progress</value>
   </data>
+  <data name="secretTunnel" xml:space="preserve">
+    <value>The socket in EasySave isn't start</value>
+  </data>
   <data name="socketDeconnection" xml:space="preserve">
     <value>The server close the connection</value>
   </data>
