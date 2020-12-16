@@ -74,6 +74,7 @@ From the Menu, you can click on the `Settings` button to display the Settings Vi
 
 ### Connection to the Panel
 EasySave come now with a Remote Panel (Panel Admin):
+
 <a href="https://ibb.co/f9NRZPg"><img src="https://i.ibb.co/Mf1TK3v/Panel.png" alt="Panel" border="0"></a>
 
 To connect the Panel to EasySave, you have click to the `Connection` button on EasySave. Then you have to enter the IP and the Port you want to connect (for now EasySave is listening on port `8080`).
