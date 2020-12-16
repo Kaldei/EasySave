@@ -256,7 +256,7 @@
     <value>Priority Exentions:</value>
   </data>
   <data name="incorrectMaxSimultaneousFilesSize" xml:space="preserve">
-    <value>Size Given is incorrect!</value>
+    <value>You have chosen a Size of 0ko (or you have entered an incorrect Size). No Size limit will be taken into account.</value>
   </data>
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
     <value>Maximum Files Size that can be save simultaneously in ko (0 to none):</value>

@@ -256,7 +256,7 @@
     <value>Extensions Prioritaires :</value>
   </data>
   <data name="incorrectMaxSimultaneousFilesSize" xml:space="preserve">
-    <value>La taille donnée n'est pas correcte !</value>
+    <value>Vous avez choisis une taille de 0 ko (ou vous avez entrer une taille incorrecte). Aucune limite de taille ne sera prise en compte.</value>
   </data>
   <data name="maxSimultaneousFilesSize" xml:space="preserve">
     <value>Taille Maximale de fichiers à copier en simultané en ko (0 pour pas de limite) :</value>
