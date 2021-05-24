@@ -1,0 +1,8 @@
+{
+  "cryptoSoftPath": "..\\CryptoSoft\\CryptoSoft.exe",
+  "maxSimultaneousFilesSize": 1000,
+  "language": "en-US",
+  "cryptoExtensions": [],
+  "prioExtensions": [],
+  "businessSoftwares": []
+}

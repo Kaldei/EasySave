@@ -1,21 +1,18 @@
-<br />
+<h1 align="center">💾</br>EasySave</h1>
 <p align="center">
-  <a href="https://dev.azure.com/ACALCGLK/EasySave/_git/EasySave?path=%2F&version=GBmaster">
-    <img src="https://www.flaticon.com/svg/static/icons/svg/3790/3790894.svg" alt="Logo" width="80" height="80">
-  </a>
-
-  <h2 align="center">EasySave v3.0 (Graphical Version)</h2>
-  <h3 align="center">User Documentation</h3>
+  EasySave Documentation
 </p>
 
-----
 
+---
 ## General
 When you launched EasySave, the Main Menu is displayed. 
 
 Here are the different options you have in the Main Menu :
 
-<a href="https://ibb.co/pjBVSXV"><img src="https://i.ibb.co/Xxr0qJ0/MainMenu.png" alt="MainMenu" border="0"></a>
+<p align="center">
+  <img src="https://i.ibb.co/jvbg1h7/Easy-Save-Visual.png" alt="EasySave Visual" width="600">
+</p>
 
 ### Backup Works Table
 On the Main Menu you will find a Table that contains the Backup Works you've created.
@@ -52,7 +49,9 @@ From the Menu, you can click on the red `-` button to display the REmove Backup 
 ### Add a Work
 From the Menu, you can click on the green `+` button to display the Add Backup Work View:
 
-<a href="https://ibb.co/2hHXcSg"><img src="https://i.ibb.co/4t3B42P/AddWork.png" alt="AddWork" border="0"></a>
+<p align="center">
+  <img src="https://i.ibb.co/4t3B42P/AddWork.png" alt="AddWork" border="0">
+</p>
 
 * You need to enter a Name between 1 to 20 characters. It has to be a unique.
 * Then you need to enter a valid Source directory like this : `C:\Users\Desktop\File`.
@@ -63,7 +62,9 @@ From the Menu, you can click on the green `+` button to display the Add Backup W
 ### Settings
 From the Menu, you can click on the `Settings` button to display the Settings View:
 
-<a href="https://ibb.co/Jj2MhS5"><img src="https://i.ibb.co/k20WdPQ/Settings.png" alt="Settings" border="0"></a>
+<p align="center">
+  <img src="https://i.ibb.co/k20WdPQ/Settings.png" alt="Settings" border="0">
+</p>
 
 * You can set the CryptoSoft Path (it has to be an Existing `.exe`). Please don't put another software thant CryptoSoft here.
 * You can add or remove File Extensions that you want to Encrypt (for you Encrypted Backup Works). They have to start with a '`.`' .
@@ -75,7 +76,9 @@ From the Menu, you can click on the `Settings` button to display the Settings Vi
 ### Connection to the Panel
 EasySave come now with a Remote Panel (Panel Admin):
 
-<a href="https://ibb.co/f9NRZPg"><img src="https://i.ibb.co/Mf1TK3v/Panel.png" alt="Panel" border="0"></a>
+<p align="center">
+  <img src="https://i.ibb.co/Mf1TK3v/Panel.png" alt="Panel" border="0">
+</p>
 
 To connect the Panel to EasySave, you have click to the `Connection` button on EasySave. Then you have to enter the IP and the Port you want to connect (for now EasySave is listening on port `8080`).
 
@@ -85,6 +88,7 @@ With this Panel you can:
 * Pause Backups.
 * Cancel Backups.
 * Change language.
+
 
 ---
 ## Files & Storage

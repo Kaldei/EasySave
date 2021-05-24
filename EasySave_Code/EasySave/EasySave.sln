@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySave", "EasySave.csproj", "{B368B6BC-46DD-4994-88ED-D934F048A931}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PanelAdmin", "..\PanelAdmin_Code\PanelAdmin.csproj", "{14C7B431-118C-431B-9E94-664565E91454}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{B368B6BC-46DD-4994-88ED-D934F048A931}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B368B6BC-46DD-4994-88ED-D934F048A931}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B368B6BC-46DD-4994-88ED-D934F048A931}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14C7B431-118C-431B-9E94-664565E91454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14C7B431-118C-431B-9E94-664565E91454}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14C7B431-118C-431B-9E94-664565E91454}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14C7B431-118C-431B-9E94-664565E91454}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
